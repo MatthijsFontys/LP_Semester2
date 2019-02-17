@@ -1,0 +1,69 @@
+
+/* CSS variabele */
+:root{
+    --primary-color: #2C3E50;
+    --main-link: #ffffff;
+    --sub-link: #D7DADB;
+    --sub-link-hover : #ffffff;
+}
+
+body{
+    background-color: #B4B8B8;
+}
+
+/* Enabling wrapper height */
+html, body{
+    height: 100%;
+}
+
+.wrapper{
+    height: auto;
+    min-height: 100%;
+    width: 800px;
+    background-color: white;
+    margin: 0 auto;
+}
+
+
+a.main-link{
+    color: var(--main-link);
+}
+
+a.sub-link{
+    color: var(--sub-link);
+}
+
+
+a.sub-link:hover{
+    color: var(--sub-link-hover);
+}
+
+nav.navbar{
+    background: var(--primary-color) !important;
+}
+
+.logo, .logo:hover{
+    font-weight: bold;
+    color: var(--main-link);
+}
+
+.release-follow-small{
+    display: none;
+    height: 0px;
+    background: green; /* rgba(0, 0, 0, .6);*/
+    position: absolute;
+    text-align: center;
+    font-size: 18px;
+    width: 100%;
+    bottom: 0px;
+    color:white;
+}
+
+.release-img-wrapper:hover .release-follow-small{
+    height: auto;
+    display: block;
+}
+  
+.release-img-wrapper:hover{
+    cursor: pointer;
+}
