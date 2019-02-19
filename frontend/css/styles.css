@@ -1,45 +1,71 @@
-
 /* CSS variabele */
 :root{
-    --primary-color: #2C3E50;
+    --primary: #2C3E50;
+    --primary-opacity: rgba(0, 0, 0, 0.5);
     --main-link: #ffffff;
     --sub-link: #D7DADB;
     --sub-link-hover : #ffffff;
+    --side-bg: #f7f7f7;
+    --outside-border: #ddd;
 }
+
 
 body{
-    background-color: #B4B8B8;
+    background-color: var(--side-bg);
 }
 
-/* Enabling wrapper height */
+/* Styling a tags */
+/* Resetting link styles */ /* Subtitles navbar links */
+a.subtitle, a.subtitle:hover, a.subtitle:active, a.subtitle:visited{
+	text-decoration: none;
+    color: inherit;
+    padding: 5px 15px;
+}
+
+/* Populair and New */
+a.subtitle:hover{
+    background: #eeeeee;
+    transition-duration: 0.2s;
+}
+
+/* Main links (login and signup)*/
+a.main-link{
+    color: var(--main-link);
+}
+
+a.sub-link, a.sub-link:hover{
+    color: var(--sub-link);
+}
+
+.title-link, .title-link:hover, .title-link:visited, .title-link:active{
+    text-decoration: none;
+    color: black;
+}
+
 html, body{
     height: 100%;
 }
 
 .wrapper{
-    height: auto;
+    position: relative;
+    top: -56px;
+    padding-top: 56px;
     min-height: 100%;
-    width: 800px;
+    width: 960px;
     background-color: white;
     margin: 0 auto;
+    border-left: 1px solid var(--outside-border);
+    border-right: 1px solid var(--outside-border);
 }
 
+/*  overriding bootstrap navbar */
 
-a.main-link{
-    color: var(--main-link);
-}
-
-a.sub-link{
-    color: var(--sub-link);
-}
-
-
-a.sub-link:hover{
-    color: var(--sub-link-hover);
+.navbar{
+    z-index: 1;
 }
 
 nav.navbar{
-    background: var(--primary-color) !important;
+    background: var(--primary) !important;
 }
 
 .logo, .logo:hover{
@@ -47,10 +73,13 @@ nav.navbar{
     color: var(--main-link);
 }
 
+/* End navbar */
+
+/* Styling release */
 .release-follow-small{
     display: none;
     height: 0px;
-    background: green; /* rgba(0, 0, 0, .6);*/
+    background: var(--primary-opacity);
     position: absolute;
     text-align: center;
     font-size: 18px;
@@ -65,5 +94,13 @@ nav.navbar{
 }
   
 .release-img-wrapper:hover{
+    cursor: pointer;
+}
+
+
+/* General styles */
+
+/* Give a pointer to all clickable content */
+.clickable{
     cursor: pointer;
 }
