@@ -14,27 +14,11 @@ body{
     background-color: var(--side-bg);
 }
 
-/* Styling a tags */
-/* Resetting link styles */ /* Subtitles navbar links */
-a.subtitle, a.subtitle:hover, a.subtitle:active, a.subtitle:visited{
-	text-decoration: none;
-    color: inherit;
-    padding: 5px 15px;
-}
 
 /* Populair and New */
 a.subtitle:hover{
     background: #eeeeee;
     transition-duration: 0.2s;
-}
-
-/* Main links (login and signup)*/
-a.main-link{
-    color: var(--main-link);
-}
-
-a.sub-link, a.sub-link:hover{
-    color: var(--sub-link);
 }
 
 .title-link, .title-link:hover, .title-link:visited, .title-link:active{
@@ -48,8 +32,6 @@ html, body{
 
 .wrapper{
     position: relative;
-    top: -56px;
-    padding-top: 56px;
     min-height: 100%;
     width: 960px;
     background-color: white;
@@ -58,25 +40,8 @@ html, body{
     border-right: 1px solid var(--outside-border);
 }
 
-/*  overriding bootstrap navbar */
-
-.navbar{
-    z-index: 1;
-}
-
-nav.navbar{
-    background: var(--primary) !important;
-}
-
-.logo, .logo:hover{
-    font-weight: bold;
-    color: var(--main-link);
-}
-
-/* End navbar */
-
 /* Styling release */
-.release-follow-small{
+.release-follow-small {
     display: none;
     height: 0px;
     background: var(--primary-opacity);
@@ -84,17 +49,17 @@ nav.navbar{
     text-align: center;
     font-size: 18px;
     bottom: 0px;
-    color:white;
+    color: white;
     clear: both;
 }
 
-.release-wrapper{
+.release-wrapper {
     display: flex;
     position: relative;
     align-items: center;
 }
 
-.release-img-wrapper:hover .release-follow-small{
+.release-img-wrapper:hover .release-follow-small {
     height: auto;
     display: inline-block;
     position: absolute;
@@ -104,25 +69,26 @@ nav.navbar{
 }
 
 
-.release-img-wrapper:hover{
+.release-img-wrapper:hover {
     cursor: pointer;
 }
 
 .release-img-wrapper {
-    box-sizing: border-box;
+    box-sizing: content-box;
     margin-right: 10px;
     border: 1px solid var(--side-bg);
-    overflow:hidden;
+    overflow: hidden;
     position: relative;
     border-radius: 8px;
+    
 }
 
-.release-img-wrapper img{
-    padding: 5px;
-    border: 1px solid var(--side-bg);
-    border-radius: 8px;
-}
-
+    .release-img-wrapper img {
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 150px;
+    }
 
 /* General styles */
 

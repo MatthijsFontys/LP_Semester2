@@ -1,0 +1,52 @@
+﻿/* CSS variabele */
+:root {
+    --primary: #2C3E50;
+    --primary-opacity: rgba(0, 0, 0, 0.5);
+    --main-link: #ffffff;
+    --sub-link: #D7DADB;
+    --sub-link-hover: #ffffff;
+    --side-bg: #f7f7f7;
+    --outside-border: #ddd;
+}
+
+/*  overriding bootstrap navbar */
+.navbar {
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.wrapper, #wrapper {
+    padding-top: 60px !important;
+}
+
+nav.navbar {
+    background: var(--primary) !important;
+}
+
+.logo, .logo:hover {
+    font-weight: bold;
+    color: var(--main-link);
+}
+
+/* End navbar */
+
+/* Main links (login and signup)*/
+a.main-link {
+    color: var(--main-link);
+}
+
+a.sub-link, a.sub-link:hover {
+    color: var(--sub-link);
+}
+
+
+/* Styling a tags */
+/* Resetting link styles */ /* Subtitles navbar links */
+a.subtitle, a.subtitle:hover, a.subtitle:active, a.subtitle:visited {
+    text-decoration: none;
+    color: inherit;
+    padding: 5px 15px;
+}

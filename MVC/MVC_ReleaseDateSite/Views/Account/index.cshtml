@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Logic.Models.ReleaseModel>
+
+@{
+    ViewData["Title"] = "Home"; 
+}
+
+@section styles{
+    <!-- My CSS-->
+    <link rel="stylesheet" type="text/css" href="~/css/styles.css">
+}
+
+<!-- main content start -->
+<div class="wrapper">
+    <div class="container justify-content-xs-start justify-content-md-center pt-3">
+        <!-- Search bar -->
+        <form class="form-inline justify-content-xs-start justify-content-md-center">
+            <input type="text" class="form-control mb-3" id="search-bar" placeholder="Search">
+            <a><span class="fas fa-search btn-icon align-top pl-2 clickable"></span></a>
+        </form>
+        <div class="row">
+            <h3 class="text-center col-12"><a href="#" class="subtitle">Populair</a></h3>
+        </div>
+        <div class="row py-2">
+            <!-- Start populair releases-->
+        @foreach (Logic.Models.ReleaseModel item in Model) {
+            <!-- Start release -->
+            <div class="col-sm-6 col-md-4 my-2 release-wrapper">
+                    <div class="release-img-wrapper">
+                       <span> <img src="@item.ImgLocation" />
+                        <div class="release-follow-small">Follow</div> </span>
+                </div>
+                <div style="display: inline-block;">
+                    <h5><a href="/overview/Title" class="title-link">@item.Title</a></h5>
+                    <h6>@item.ReleaseDate.ToShortDateString()</h6>
+                    <h6>@item.FollowerCount followers</h6>
+                </div>
+            </div>
+            <!-- End release -->
+        }
+            <!-- End populair releases -->
+        </div> <!-- end row 2-->
+        <div class="row">
+            <hr class="content-divider" />
+        </div> <!-- end row -->
+        <div class="row">
+            <h3 class="text-center col-12"><a href="#" class="subtitle">New</a></h3>
+        </div> <!-- end row -->
+        <div class="row">
+            <!-- Start New releases-->
+           
+
+        </div>
+        <!-- End new releases-->
+    </div> <!-- end container -->
+</div>
