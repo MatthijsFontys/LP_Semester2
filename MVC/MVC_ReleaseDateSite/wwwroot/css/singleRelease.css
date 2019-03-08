@@ -1,0 +1,50 @@
+:root{
+    --primary: #2C3E50;
+    --primary-opacity: rgba(0, 0, 0, 0.5);
+    --main-link: #ffffff;
+    --sub-link: #D7DADB;
+    --sub-link-hover : #ffffff;
+    --side-bg: #f7f7f7;
+    --outside-border: #ddd;
+}
+
+html,body{
+    width: 100%;
+    height: 100%;
+    background-color: var(--side-bg);
+}
+
+#wrapper{
+    min-height: 100%;
+    width: 800px;
+    margin: 0 auto;
+    border-left: 1px solid var(--outside-border);
+    border-right: 1px solid var(--outside-border);
+    background-color: white;
+}
+
+.comment {
+    min-height: 125px;
+    height: auto;
+}
+
+.standard-text-box {
+    resize: none !important;
+    height: auto;
+    border: none;
+    outline: none;
+}
+
+.img-large {
+    width: auto;
+    height: auto;
+    max-width: 200px;
+    max-height: 300px;
+}
+
+.description {
+    text-align: left;
+    font-size: 15px;
+    max-height: 295px;
+    overflow: hidden;
+}

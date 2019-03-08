@@ -7,46 +7,115 @@
     --sub-link-hover: #ffffff;
     --side-bg: #f7f7f7;
     --outside-border: #ddd;
-}
-
-/*  overriding bootstrap navbar */
-.navbar {
-    z-index: 1;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    --main-border: #eeeeee;
+    --main-text-color: #000;
+    --title-secondary-color: #5bc0de;
 }
 
 .wrapper, #wrapper {
-    padding-top: 60px !important;
+    padding-top: 60px !important; /* Adding padding to top to avoid the navbar overlapping content */
 }
 
-nav.navbar {
+
+/* Navbar styles */
+.standard-bgr {
     background: var(--primary) !important;
 }
 
-.logo, .logo:hover {
-    font-weight: bold;
+.logo {
     color: var(--main-link);
+    font-weight: bold;
 }
 
-/* End navbar */
+
+.sticky {
+    position: fixed;
+    width: 100%;
+}
+
+/* End navbar styles */
+
+
+/* Links */
 
 /* Main links (login and signup)*/
-a.main-link {
+.main-link {
     color: var(--main-link);
 }
 
-a.sub-link, a.sub-link:hover {
+.sub-link {
     color: var(--sub-link);
 }
 
+.sub-link:hover, .main-link:hover {
+    color: var(--main-link);
+}
 
-/* Styling a tags */
-/* Resetting link styles */ /* Subtitles navbar links */
-a.subtitle, a.subtitle:hover, a.subtitle:active, a.subtitle:visited {
+
+/* Resetting link styles */
+a, a:hover, a:active, a:visited {
     text-decoration: none;
-    color: inherit;
-    padding: 5px 15px;
+}
+
+.foldout {
+    width: 0;
+    height: 0;
+    margin: -1.5px 0 0 0;
+    padding: 0;
+    border-bottom: 1.5px solid white;
+}
+
+li:hover .foldout {
+    animation-name: foldout-hr;
+    animation-duration: .6s;
+    animation-fill-mode:forwards;
+}
+
+/* My own general styling classes */
+.clickable {
+    cursor: pointer;
+}
+
+.user-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50% !important;
+}
+
+.standard-border {
+    border: 2px solid var(--main-border);
+}
+
+/* Only for absolute position*/
+.abs-nav {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+}
+
+.abs-left {
+    left: 0px;
+}
+
+.abs-right {
+    right: 0px;
+}
+
+.abs-bot {
+    bottom: 0px;
+}
+
+
+
+
+/* Animations */
+@keyframes foldout-hr {
+    from {
+       width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+
 }

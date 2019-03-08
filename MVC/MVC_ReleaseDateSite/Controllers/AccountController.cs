@@ -14,7 +14,7 @@ namespace MVC_ReleaseDateSite.Controllers
     {
         public IActionResult Index()
         {
-            return View(MockDataReleasesFactory.GetReleases());
+            return View();
         }
 
         public IActionResult Login() {

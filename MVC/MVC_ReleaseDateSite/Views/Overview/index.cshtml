@@ -30,7 +30,7 @@
                         <div class="release-follow-small">Follow</div> </span>
                 </div>
                 <div style="display: inline-block;">
-                    <h5><a href="/overview/Title" class="title-link">@item.Title</a></h5>
+                    <h5><a href= @String.Format("/overview/single/{0}", item.Id)  class="title-link">@item.Title</a></h5>
                     <h6>@item.ReleaseDate.ToShortDateString()</h6>
                     <h6>@item.FollowerCount followers</h6>
                 </div>

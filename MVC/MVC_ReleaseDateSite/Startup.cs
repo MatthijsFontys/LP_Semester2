@@ -50,7 +50,7 @@ namespace MVC_ReleaseDateSite {
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Account}/{action=Index}/{id?}");
+                    template: "{controller=Overview}/{action=Index}/{id?}");
             });
         }
     }
