@@ -25,8 +25,8 @@ html, body {
 }
 
 #center-box{
-    max-height: 450px;
-    min-width: 400px;
+    max-height: 500px;
+    min-width: 450px;
     padding: 0 40px;
     background-color: var(--primary);
     position: relative;

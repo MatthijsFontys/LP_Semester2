@@ -6,12 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 using MVC_ReleaseDateSite;
 using Logic;
 using Logic.Models;
-
+using Microsoft.AspNetCore.Http;
 
 namespace MVC_ReleaseDateSite.Controllers
 {
     public class AccountController : Controller
     {
+        const string SessionName = "_Name";
+        const string SessionPass = "_Age";
+
         public IActionResult Index()
         {
             return View();
@@ -25,14 +28,30 @@ namespace MVC_ReleaseDateSite.Controllers
             return View();
         }
 
+        public IActionResult RegisterTest() {
+            return View();
+        }
         public IActionResult showReleases() {
 
             return View(MockDataReleasesFactory.GetReleases()[0]);
         }
 
+        public IActionResult welcome() {
+            RegisterModel vm = new RegisterModel
+            {
+                Username = HttpContext.Session.GetString(SessionName)
+            };
+            return View(vm);
+        }
+
         [HttpPost]
-        public IActionResult RegisterAccount() {
+        public IActionResult RegisterAccount(RegisterModel model) {
+
+            HttpContext.Session.SetString(SessionName, model.Username);
+            HttpContext.Session.SetString(SessionPass, model.Password);
+            string name = model.Username;
             return View();
+           
         }
     }
 }
