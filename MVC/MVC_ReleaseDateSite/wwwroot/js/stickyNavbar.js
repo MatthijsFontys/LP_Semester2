@@ -1,6 +1,4 @@
-
-
-window.onscroll = function () { checkForFixedNav() };
+window.onscroll = function() {checkForFixedNav()};
 
 let nav = document.getElementById("mainNav");
 
