@@ -27,7 +27,7 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\Logic\MVC_ReleaseDateSite.Logic.csproj" />
+    <ProjectReference Include="..\MVC_ReleaseDateSite.Logic\MVC_ReleaseDateSite.Logic.csproj" />
   </ItemGroup>
 
 </Project>

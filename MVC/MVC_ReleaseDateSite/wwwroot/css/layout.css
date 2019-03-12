@@ -29,7 +29,7 @@
 
 
 .sticky {
-    position: fixed;
+    position: fixed !important;
     width: 100%;
 }
 
@@ -50,7 +50,6 @@
 .sub-link:hover, .main-link:hover {
     color: var(--main-link);
 }
-
 
 /* Resetting link styles */
 a, a:hover, a:active, a:visited {

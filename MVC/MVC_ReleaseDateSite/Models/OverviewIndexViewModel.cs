@@ -4,6 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace MVC_ReleaseDateSite.Models {
-    public class CommentViewModel {
+    public class OverviewIndexViewModel {
     }
 }

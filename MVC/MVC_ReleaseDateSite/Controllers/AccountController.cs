@@ -36,21 +36,14 @@ namespace MVC_ReleaseDateSite.Controllers
             return View(MockDataReleasesFactory.GetReleases()[0]);
         }
 
-        public IActionResult welcome() {
-            RegisterModel vm = new RegisterModel
-            {
-                Username = HttpContext.Session.GetString(SessionName)
-            };
-            return View(vm);
-        }
-
         [HttpPost]
         public IActionResult RegisterAccount(RegisterModel model) {
-
-            HttpContext.Session.SetString(SessionName, model.Username);
-            HttpContext.Session.SetString(SessionPass, model.Password);
-            string name = model.Username;
-            return View();
+            if (ModelState.IsValid) {
+                HttpContext.Session.SetString(SessionName, model.Username);
+                HttpContext.Session.SetString(SessionPass, model.Password);
+                return RedirectToAction("welcome", "Overview");
+            }
+            return RedirectToAction("Register");
            
         }
     }
