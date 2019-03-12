@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MVC_ReleaseDateSite.Models {
-    public class SingleReleaseViewModel {
+    public class OverviewSingleViewModel {
         ReleaseViewModel Release { get; set; }
-        List<CommentViewModel> Comments { get; set; }
-        UserViewModel Owner { get; set; }
+        ReadOnlyCollection<CommentViewModel> Comments { get; set; }
     }
 }

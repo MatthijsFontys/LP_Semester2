@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MVC_ReleaseDateSite;
 using Logic;
-using Logic.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace MVC_ReleaseDateSite.Controllers
@@ -46,12 +45,10 @@ namespace MVC_ReleaseDateSite.Controllers
 
         [HttpPost]
         public IActionResult RegisterAccount(RegisterModel model) {
-
             HttpContext.Session.SetString(SessionName, model.Username);
             HttpContext.Session.SetString(SessionPass, model.Password);
             string name = model.Username;
-            return View();
-           
+            return View();      
         }
     }
 }
