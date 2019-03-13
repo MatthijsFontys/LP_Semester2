@@ -1,4 +1,4 @@
-﻿@model Logic.Models.ReleaseModel
+﻿@model MVC_ReleaseDateSite.ViewModels.OverviewSingleViewModel
 
 @{
     ViewData["Title"] = "Single";
@@ -17,16 +17,16 @@
             <div class="col-sm-6 col-md-4 text-center my-auto justify-content-end"> <p class="float-right text-left text-muted ml-2">Username <br />7/3/2019</p> <img src="https://via.placeholder.com/50x50" class="float-right clickable user-icon" />  </div>
 
             <div class="col-sm-6 col-md-4 text-center">
-                <img src=@Html.DisplayFor(model => model.ImgLocation) class="img-large">
-                <h3 class="m-0 p-0">@Html.DisplayFor(model => model.Title)</h3>
-                <h3 class="text-info m-0 p-0">@Html.DisplayFor(model => model.ReleaseString)</h3>
-                <span class="text-muted">@Html.DisplayFor(model => model.FollowerCount) followers</span>
+                <img src=@Html.DisplayFor(model => model.Release.ImgLocation) class="img-large">
+                <h3 class="m-0 p-0">@Html.DisplayFor(model => model.Release.Title)</h3>
+                <h3 class="text-info m-0 p-0">@Html.DisplayFor(model => model.Release.ReleaseString)</h3>
+                <span class="text-muted">@Html.DisplayFor(model => model.Release.FollowerCount) followers</span>
 
             </div>
 
             <div class="col-sm-12 col-md-4 text-center">
                 <strong>Description</strong>
-                <div class="px-1 py-sm-3 py-md-1 overflow-hidden standard-border description">@Html.DisplayFor(model => model.Description)</div>
+                <div class="px-1 py-sm-3 py-md-1 overflow-hidden standard-border description">@Html.DisplayFor(model => model.Release.Description)</div>
             </div>
         </div> <!-- End row -->
         <div class="row mt-5 text-center">

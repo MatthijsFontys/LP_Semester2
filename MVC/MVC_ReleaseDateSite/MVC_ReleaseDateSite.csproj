@@ -23,11 +23,13 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
+    <PackageReference Include="System.Linq" Version="4.3.0" />
   </ItemGroup>
 
 
   <ItemGroup>
-    <ProjectReference Include="..\Logic\MVC_ReleaseDateSite.Logic.csproj" />
+    <ProjectReference Include="..\GoodVersionLogic\MVC_ReleaseDateSite.Logic.csproj" />
+    <ProjectReference Include="..\Models\MVC_ReleaseDateSite.Models.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 using System;
 
-namespace MVC_ReleaseDateSite.Models {
+namespace MVC_ReleaseDateSite.ViewModels {
     public class ErrorViewModel {
         public string RequestId { get; set; }
 

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Logic.Models.ReleaseModel>
+﻿@model MVC_ReleaseDateSite.ViewModels.OverviewIndexViewModel
 
 @{
     ViewData["Title"] = "Home"; 
@@ -24,7 +24,7 @@
         </div>
         <div class="row py-2">
             <!-- Start populair releases-->
-        @foreach (Logic.Models.ReleaseModel item in Model) {
+        @foreach (MVC_ReleaseDateSite.Models.Release item in Model.PopulairReleases) {
             <!-- Start release -->
             <div class="col-sm-6 col-md-4 my-2 release-wrapper">
                     <div class="release-img-wrapper">
@@ -48,9 +48,9 @@
         </div> <!-- end row -->
         <div class="row pt-2 justify-content-around">
             <!-- Start New releases-->
-            @for (int i=0; i<3; i++) {
+            @foreach (MVC_ReleaseDateSite.Models.Release item in Model.NewReleases) {
                 <div class="col-12 col-sm-6 col-md-4 mb-5 justify-content-start">
-                    <img class="my-auto mx-md-auto clickable" src=@Model.ToList()[i].ImgLocation style="max-width:90%; max-height: 200px; height: auto; width: auto" />
+                    <img class="my-auto mx-md-auto clickable" src=@item.ImgLocation style="max-width:90%; max-height: 200px; height: auto; width: auto" />
                 </div>
             }
             </div>

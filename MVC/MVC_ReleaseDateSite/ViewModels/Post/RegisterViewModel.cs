@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MVC_ReleaseDateSite {
-    public class RegisterModel {
+namespace MVC_ReleaseDateSite.ViewModels {
+    public class RegisterViewModel {
         [MinLength(3, ErrorMessage = "Username needs to be between 3 and 12 characters" )]
         [MaxLength(12, ErrorMessage = "Username needs to be between 3 and 12 characters")]
         [Required(ErrorMessage = "You need to fill in a username")]

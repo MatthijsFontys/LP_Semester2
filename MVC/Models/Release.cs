@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 
 
-namespace Logic.Models {
-    public class ReleaseModel {
+namespace MVC_ReleaseDateSite.Models {
+    public class Release {
         public string ImgLocation { get; set; }
         public string Description { get; set; } 
         public string Title { get; set; }

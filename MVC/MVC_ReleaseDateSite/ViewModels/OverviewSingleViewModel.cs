@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using MVC_ReleaseDateSite.Models;
 
-namespace MVC_ReleaseDateSite.Models {
+namespace MVC_ReleaseDateSite.ViewModels {
     public class OverviewSingleViewModel {
-        ReleaseViewModel Release { get; set; }
-        ReadOnlyCollection<CommentViewModel> Comments { get; set; }
+        public Release Release { get; set; }
+        public ReadOnlyCollection<Comment> Comments { get; set; }
     }
 }

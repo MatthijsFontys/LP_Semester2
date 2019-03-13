@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MVC_ReleaseDateSite;
-using Logic;
+using MVC_ReleaseDateSite.Logic;
 using Microsoft.AspNetCore.Http;
-
+using MVC_ReleaseDateSite.ViewModels;
 namespace MVC_ReleaseDateSite.Controllers
 {
     public class AccountController : Controller
@@ -27,16 +27,9 @@ namespace MVC_ReleaseDateSite.Controllers
             return View();
         }
 
-        public IActionResult RegisterTest() {
-            return View();
-        }
-        public IActionResult showReleases() {
-
-            return View(MockDataReleasesFactory.GetReleases()[0]);
-        }
 
         public IActionResult welcome() {
-            RegisterModel vm = new RegisterModel
+            RegisterViewModel vm = new RegisterViewModel
             {
                 Username = HttpContext.Session.GetString(SessionName)
             };
@@ -44,11 +37,10 @@ namespace MVC_ReleaseDateSite.Controllers
         }
 
         [HttpPost]
-        public IActionResult RegisterAccount(RegisterModel model) {
-            HttpContext.Session.SetString(SessionName, model.Username);
-            HttpContext.Session.SetString(SessionPass, model.Password);
-            string name = model.Username;
-            return View();      
+        public IActionResult RegisterAccount(RegisterViewModel model) {
+            //HttpContext.Session.SetString(SessionName, model.Username);
+           // HttpContext.Session.SetString(SessionPass, model.Password);
+            return RedirectToAction("index", "Overview");      
         }
     }
 }

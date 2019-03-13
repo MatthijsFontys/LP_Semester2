@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Logic.Models;
 
 namespace MVC_ReleaseDateSite.Models {
     public class ReleaseViewModel {
