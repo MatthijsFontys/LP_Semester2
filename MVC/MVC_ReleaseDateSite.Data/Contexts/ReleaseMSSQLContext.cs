@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using MVC_ReleaseDateSite.Models;
+using System.Configuration; // Adding access to the configuration manager for the connectionstring
 
 namespace MVC_ReleaseDateSite.Data {
     public class ReleaseMSSQLContext : IReleaseContext {
@@ -10,6 +11,7 @@ namespace MVC_ReleaseDateSite.Data {
         }
 
         public List<Release> GetReleases() {
+            string ConnectionstringTest = DBSettings.ReleaseSiteConString;
             throw new NotImplementedException();
         }
     }

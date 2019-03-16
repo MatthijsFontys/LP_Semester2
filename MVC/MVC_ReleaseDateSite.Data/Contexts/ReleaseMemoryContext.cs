@@ -45,6 +45,7 @@ namespace MVC_ReleaseDateSite.Data {
         }
 
         public List<Release> GetReleases() {
+            string test = DBSettings.ReleaseSiteConString;
             return releases;
         }
     }

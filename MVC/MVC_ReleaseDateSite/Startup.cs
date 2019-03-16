@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MVC_ReleaseDateSite.Data;
 
 namespace MVC_ReleaseDateSite {
     public class Startup {
@@ -20,6 +21,7 @@ namespace MVC_ReleaseDateSite {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
+            services.Configure<DBSettings>(Configuration.GetSection("ConnectionStrings"));
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
