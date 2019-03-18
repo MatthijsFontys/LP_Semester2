@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using MVC_ReleaseDateSite.Models;
+using System.Linq;
 
 namespace MVC_ReleaseDateSite.Data {
    public class ReleaseMemoryContext : IReleaseContext {
@@ -45,8 +46,11 @@ namespace MVC_ReleaseDateSite.Data {
         }
 
         public List<Release> GetReleases() {
-            string test = DBSettings.ReleaseSiteConString;
             return releases;
+        }
+
+        public Release GetReleaseById(int id) {
+            return releases.First(x => x.Id == id);
         }
     }
 }

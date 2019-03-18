@@ -14,5 +14,9 @@ namespace MVC_ReleaseDateSite.Data {
         public List<Release> GetReleases() {
             return releaseContext.GetReleases();
         }
+
+        public Release GetReleaseById(int id) {
+            return releaseContext.GetReleaseById(id);
+        }
     }
 }

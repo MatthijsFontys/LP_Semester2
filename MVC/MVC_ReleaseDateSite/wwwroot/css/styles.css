@@ -50,7 +50,7 @@ html, body{
     clear: both;
 }
 
-.release-wrapper {
+.populair-release-wrapper {
     display: flex;
     position: relative;
     align-items: center;
@@ -85,4 +85,23 @@ html, body{
     max-width: 100%;
     max-height: 150px;
 }
+
+    /* New */
+.new-release-wrapper img {
+    max-width: 75%;
+    border-radius: 10px;
+    max-height: 200px;
+    height: auto;
+    width: auto;
+    transition-duration: .5s;
+}
+
+.new-release-wrapper img:hover {
+    max-height: 250px;
+    max-width: 90%;
+    margin-top: -50px;
+    height: auto;
+    width: auto;
+}
+
 

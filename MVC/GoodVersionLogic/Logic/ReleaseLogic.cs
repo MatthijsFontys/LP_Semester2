@@ -19,14 +19,15 @@ namespace MVC_ReleaseDateSite.Logic {
         }
 
         public List<Release> GetPopulairReleases() {
-            return releaseRepository.GetReleases().GetRange(0,4);
+            return releaseRepository.GetReleases()/*.GetRange(0,4)*/;
         }
 
         public List<Release> GetNewReleases() {
-            return releaseRepository.GetReleases().GetRange(0,3);
+            return releaseRepository.GetReleases()/*.GetRange(0,3)*/;
         }
 
         public Release GetReleaseById(int id) {
+            //return releaseRepository.GetReleaseById(id);
             return releaseRepository.GetReleases().First(x => x.Id == id);
         }
 

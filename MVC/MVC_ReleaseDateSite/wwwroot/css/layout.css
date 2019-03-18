@@ -29,7 +29,7 @@
 
 
 .sticky {
-    position: fixed;
+    position: fixed !important;
     width: 100%;
 }
 

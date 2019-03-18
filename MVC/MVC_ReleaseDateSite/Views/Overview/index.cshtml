@@ -26,7 +26,7 @@
             <!-- Start populair releases-->
         @foreach (MVC_ReleaseDateSite.Models.Release item in Model.PopulairReleases) {
             <!-- Start release -->
-            <div class="col-sm-6 col-md-4 my-2 release-wrapper">
+            <div class="col-sm-6 col-md-4 my-2 populair-release-wrapper">
                     <div class="release-img-wrapper">
                        <span> <img src="@item.ImgLocation" />
                         <div class="release-follow-small">Follow</div> </span>
@@ -46,11 +46,12 @@
         <div class="row">
             <h3 class="text-center col-12"><a href="#" class="subtitle">New</a></h3>
         </div> <!-- end row -->
-        <div class="row pt-2 justify-content-around">
-            <!-- Start New releases-->
+
+        <!-- Start New releases-->
+        <div class="row py-0 my-0 justify-content-between">
             @foreach (MVC_ReleaseDateSite.Models.Release item in Model.NewReleases) {
-                <div class="col-12 col-sm-6 col-md-4 mb-5 justify-content-start">
-                    <img class="my-auto mx-md-auto clickable" src=@item.ImgLocation style="max-width:90%; max-height: 200px; height: auto; width: auto" />
+                <div class="col-12 col-sm-6 col-md-4 mb-5 text-center new-release-wrapper">
+                   <a href="@String.Format("/overview/single/{0}", item.Id)"> <img class="my-auto clickable" src=@item.ImgLocation /> </a>
                 </div>
             }
             </div>

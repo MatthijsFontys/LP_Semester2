@@ -8,7 +8,7 @@ namespace MVC_ReleaseDateSite.Logic {
         public static ReleaseLogic CreateReleaseLogic() {
             return new ReleaseLogic(
                 new ReleaseRepository(
-                    new ReleaseMemoryContext()));
+                    new ReleaseMSSQLContext(new DatabaseConnection("Data Source=DESKTOP-AAOK8UK\\SQLEXPRESS03;Initial Catalog=releaseSite;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"))));
         }
     }
 }
