@@ -28,7 +28,7 @@ namespace MVC_ReleaseDateSite.Controllers
         }
 
 
-        public IActionResult welcome() {
+        public IActionResult welcome(string message) {
             RegisterViewModel vm = new RegisterViewModel
             {
                 Username = HttpContext.Session.GetString(SessionName)

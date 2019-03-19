@@ -28,12 +28,6 @@ html,body{
     height: auto;
 }
 
-.standard-text-box {
-    resize: none !important;
-    height: auto;
-    border: none;
-    outline: none;
-}
 
 .img-large {
     width: auto;

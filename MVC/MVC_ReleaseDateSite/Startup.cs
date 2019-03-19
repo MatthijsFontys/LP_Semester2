@@ -56,7 +56,7 @@ namespace MVC_ReleaseDateSite {
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Overview}/{action=Index}/{id?}");
+                    template: "{controller=Release}/{action=Index}/{id?}");
             });
         }
     }

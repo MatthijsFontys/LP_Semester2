@@ -13,17 +13,23 @@ namespace MVC_ReleaseDateSite.Logic {
         public ReleaseLogic(ReleaseRepository releaseRepository) {
             this.releaseRepository = releaseRepository;
         }
-        public bool AddRelease() {
-            throw new NotImplementedException();
-            // call repo method here
+        public bool AddRelease(Release release) {
+            // Do more validation here
+            return releaseRepository.AddRelease(release);
         }
 
         public List<Release> GetPopulairReleases() {
-            return releaseRepository.GetReleases()/*.GetRange(0,4)*/;
+            if (releaseRepository.GetReleases().Count > 6)
+                return releaseRepository.GetReleases().GetRange(0, 6);
+            else
+                return releaseRepository.GetReleases();
         }
 
         public List<Release> GetNewReleases() {
-            return releaseRepository.GetReleases()/*.GetRange(0,3)*/;
+            if (releaseRepository.GetReleases().Count > 3)
+                return releaseRepository.GetReleases().GetRange(0, 3);
+            else
+                return releaseRepository.GetReleases();
         }
 
         public Release GetReleaseById(int id) {

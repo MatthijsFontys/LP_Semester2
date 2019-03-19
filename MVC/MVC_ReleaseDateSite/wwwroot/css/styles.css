@@ -39,7 +39,6 @@ html, body{
 
 /* Styling release */
 .release-follow-small {
-    display: none;
     height: 0px;
     background: var(--primary-opacity);
     position: absolute;
@@ -48,6 +47,15 @@ html, body{
     bottom: 0px;
     color: white;
     clear: both;
+    transition-duration: .5s;
+}
+
+.category-icon {
+    display: none;
+    top: 0px;
+    padding: 2px;
+    border-bottom-left-radius: 25%;
+    background-color: var(--primary-opacity);
 }
 
 .populair-release-wrapper {
@@ -63,10 +71,14 @@ html, body{
     left: 0;
     right: 0;
     bottom: 0;
+    cursor: pointer;
 }
 
-.release-img-wrapper:hover {
-    cursor: pointer;
+
+.populair-release-wrapper:hover .category-icon {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
 }
 
 .release-img-wrapper {
@@ -103,5 +115,7 @@ html, body{
     height: auto;
     width: auto;
 }
+
+
 
 

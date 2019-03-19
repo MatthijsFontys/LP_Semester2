@@ -5,8 +5,8 @@ using MVC_ReleaseDateSite.Models;
 
 namespace MVC_ReleaseDateSite.Data {
     public interface IReleaseContext {
-        bool AddRelease();
         List<Release> GetReleases();
         Release GetReleaseById(int id);
+        bool AddRelease(Release release);
     }
 }

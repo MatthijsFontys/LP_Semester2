@@ -10,6 +10,8 @@
     --main-border: #eeeeee;
     --main-text-color: #000;
     --title-secondary-color: #5bc0de;
+    --primary-button-color: #366982;
+    --primary-button-color-hover: #4888a8;
 }
 
 .wrapper, #wrapper {
@@ -52,6 +54,7 @@
 }
 
 
+
 /* Resetting link styles */
 a, a:hover, a:active, a:visited {
     text-decoration: none;
@@ -69,6 +72,12 @@ li:hover .foldout {
     animation-name: foldout-hr;
     animation-duration: .6s;
     animation-fill-mode:forwards;
+}
+
+/* Remove styles from a tag */
+.no-style-link, .no-style-link:hover, .no-style-link:active, .no-style-link:visited {
+    text-decoration: none;
+    color: none;
 }
 
 /* My own general styling classes */
@@ -105,6 +114,25 @@ li:hover .foldout {
     bottom: 0px;
 }
 
+.primary-button {
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    background-color: var(--primary-button-color);
+    transition-duration: .2s
+}
+
+.primary-button:hover {
+    background-color: var(--primary-button-color-hover);
+}
+
+/* Form styles */
+.standard-text-box {
+    resize: none !important;
+    height: auto;
+    border: none;
+    outline: none;
+}   
 
 
 

@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="Views\Overview\index.cshtml" />
+    <None Include="Views\Release\index.cshtml" />
     <None Include="Views\Account\Login.cshtml" />
     <None Include="Views\Account\Register.cshtml" />
   </ItemGroup>
@@ -30,6 +30,11 @@
   <ItemGroup>
     <ProjectReference Include="..\GoodVersionLogic\MVC_ReleaseDateSite.Logic.csproj" />
     <ProjectReference Include="..\Models\MVC_ReleaseDateSite.Models.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\categories\" />
   </ItemGroup>
 
 </Project>

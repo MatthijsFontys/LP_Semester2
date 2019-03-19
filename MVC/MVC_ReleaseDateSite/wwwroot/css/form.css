@@ -51,16 +51,9 @@ html, body {
     margin: 50px 10px;
 }
 
-.myBtn{
-    width: 100%;
-    margin: 0 auto;
-    background-color: #366982;
-    color: white;
-    transition-duration: .2s
-}
 
 .myBtn:hover{
-    background-color: #4888a8;
+    background-color: var(--primary-button-color-hover);
 }
 
 footer{

@@ -9,10 +9,10 @@ using MVC_ReleaseDateSite.Models;
 
 namespace MVC_ReleaseDateSite.Controllers
 {
-    public class OverviewController : Controller {
+    public class ReleaseController : Controller {
 
         private ReleaseLogic releaseLogic;
-        public OverviewController(){
+        public ReleaseController(){
             releaseLogic = LogicFactory.CreateReleaseLogic();
         }
         public IActionResult Index()
@@ -23,14 +23,37 @@ namespace MVC_ReleaseDateSite.Controllers
                 PopulairReleases = releaseLogic.GetPopulairReleases()
             };
 
-            //return View(MockDataReleasesFactory.GetReleases());
             return View(vm);
         }
 
         public IActionResult Single(int id) {
-            OverviewSingleViewModel vm = new OverviewSingleViewModel();
-            vm.Release = releaseLogic.GetReleaseById(id);
+            OverviewSingleViewModel vm = new OverviewSingleViewModel
+            {
+                Release = releaseLogic.GetReleaseById(id)
+                // Comments = releaseLogic.GetComments(id);
+            };
             return View(vm);
+        }
+
+        [Route("/release/new")]
+        public IActionResult Create() {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateRelease(CreateReleaseViewModel model) { // Remove the ReleaseViewModel from models, but i cant find it there
+            if (ModelState.IsValid) {
+                Release release = new Release
+                {
+                    Description = model.Description,
+                    ImgLocation = model.ImgLocation,
+                    ReleaseDate = model.ReleaseDate,
+                    Title = model.Title
+                    // Still have to add owner
+                };
+                releaseLogic.AddRelease(release);
+            }
+            return View("index");
         }
     }
 }

@@ -41,7 +41,7 @@ namespace MVC_ReleaseDateSite.Data {
                 Id = 4
             }
         };
-        public bool AddRelease() {
+        public bool AddRelease(Release release) {
             throw new NotImplementedException();
         }
 

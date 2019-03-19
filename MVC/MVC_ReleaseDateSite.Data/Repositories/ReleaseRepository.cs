@@ -11,6 +11,10 @@ namespace MVC_ReleaseDateSite.Data {
             this.releaseContext = releaseContext;
         }
 
+        public bool AddRelease(Release release) {
+            return releaseContext.AddRelease(release);
+        }
+
         public List<Release> GetReleases() {
             return releaseContext.GetReleases();
         }
