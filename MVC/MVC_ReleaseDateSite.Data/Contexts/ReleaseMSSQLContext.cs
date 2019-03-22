@@ -7,14 +7,16 @@ using System.Data.SqlClient;
 namespace MVC_ReleaseDateSite.Data {
     public class ReleaseMSSQLContext : IReleaseContext {
         private readonly DatabaseConnection connection;
+        private readonly string connectionstring;
 
 
         public ReleaseMSSQLContext(DatabaseConnection connection) {
             this.connection = connection;
+            connectionstring = "Data Source=DESKTOP-AAOK8UK\\SQLEXPRESS03;Initial Catalog=releaseSite;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"; 
         }
         public bool AddRelease(Release release) {
-            string test = "Data Source=DESKTOP-AAOK8UK\\SQLEXPRESS03;Initial Catalog=releaseSite;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-            using (SqlConnection conn = new SqlConnection(test)) {
+
+            using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("INSERT INTO dbo.Release (releaseName, releaseDescription, imgLocation, releaseDate) VALUES (@title, @description, @img, @releaseDate);", conn);
                 cmd.Parameters.AddWithValue("@title", release.Title);
@@ -27,7 +29,7 @@ namespace MVC_ReleaseDateSite.Data {
 
         public List<Comment> GetComments(int id) {
             List<Comment> toReturn = new List<Comment>();
-            using (SqlConnection conn = new SqlConnection("Data Source=DESKTOP-AAOK8UK\\SQLEXPRESS03;Initial Catalog=releaseSite;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False")) {
+            using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("SELECT id, releaseId, userId, replyId, commentText, postDate FROM dbo.Comment WHERE releaseId = @id", conn);
                 cmd.Parameters.AddWithValue("@id", id);
@@ -50,7 +52,7 @@ namespace MVC_ReleaseDateSite.Data {
 
         public List<Release> GetReleases() {
             List<Release> toReturn = new List<Release>();
-            using (SqlConnection conn = new SqlConnection("Data Source=DESKTOP-AAOK8UK\\SQLEXPRESS03;Initial Catalog=releaseSite;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False")) {
+            using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(@"SELECT *, username, releaseUser.imgLocation as userImage
                 FROM(
