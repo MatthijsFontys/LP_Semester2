@@ -8,5 +8,6 @@ namespace MVC_ReleaseDateSite.Data {
         List<Release> GetReleases();
         Release GetReleaseById(int id);
         bool AddRelease(Release release);
+        List<Comment> GetComments(int id);
     }
 }

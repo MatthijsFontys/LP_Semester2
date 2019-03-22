@@ -29,8 +29,8 @@ namespace MVC_ReleaseDateSite.Controllers
         public IActionResult Single(int id) {
             OverviewSingleViewModel vm = new OverviewSingleViewModel
             {
-                Release = releaseLogic.GetReleaseById(id)
-                // Comments = releaseLogic.GetComments(id);
+                Release = releaseLogic.GetReleaseById(id),
+                Comments = releaseLogic.GetComments(id)
             };
             return View(vm);
         }
@@ -53,7 +53,7 @@ namespace MVC_ReleaseDateSite.Controllers
                 };
                 releaseLogic.AddRelease(release);
             }
-            return View("index");
+            return RedirectToAction("index");
         }
     }
 }

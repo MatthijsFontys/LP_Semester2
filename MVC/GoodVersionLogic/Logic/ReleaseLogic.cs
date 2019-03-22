@@ -26,18 +26,20 @@ namespace MVC_ReleaseDateSite.Logic {
         }
 
         public List<Release> GetNewReleases() {
-            if (releaseRepository.GetReleases().Count > 3)
-                return releaseRepository.GetReleases().GetRange(0, 3);
+            List<Release> releases = releaseRepository.GetReleases().OrderByDescending(x => x.CreationDate).ToList();
+            if (releases.Count > 3)
+                return releases.GetRange(0, 3);
             else
-                return releaseRepository.GetReleases();
+                return releases;
+        }
+
+        public List<Comment> GetComments(int id) {
+            return releaseRepository.GetComments(id);
         }
 
         public Release GetReleaseById(int id) {
-            //return releaseRepository.GetReleaseById(id);
             return releaseRepository.GetReleases().First(x => x.Id == id);
         }
-
-        
 
 
     }

@@ -52,5 +52,9 @@ namespace MVC_ReleaseDateSite.Data {
         public Release GetReleaseById(int id) {
             return releases.First(x => x.Id == id);
         }
+
+        public List<Comment> GetComments(int id) {
+            throw new NotImplementedException();
+        }
     }
 }

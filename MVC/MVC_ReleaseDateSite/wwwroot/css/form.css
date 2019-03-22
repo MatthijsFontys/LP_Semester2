@@ -9,19 +9,14 @@
     --outside-border: #ddd;
 }
 
-/* Allow overlay width and height*/
-html, body {
-    width: 100%;
-    height: 100%;
-    background-color: var(--side-bg);
-}
-
 #wrapper{
     display: flex;
     justify-content: center;
     width: 100%;
+    max-width: 100%;
     height: 100%;
     background-color: var(--primary-opacity);
+    border: none;
 }
 
 #center-box{

@@ -8,6 +8,6 @@ using MVC_ReleaseDateSite.Models;
 namespace MVC_ReleaseDateSite.ViewModels {
     public class OverviewSingleViewModel {
         public Release Release { get; set; }
-        public ReadOnlyCollection<Comment> Comments { get; set; }
+        public List<Comment> Comments { get; set; }
     }
 }

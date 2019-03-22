@@ -22,5 +22,9 @@ namespace MVC_ReleaseDateSite.Data {
         public Release GetReleaseById(int id) {
             return releaseContext.GetReleaseById(id);
         }
+
+        public List<Comment> GetComments(int id) {
+            return releaseContext.GetComments(id);
+        }
     }
 }

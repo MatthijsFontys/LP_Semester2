@@ -8,11 +8,13 @@ namespace MVC_ReleaseDateSite.Data {
     public class ReleaseMSSQLContext : IReleaseContext {
         private readonly DatabaseConnection connection;
 
+
         public ReleaseMSSQLContext(DatabaseConnection connection) {
             this.connection = connection;
         }
         public bool AddRelease(Release release) {
-            using (SqlConnection conn = new SqlConnection("Data Source=DESKTOP-AAOK8UK\\SQLEXPRESS03;Initial Catalog=releaseSite;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False")) {
+            string test = "Data Source=DESKTOP-AAOK8UK\\SQLEXPRESS03;Initial Catalog=releaseSite;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            using (SqlConnection conn = new SqlConnection(test)) {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("INSERT INTO dbo.Release (releaseName, releaseDescription, imgLocation, releaseDate) VALUES (@title, @description, @img, @releaseDate);", conn);
                 cmd.Parameters.AddWithValue("@title", release.Title);
@@ -23,6 +25,25 @@ namespace MVC_ReleaseDateSite.Data {
             }
         }
 
+        public List<Comment> GetComments(int id) {
+            List<Comment> toReturn = new List<Comment>();
+            using (SqlConnection conn = new SqlConnection("Data Source=DESKTOP-AAOK8UK\\SQLEXPRESS03;Initial Catalog=releaseSite;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False")) {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT id, releaseId, userId, replyId, commentText, postDate FROM dbo.Comment WHERE releaseId = @id", conn);
+                cmd.Parameters.AddWithValue("@id", id);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read()) {
+                    Comment comment = new Comment
+                    {
+                      Text = reader["commentText"].ToString(),
+                      PostTime = (DateTime)reader["postDate"]
+                    };
+                    toReturn.Add(comment);
+                }
+            }
+            return toReturn;
+        }
+
         public Release GetReleaseById(int id) {
             throw new NotImplementedException();
         }
@@ -31,21 +52,34 @@ namespace MVC_ReleaseDateSite.Data {
             List<Release> toReturn = new List<Release>();
             using (SqlConnection conn = new SqlConnection("Data Source=DESKTOP-AAOK8UK\\SQLEXPRESS03;Initial Catalog=releaseSite;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False")) {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("SELECT Release.CategoryName, Category.imgLocation as CategoryImage, id, ownerId, releaseName, releaseDescription, dbo.Release.imgLocation as ReleaseImage, releaseDate, creationDate, followerCount FROM Release, Category WHERE Release.categoryName = Category.categoryName", conn);
+                SqlCommand cmd = new SqlCommand(@"SELECT *, username, releaseUser.imgLocation as userImage
+                FROM(
+                SELECT Release.CategoryName, Category.imgLocation as categoryImage, release.id as releaseId, releaseName, releaseDescription, dbo.Release.imgLocation as ReleaseImage, releaseDate, creationDate, followerCount, ownerId
+                FROM Release
+                LEFT JOIN Category ON Release.categoryName = Category.categoryName
+                ) as R
+                LEFT JOIN releaseUser ON releaseUser.id = R.ownerId;", conn);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read()) {
                     Release release = new Release
                     {
                         Title = reader["releaseName"].ToString(),
                         ReleaseDate = Convert.ToDateTime(reader["releaseDate"]),
-                        Id = (int)reader["id"],
+                        CreationDate = Convert.ToDateTime(reader["creationDate"]),
+                        Id = (int)reader["releaseId"],
                         Description = reader["releaseDescription"].ToString(),
                         ImgLocation = reader["ReleaseImage"].ToString(),
                         FollowerCount = (int)reader["followerCount"],
+                        User = new User
+                        {
+                            ImgLocation = reader["userImage"].ToString(),
+                            Username = reader["username"].ToString()
+                        },
                         Category = new Category {
-                            ImgLocation = reader["CategoryImage"].ToString(),
-                            Name = reader["CategoryName"].ToString()
+                            ImgLocation = reader["categoryImage"].ToString(),
+                            Name = reader["CategoryName"].ToString() 
                         }
+                        
                     };
                     toReturn.Add(release);
                 }
