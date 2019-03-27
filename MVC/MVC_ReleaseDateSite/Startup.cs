@@ -13,6 +13,8 @@ using MVC_ReleaseDateSite.Data;
 
 namespace MVC_ReleaseDateSite {
     public class Startup {
+
+
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
         }
@@ -31,9 +33,8 @@ namespace MVC_ReleaseDateSite {
 
             // This lets me use my database connectionstring across the programm
             services.AddSingleton<IConfiguration>(Configuration);
-            //services.AddScoped<ICustomerContext, CustomerContext>();
-            //services.AddTransient(_ => new DatabaseConnection(Configuration.GetConnectionString("LocalConnection")));
-
+            services.AddSingleton<IConfiguration>(Configuration);
+           // services.AddTransient( _ => new DatabaseConnection(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

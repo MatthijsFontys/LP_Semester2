@@ -62,6 +62,7 @@ html, body{
     display: flex;
     position: relative;
     align-items: center;
+    transition-duration: .3s;
 }
 
 .release-img-wrapper:hover .release-follow-small {
@@ -75,10 +76,14 @@ html, body{
 }
 
 
-.populair-release-wrapper:hover .category-icon {
+.release-img-wrapper:hover .category-icon {
     display: inline-block;
     width: 30px;
     height: 30px;
+}
+
+.populair-release-wrapper:hover {
+    background-color: var(--gray-hover-color);
 }
 
 .release-img-wrapper {

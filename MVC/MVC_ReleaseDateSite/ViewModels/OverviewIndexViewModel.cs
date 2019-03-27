@@ -8,10 +8,5 @@ namespace MVC_ReleaseDateSite.ViewModels {
     public class OverviewIndexViewModel {
        public IReadOnlyCollection<Release> PopulairReleases { get; set; }
         public IReadOnlyCollection<Release> NewReleases { get; set; }
-
-        public OverviewIndexViewModel() {
-            this.PopulairReleases = new List<Release>();
-            this.NewReleases = new List<Release>();
-        }
     }
 }

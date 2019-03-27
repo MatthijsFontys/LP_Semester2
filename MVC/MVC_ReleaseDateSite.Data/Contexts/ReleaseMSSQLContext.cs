@@ -12,13 +12,13 @@ namespace MVC_ReleaseDateSite.Data {
 
         public ReleaseMSSQLContext(DatabaseConnection connection) {
             this.connection = connection;
-            connectionstring = "Data Source=DESKTOP-AAOK8UK\\SQLEXPRESS03;Initial Catalog=releaseSite;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"; 
+            connectionstring = connection.SqlConnection.ConnectionString;
         }
         public bool AddRelease(Release release) {
 
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO dbo.Release (releaseName, releaseDescription, imgLocation, releaseDate) VALUES (@title, @description, @img, @releaseDate);", conn);
+                SqlCommand cmd = new SqlCommand("INSERT INTO dbo.Release (releaseName, releaseDescription, imgLocation, releaseDate, ownerId) VALUES (@title, @description, @img, @releaseDate, 1);", conn);
                 cmd.Parameters.AddWithValue("@title", release.Title);
                 cmd.Parameters.AddWithValue("@description", release.Description);
                 cmd.Parameters.AddWithValue("@img", release.ImgLocation);

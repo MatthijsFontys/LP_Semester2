@@ -5,10 +5,11 @@ using MVC_ReleaseDateSite.Models;
 
 namespace MVC_ReleaseDateSite.Data {
     public class ReleaseRepository {
-        private IReleaseContext releaseContext;
-
-        public ReleaseRepository(IReleaseContext releaseContext) {
+        private readonly IReleaseContext releaseContext;
+        private readonly ICategoryContext categoryContext;
+        public ReleaseRepository(IReleaseContext releaseContext, ICategoryContext categoryContext) {
             this.releaseContext = releaseContext;
+            this.categoryContext = categoryContext;
         }
 
         public bool AddRelease(Release release) {
@@ -25,6 +26,10 @@ namespace MVC_ReleaseDateSite.Data {
 
         public List<Comment> GetComments(int id) {
             return releaseContext.GetComments(id);
+        }
+
+        public IEnumerable<string> GetAllCategories() {
+            return categoryContext.GetAllCategories();
         }
     }
 }
