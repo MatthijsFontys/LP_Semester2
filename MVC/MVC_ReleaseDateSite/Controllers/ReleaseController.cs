@@ -9,6 +9,7 @@ using MVC_ReleaseDateSite.Models;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace MVC_ReleaseDateSite.Controllers
 {
@@ -16,9 +17,10 @@ namespace MVC_ReleaseDateSite.Controllers
         private readonly IHostingEnvironment he;
 
         private ReleaseLogic releaseLogic;
-        public ReleaseController(IHostingEnvironment he) {
+        public ReleaseController(IHostingEnvironment he, IConfiguration configuration) {
             this.he = he;
             releaseLogic = LogicFactory.CreateReleaseLogic();
+            string test = configuration.GetConnectionString("LocalConnection");
         }
         public IActionResult Index() {
             OverviewIndexViewModel vm = new OverviewIndexViewModel

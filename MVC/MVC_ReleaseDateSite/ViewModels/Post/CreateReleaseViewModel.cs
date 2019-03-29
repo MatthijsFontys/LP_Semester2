@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
+using Foolproof;
 
 namespace MVC_ReleaseDateSite.ViewModels {
     public class CreateReleaseViewModel {

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using MVC_ReleaseDateSite.Data;
 
+
+
 namespace MVC_ReleaseDateSite.Logic {
    public static class LogicFactory {
         private static string connectionstringLocal = "Data Source=DESKTOP-AAOK8UK\\SQLEXPRESS03;Initial Catalog=releaseSite;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
@@ -11,8 +13,8 @@ namespace MVC_ReleaseDateSite.Logic {
             return new ReleaseLogic(
                 new ReleaseRepository(
                     new ReleaseMSSQLContext(new DatabaseConnection(connectionstringLocal)),
-                    new CategoryMSSQLContext(new DatabaseConnection(connectionstringLocal)
-                    )));
+                    new CategoryMSSQLContext(new DatabaseConnection(connectionstringLocal))
+                    ));
         }
     }
 }
