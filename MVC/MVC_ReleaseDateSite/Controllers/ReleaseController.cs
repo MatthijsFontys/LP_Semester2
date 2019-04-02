@@ -37,8 +37,7 @@ namespace MVC_ReleaseDateSite.Controllers
         public IActionResult Single(int id) {
             OverviewSingleViewModel vm = new OverviewSingleViewModel
             {
-                Release = releaseLogic.GetReleaseById(id, 5), /*HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault() */
-                Comments = releaseLogic.GetComments(id)
+                Release = releaseLogic.GetReleaseById(id, HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault()),                Comments = releaseLogic.GetComments(id)
             };
             return View(vm);
         }
@@ -80,7 +79,7 @@ namespace MVC_ReleaseDateSite.Controllers
                         }
 
                     }
-                    string newFileName = generateFileName(extension);
+                    string newFileName = GenerateFileName(extension);
                     string newFilePath = Path.Combine(filePath, newFileName);
                     System.IO.File.Move(fullPath, newFilePath);
                     release.ImgLocation = Path.Combine(@"/images/userUploads", newFileName);
@@ -121,12 +120,12 @@ namespace MVC_ReleaseDateSite.Controllers
                     }
 
                 }
-                System.IO.File.Move(fullPath, Path.Combine(filePath, generateFileName(extension)));
+                System.IO.File.Move(fullPath, Path.Combine(filePath, GenerateFileName(extension)));
             }
             return RedirectToAction("index");
         }
 
-        private string generateFileName(string extension) {
+        private string GenerateFileName(string extension) {
             return Guid.NewGuid() + extension;
         }
     }
