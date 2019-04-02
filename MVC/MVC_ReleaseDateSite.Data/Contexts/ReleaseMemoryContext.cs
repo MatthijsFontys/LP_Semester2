@@ -64,5 +64,9 @@ namespace MVC_ReleaseDateSite.Data {
         public List<Release> GetReleases(int userId) {
             throw new NotImplementedException();
         }
+
+        public void UnfollowRelease(int releaseId, int userId) {
+            throw new NotImplementedException();
+        }
     }
 }

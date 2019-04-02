@@ -96,6 +96,7 @@ namespace MVC_ReleaseDateSite.Controllers
         }
 
         public IActionResult Unfollow(int id) {
+            releaseLogic.UnfollowRelease(id, HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault());
             return RedirectToAction("index");
         }
 

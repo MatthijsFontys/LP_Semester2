@@ -45,5 +45,8 @@ namespace MVC_ReleaseDateSite.Logic {
             releaseRepository.FollowRelease(releaseId, userId);
         }
 
+        public void UnfollowRelease(int releaseId, int userId) {
+            releaseRepository.UnfollowRelease(releaseId, userId);
+        }
     }
 }

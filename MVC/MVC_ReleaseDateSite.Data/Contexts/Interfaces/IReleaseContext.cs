@@ -10,5 +10,6 @@ namespace MVC_ReleaseDateSite.Data {
         bool AddRelease(Release release);
         List<Comment> GetComments(int id);
         void FollowRelease(int releaseId, int userId);
+        void UnfollowRelease(int releaseId, int userId);
     }
 }

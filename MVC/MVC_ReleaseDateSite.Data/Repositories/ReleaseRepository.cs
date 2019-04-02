@@ -35,5 +35,9 @@ namespace MVC_ReleaseDateSite.Data {
         public void FollowRelease(int releaseId, int userId) {
             releaseContext.FollowRelease(releaseId, userId);
         }
+
+        public void UnfollowRelease(int releaseId, int userId) {
+            releaseContext.UnfollowRelease(releaseId, userId);
+        }
     }
 }

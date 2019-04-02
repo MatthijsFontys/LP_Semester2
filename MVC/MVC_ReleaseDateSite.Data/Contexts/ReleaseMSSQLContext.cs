@@ -103,5 +103,15 @@ namespace MVC_ReleaseDateSite.Data {
             }
             return toReturn;     
         }
+
+        public void UnfollowRelease(int releaseId, int userId) {
+            using (SqlConnection conn = new SqlConnection(connectionstring)) {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("DELETE FROM dbo.User_Release WHERE userId = @userId AND releaseId = @releaseId;", conn);
+                cmd.Parameters.AddWithValue("@releaseId", releaseId);
+                cmd.Parameters.AddWithValue("@userId", userId);
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }
