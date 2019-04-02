@@ -25,7 +25,7 @@ namespace MVC_ReleaseDateSite.Data {
                 Id = 2
             },
             new Release{
-                Title = "Walking dead episode 4",
+                Title = "Walking Dead episode 4",
                 ImgLocation = @"https://vignette.wikia.nocookie.net/walkingdead/images/3/39/TelltaleGames_TWD_Season4.jpg/revision/latest/scale-to-width-down/2000?cb=20180330150708",
                 Description = "After years on the road facing threats both living and dead, a secluded school might finally be Clementine and AJ’s chance for a home. But protecting it will mean sacrifice. In this gripping, emotional final season, your choices define your relationships, shape your world, and determine how Clementine’s story ends.",
                 FollowerCount = 126,
