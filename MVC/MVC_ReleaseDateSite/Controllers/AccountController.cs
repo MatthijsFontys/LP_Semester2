@@ -7,19 +7,44 @@ using MVC_ReleaseDateSite;
 using MVC_ReleaseDateSite.Logic;
 using Microsoft.AspNetCore.Http;
 using MVC_ReleaseDateSite.ViewModels;
+using MVC_ReleaseDateSite.Models;
+
 namespace MVC_ReleaseDateSite.Controllers
 {
     public class AccountController : Controller
     {
-        const string SessionName = "_Name";
-        const string SessionPass = "_Age";
+        public AccountLogic accountLogic;
+        public AccountController() {
+            accountLogic = LogicFactory.CreateAccountLogic();
+        }
 
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Login() {
+        public IActionResult TryLogin(LoginViewModel model) {
+            User user = new User
+            {
+                Username = model.Username,
+                PasswordHash = model.Password
+            };
+            if (accountLogic.CheckLoginCredentials(user) && ModelState.IsValid) {
+                User tempUser = accountLogic.GetUserByName(model.Username);
+                HttpContext.Session.SetInt32(SessionHolder.SessionUserId, tempUser.Id); // Change this to auth token
+                HttpContext.Session.SetString(SessionHolder.SessionUsername, model.Username);
+                HttpContext.Session.SetString(SessionHolder.SessionUserImg, tempUser.ImgLocation);
+                return RedirectToAction("Index", "Release");
+            }
+            return RedirectToAction("Login, Account");
+        }
+
+        public IActionResult Logout() {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login");
+        }
+
+        public IActionResult Login(LoginViewModel model) {
             return View();
         }
 
@@ -28,19 +53,16 @@ namespace MVC_ReleaseDateSite.Controllers
         }
 
 
-        public IActionResult welcome(string message) {
-            RegisterViewModel vm = new RegisterViewModel
-            {
-                Username = HttpContext.Session.GetString(SessionName)
-            };
-            return View(vm);
-        }
-
         [HttpPost]
         public IActionResult RegisterAccount(RegisterViewModel model) {
-            //HttpContext.Session.SetString(SessionName, model.Username);
-           // HttpContext.Session.SetString(SessionPass, model.Password);
-            return RedirectToAction("index", "Overview");      
+            if(ModelState.IsValid) {
+                User user = new User {
+                    Username = model.Username,
+                    PasswordHash = model.Password
+                };
+                accountLogic.Add(user);
+            }
+            return RedirectToAction("index", "Release");      
         }
     }
 }

@@ -16,8 +16,8 @@ namespace MVC_ReleaseDateSite.Data {
             return releaseContext.AddRelease(release);
         }
 
-        public List<Release> GetReleases() {
-            return releaseContext.GetReleases();
+        public List<Release> GetReleases(int userId) {
+            return releaseContext.GetReleases(userId);
         }
 
         public Release GetReleaseById(int id) {
@@ -30,6 +30,10 @@ namespace MVC_ReleaseDateSite.Data {
 
         public IEnumerable<string> GetAllCategories() {
             return categoryContext.GetAllCategories();
+        }
+
+        public void FollowRelease(int releaseId, int userId) {
+            releaseContext.FollowRelease(releaseId, userId);
         }
     }
 }

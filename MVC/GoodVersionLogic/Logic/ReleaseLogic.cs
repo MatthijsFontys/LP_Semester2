@@ -18,15 +18,15 @@ namespace MVC_ReleaseDateSite.Logic {
             return releaseRepository.AddRelease(release);
         }
 
-        public List<Release> GetPopulairReleases() {
-            if (releaseRepository.GetReleases().Count > 6)
-                return releaseRepository.GetReleases().GetRange(0, 6);
+        public List<Release> GetPopulairReleases(int userId) {
+            if (releaseRepository.GetReleases(userId).Count > 6)
+                return releaseRepository.GetReleases(userId).GetRange(0, 6);
             else
-                return releaseRepository.GetReleases();
+                return releaseRepository.GetReleases(userId);
         }
 
-        public List<Release> GetNewReleases() {
-            List<Release> releases = releaseRepository.GetReleases().OrderByDescending(x => x.CreationDate).ToList();
+        public List<Release> GetNewReleases(int userId) {
+            List<Release> releases = releaseRepository.GetReleases(userId).OrderByDescending(x => x.CreationDate).ToList();
             if (releases.Count > 3)
                 return releases.GetRange(0, 3);
             else
@@ -37,10 +37,13 @@ namespace MVC_ReleaseDateSite.Logic {
             return releaseRepository.GetComments(id);
         }
 
-        public Release GetReleaseById(int id) {
-            return releaseRepository.GetReleases().First(x => x.Id == id);
+        public Release GetReleaseById(int id, int userId) {
+            return releaseRepository.GetReleases(userId).First(x => x.Id == id);
         }
 
+        public void FollowRelease(int releaseId, int userId) {
+            releaseRepository.FollowRelease(releaseId, userId);
+        }
 
     }
 }

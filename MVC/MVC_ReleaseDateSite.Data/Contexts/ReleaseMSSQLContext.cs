@@ -18,12 +18,23 @@ namespace MVC_ReleaseDateSite.Data {
 
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO dbo.Release (releaseName, releaseDescription, imgLocation, releaseDate, ownerId) VALUES (@title, @description, @img, @releaseDate, 1);", conn);
+                SqlCommand cmd = new SqlCommand("INSERT INTO dbo.Release (releaseName, releaseDescription, imgLocation, releaseDate, ownerId) VALUES (@title, @description, @img, @releaseDate, @ownerId);", conn);
                 cmd.Parameters.AddWithValue("@title", release.Title);
                 cmd.Parameters.AddWithValue("@description", release.Description);
                 cmd.Parameters.AddWithValue("@img", release.ImgLocation);
                 cmd.Parameters.AddWithValue("@releaseDate", release.ReleaseDate);
+                cmd.Parameters.AddWithValue("@ownerId", release.UserId);
                 return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+
+        public void FollowRelease(int releaseId, int userId) {
+            using (SqlConnection conn = new SqlConnection(connectionstring)) {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("insert into dbo.User_Release (releaseId, userId) VALUES (@releaseId, @userId);", conn);
+                cmd.Parameters.AddWithValue("@releaseId", releaseId);
+                cmd.Parameters.AddWithValue("@userId", userId);
+                cmd.ExecuteNonQuery();
             }
         }
 
@@ -50,22 +61,26 @@ namespace MVC_ReleaseDateSite.Data {
             throw new NotImplementedException();
         }
 
-        public List<Release> GetReleases() {
+        public List<Release> GetReleases(int userId) {
             List<Release> toReturn = new List<Release>();
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand(@"SELECT *, username, releaseUser.imgLocation as userImage
-                FROM(
-                SELECT Release.CategoryName, Category.imgLocation as categoryImage, release.id as releaseId, releaseName, releaseDescription, dbo.Release.imgLocation as ReleaseImage, releaseDate, creationDate, followerCount, ownerId
-                FROM Release
-                LEFT JOIN Category ON Release.categoryName = Category.categoryName
-                ) as R
-                LEFT JOIN releaseUser ON releaseUser.id = R.ownerId;", conn);
+                SqlCommand cmd = new SqlCommand(@"SELECT releaseUser.username, releaseUser.imgLocation as userImage,
+                Release.CategoryName, Release.id as releaseId, Release.releaseName, Release.releaseDescription, Release.imgLocation as ReleaseImage, Release.releaseDate, Release.creationDate, Release.followerCount, Release.ownerId,
+                Category.imgLocation as categoryImage, CASE WHEN release.id IN ( SELECT releaseId
+                FROM dbo.User_Release
+                WHERE dbo.User_Release.userId = @userId
+                ) THEN 1 ELSE 0 END AS isFollowed
+                FROM Dbo.Release
+                LEFT JOIN dbo.releaseUser ON dbo.releaseUser.id = Release.ownerId
+                LEFT JOIN dbo.Category ON dbo.Category.categoryName = Release.categoryName", conn);
+                cmd.Parameters.AddWithValue("@userId", userId);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read()) {
                     Release release = new Release
                     {
                         Title = reader["releaseName"].ToString(),
+                        IsFollowed = (int)reader["isFollowed"] == 1,
                         ReleaseDate = Convert.ToDateTime(reader["releaseDate"]),
                         CreationDate = Convert.ToDateTime(reader["creationDate"]),
                         Id = (int)reader["releaseId"],

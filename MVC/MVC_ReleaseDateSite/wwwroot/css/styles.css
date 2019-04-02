@@ -38,17 +38,35 @@ html, body{
 }
 
 /* Styling release */
+
+.releaseFollowStyle {
+    background-color: var(--correct-opacity);
+}
+
+.releaseUnfollowStyle {
+    background-color: var(--error-opacity);
+}
+
+.releaseUnfollowStyle::after {
+    content: "Unfollow";
+    color: white;
+}
+
+.releaseFollowStyle::after {
+    content: "Follow";
+}
+
 .release-follow-small {
+    color: black;
     height: 0px;
-    background: var(--primary-opacity);
     position: absolute;
     text-align: center;
     font-size: 18px;
     bottom: 0px;
-    color: white;
     clear: both;
     transition-duration: .5s;
 }
+
 
 .category-icon {
     display: none;

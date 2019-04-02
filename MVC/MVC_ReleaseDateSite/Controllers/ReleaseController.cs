@@ -23,10 +23,12 @@ namespace MVC_ReleaseDateSite.Controllers
             string test = configuration.GetConnectionString("LocalConnection");
         }
         public IActionResult Index() {
+            // End global user
+            int id = HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault();
             OverviewIndexViewModel vm = new OverviewIndexViewModel
             {
-                NewReleases = releaseLogic.GetNewReleases(),
-                PopulairReleases = releaseLogic.GetPopulairReleases()
+                NewReleases = releaseLogic.GetNewReleases(id),
+                PopulairReleases = releaseLogic.GetPopulairReleases(id)
             };
 
             return View(vm);
@@ -35,7 +37,7 @@ namespace MVC_ReleaseDateSite.Controllers
         public IActionResult Single(int id) {
             OverviewSingleViewModel vm = new OverviewSingleViewModel
             {
-                Release = releaseLogic.GetReleaseById(id),
+                Release = releaseLogic.GetReleaseById(id, 5), /*HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault() */
                 Comments = releaseLogic.GetComments(id)
             };
             return View(vm);
@@ -54,14 +56,13 @@ namespace MVC_ReleaseDateSite.Controllers
                     Description = model.Description,
                     ImgLocation = model.ImgLocation,
                     ReleaseDate = model.ReleaseDate,
-                    Title = model.Title
-                    // Still have to add owner
+                    Title = model.Title,
+                    UserId = HttpContext.Session.GetInt32(SessionHolder.SessionUserId)
                 };
                 IFormFile file = model.ImgFile;
 
                 /* Still have to refactor this */
                 if (file != null) {
-                    // Move this to the logic class
                     string filePath = Path.Combine(he.WebRootPath, @"images\userUploads\");
                     string fileName = Path.GetFileName(file.FileName);
                     string fullPath = Path.Combine(filePath, fileName);
@@ -90,9 +91,13 @@ namespace MVC_ReleaseDateSite.Controllers
             return RedirectToAction("index");
         }
 
+        public IActionResult Follow(int id) {
+            releaseLogic.FollowRelease(id, HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault());
+            return RedirectToAction("index");
+        }
 
-        public IActionResult UploadImage() {
-            return View();
+        public IActionResult Unfollow(int id) {
+            return RedirectToAction("index");
         }
 
         [HttpPost]

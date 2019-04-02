@@ -56,5 +56,13 @@ namespace MVC_ReleaseDateSite.Data {
         public List<Comment> GetComments(int id) {
             throw new NotImplementedException();
         }
+
+        public void FollowRelease(int releaseId, int userId) {
+            throw new NotImplementedException();
+        }
+
+        public List<Release> GetReleases(int userId) {
+            throw new NotImplementedException();
+        }
     }
 }

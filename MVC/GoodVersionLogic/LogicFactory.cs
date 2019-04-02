@@ -16,5 +16,12 @@ namespace MVC_ReleaseDateSite.Logic {
                     new CategoryMSSQLContext(new DatabaseConnection(connectionstringLocal))
                     ));
         }
+
+      public static AccountLogic CreateAccountLogic() {
+            return new AccountLogic(
+                new AccountRepository(
+                    new AccountMSSQLContext(new DatabaseConnection(connectionstringLocal)))) {
+            };
+      }
     }
 }

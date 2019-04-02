@@ -3,25 +3,27 @@
     <!-- My CSS-->
     <link rel="stylesheet" type="text/css" href="~/css/form.css">
 }
+
+@model MVC_ReleaseDateSite.ViewModels.LoginViewModel
 <div id="wrapper">
     <div id="center-box">
         <h2 class="title">Logo</h2>
-        <form method="post">
+        <form asp-action="TryLogin">
             <div class="form-group form-in-popup">
                 <!-- Username -->
                 <label for="username-input">Username</label>
-                <input type="text" class="form-control" id="username-input">
+                <input asp-for="Username" type="text" class="form-control" id="username-input">
                 <!-- Password -->
                 <label for="pass-input">Password</label>
-                <input type="password" class="form-control" id="pass-input">
+                <input asp-for="Password" type="password" class="form-control" id="pass-input">
                 <!-- Remember me -->
-                <input type="checkbox" name="remember-user" class="cbox">Remember me <br />
+                <input asp-for="StayLoggedIn" type="checkbox" name="remember-user" class="cbox">Remember me <br />
                 <!-- Login button -->
                 <button type="submit" class="btn mb-2 primary-button w-100">Log in</button>
             </div>
         </form>
-            <footer>
-                Need an account? <span><a class="text-light" href="~/Account/Register">SIGN UP</a></span>
-            </footer>
-        </div>
+        <footer>
+            Need an account? <span><a class="text-light" href="~/Account/Register">SIGN UP</a></span>
+        </footer>
     </div>
+</div>
