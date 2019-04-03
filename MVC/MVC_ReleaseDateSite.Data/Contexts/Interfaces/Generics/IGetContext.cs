@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace MVC_ReleaseDateSite.Data {
-    class GenericContext {
+    public interface IGetContext<T> {
+        T GetById(int id);
+        IEnumerable<T> GetAll();
     }
 }

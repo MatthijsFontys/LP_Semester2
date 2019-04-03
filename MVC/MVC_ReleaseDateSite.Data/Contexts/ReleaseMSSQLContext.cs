@@ -14,6 +14,11 @@ namespace MVC_ReleaseDateSite.Data {
             this.connection = connection;
             connectionstring = connection.SqlConnection.ConnectionString;
         }
+
+        public void Add(Release type) {
+            throw new NotImplementedException();
+        }
+
         public bool AddRelease(Release release) {
 
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
@@ -26,6 +31,10 @@ namespace MVC_ReleaseDateSite.Data {
                 cmd.Parameters.AddWithValue("@ownerId", release.UserId);
                 return cmd.ExecuteNonQuery() > 0;
             }
+        }
+
+        public void Delete(int id) {
+            throw new NotImplementedException();
         }
 
         public void FollowRelease(int releaseId, int userId) {
@@ -55,7 +64,7 @@ namespace MVC_ReleaseDateSite.Data {
                 }
             }
             return toReturn;
-        }
+        } /* This in another context ? */
 
         public Release GetReleaseById(int id) {
             throw new NotImplementedException();
@@ -105,6 +114,10 @@ namespace MVC_ReleaseDateSite.Data {
                 cmd.Parameters.AddWithValue("@userId", userId);
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        public void Update(Release type) {
+            throw new NotImplementedException();
         }
     }
 }

@@ -68,5 +68,21 @@ namespace MVC_ReleaseDateSite.Data {
         public void UnfollowRelease(int releaseId, int userId) {
             throw new NotImplementedException();
         }
+
+        public void Add(Release type) {
+            throw new NotImplementedException();
+        }
+
+        public void Update(Release type) {
+            throw new NotImplementedException();
+        }
+
+        public void Delete() {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(int id) {
+            throw new NotImplementedException();
+        }
     }
 }

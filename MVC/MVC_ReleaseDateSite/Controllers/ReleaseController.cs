@@ -105,34 +105,13 @@ namespace MVC_ReleaseDateSite.Controllers
             return RedirectToAction("index");
         }
 
-        [HttpPost]
-        public IActionResult UploadImage(IFormFile file) {
-            if (file != null) {
-                // Move this to the logic class
-                string filePath = Path.Combine(he.WebRootPath, @"images\userUploads\");
-                string fileName = Path.GetFileName(file.FileName);
-                string fullPath = Path.Combine(filePath, fileName);
-                string extension = Path.GetExtension(fullPath);
-                using (FileStream stream = new FileStream(fullPath, FileMode.Create)) {
-                    try {
-                        if (extension == ".png" || extension == ".jpg" || extension == ".jpeg") {
-                            file.CopyTo(stream);
-                        }
-                        else
-                            throw new FileLoadException("Only png and jpg allowed");
-                    }
-                    catch (FileNotFoundException ex) {
-                        Console.WriteLine(ex.Message);
-                    }
-
-                }
-                System.IO.File.Move(fullPath, Path.Combine(filePath, GenerateFileName(extension)));
-            }
-            return RedirectToAction("index");
-        }
 
         private string GenerateFileName(string extension) {
             return Guid.NewGuid() + extension;
+        }
+
+        public IActionResult Following() {
+            return View();
         }
     }
 }

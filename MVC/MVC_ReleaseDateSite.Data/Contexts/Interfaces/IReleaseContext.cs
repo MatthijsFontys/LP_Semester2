@@ -4,7 +4,7 @@ using System.Text;
 using MVC_ReleaseDateSite.Models;
 
 namespace MVC_ReleaseDateSite.Data {
-    public interface IReleaseContext {
+    public interface IReleaseContext : ICrudContext<Release>{
         List<Release> GetReleases(int userId);
         Release GetReleaseById(int id);
         bool AddRelease(Release release);
