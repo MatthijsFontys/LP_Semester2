@@ -12,16 +12,16 @@ namespace MVC_ReleaseDateSite.Data {
             this.categoryContext = categoryContext;
         }
 
-        public bool AddRelease(Release release) {
-            return releaseContext.AddRelease(release);
+        public void AddRelease(Release release) {
+            releaseContext.Add(release);
         }
 
         public List<Release> GetReleases(int userId) {
-            return releaseContext.GetReleases(userId);
+            return releaseContext.GetAll(userId);
         }
 
         public Release GetReleaseById(int id) {
-            return releaseContext.GetReleaseById(id);
+            return releaseContext.GetByPrimaryKey(id);
         }
 
         public List<Comment> GetComments(int id) {

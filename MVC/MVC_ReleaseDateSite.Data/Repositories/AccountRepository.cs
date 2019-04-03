@@ -19,7 +19,7 @@ namespace MVC_ReleaseDateSite.Data {
         }
 
         public User GetUserByName(string username) {
-            return context.GetUserByName(username);
+            return context.GetByPrimaryKey(username);
         }
     }
 }

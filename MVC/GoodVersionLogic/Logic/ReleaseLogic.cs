@@ -13,9 +13,9 @@ namespace MVC_ReleaseDateSite.Logic {
         public ReleaseLogic(ReleaseRepository releaseRepository) {
             this.releaseRepository = releaseRepository;
         }
-        public bool AddRelease(Release release) {
+        public void AddRelease(Release release) {
             // Do more validation here
-            return releaseRepository.AddRelease(release);
+            releaseRepository.AddRelease(release);
         }
 
         public List<Release> GetPopulairReleases(int userId) {

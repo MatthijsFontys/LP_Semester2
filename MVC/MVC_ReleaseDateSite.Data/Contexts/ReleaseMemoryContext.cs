@@ -84,5 +84,21 @@ namespace MVC_ReleaseDateSite.Data {
         public void Delete(int id) {
             throw new NotImplementedException();
         }
+
+        public List<Release> GetAll(int userId) {
+            throw new NotImplementedException();
+        }
+
+        public void Delete<T2>(T2 primaryKey) {
+            throw new NotImplementedException();
+        }
+
+        public Release GetByPrimaryKey<T2>(T2 id) {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Release> GetAll() {
+            throw new NotImplementedException();
+        }
     }
 }

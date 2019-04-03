@@ -15,12 +15,8 @@ namespace MVC_ReleaseDateSite.Data {
             connectionstring = connection.SqlConnection.ConnectionString;
         }
 
-        public void Add(Release type) {
-            throw new NotImplementedException();
-        }
-
-        public bool AddRelease(Release release) {
-
+        #region Crud
+        public void Add(Release release) {
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("INSERT INTO dbo.Release (releaseName, releaseDescription, imgLocation, releaseDate, ownerId) VALUES (@title, @description, @img, @releaseDate, @ownerId);", conn);
@@ -29,7 +25,7 @@ namespace MVC_ReleaseDateSite.Data {
                 cmd.Parameters.AddWithValue("@img", release.ImgLocation);
                 cmd.Parameters.AddWithValue("@releaseDate", release.ReleaseDate);
                 cmd.Parameters.AddWithValue("@ownerId", release.UserId);
-                return cmd.ExecuteNonQuery() > 0;
+                cmd.ExecuteNonQuery();
             }
         }
 
@@ -37,40 +33,19 @@ namespace MVC_ReleaseDateSite.Data {
             throw new NotImplementedException();
         }
 
-        public void FollowRelease(int releaseId, int userId) {
-            using (SqlConnection conn = new SqlConnection(connectionstring)) {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("insert into dbo.User_Release (releaseId, userId) VALUES (@releaseId, @userId);", conn);
-                cmd.Parameters.AddWithValue("@releaseId", releaseId);
-                cmd.Parameters.AddWithValue("@userId", userId);
-                cmd.ExecuteNonQuery();
-            }
-        }
-
-        public List<Comment> GetComments(int id) {
-            List<Comment> toReturn = new List<Comment>();
-            using (SqlConnection conn = new SqlConnection(connectionstring)) {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("SELECT id, releaseId, userId, replyId, text, postDate FROM dbo.Comment WHERE releaseId = @id", conn);
-                cmd.Parameters.AddWithValue("@id", id);
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read()) {
-                    Comment comment = new Comment
-                    {
-                      Text = reader["text"].ToString(),
-                      PostTime = (DateTime)reader["postDate"]
-                    };
-                    toReturn.Add(comment);
-                }
-            }
-            return toReturn;
-        } /* This in another context ? */
-
-        public Release GetReleaseById(int id) {
+        public void Update(Release type) {
             throw new NotImplementedException();
         }
 
-        public List<Release> GetReleases(int userId) {
+
+        public IEnumerable<Release> GetAll() {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// User this overflow if you also want to get back if the user is following the releases
+        /// </summary>
+        public List<Release> GetAll(int userId) {
             List<Release> toReturn = new List<Release>();
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 conn.Open();
@@ -94,16 +69,35 @@ namespace MVC_ReleaseDateSite.Data {
                             ImgLocation = reader["userImage"].ToString(),
                             Username = reader["username"].ToString()
                         },
-                        Category = new Category {
+                        Category = new Category
+                        {
                             ImgLocation = reader["categoryImage"].ToString(),
-                            Name = reader["CategoryName"].ToString() 
+                            Name = reader["CategoryName"].ToString()
                         }
-                        
+
                     };
                     toReturn.Add(release);
                 }
             }
-            return toReturn;     
+            return toReturn;
+        }
+        public Release GetByPrimaryKey<T2>(T2 id) {
+            throw new NotImplementedException();
+        }
+
+        public void Delete<T2>(T2 primaryKey) {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        public void FollowRelease(int releaseId, int userId) {
+            using (SqlConnection conn = new SqlConnection(connectionstring)) {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("insert into dbo.User_Release (releaseId, userId) VALUES (@releaseId, @userId);", conn);
+                cmd.Parameters.AddWithValue("@releaseId", releaseId);
+                cmd.Parameters.AddWithValue("@userId", userId);
+                cmd.ExecuteNonQuery();
+            }
         }
 
         public void UnfollowRelease(int releaseId, int userId) {
@@ -116,8 +110,27 @@ namespace MVC_ReleaseDateSite.Data {
             }
         }
 
-        public void Update(Release type) {
-            throw new NotImplementedException();
-        }
+
+
+        public List<Comment> GetComments(int id) {
+            List<Comment> toReturn = new List<Comment>();
+            using (SqlConnection conn = new SqlConnection(connectionstring)) {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT id, releaseId, userId, replyId, text, postDate FROM dbo.Comment WHERE releaseId = @id", conn);
+                cmd.Parameters.AddWithValue("@id", id);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read()) {
+                    Comment comment = new Comment
+                    {
+                        Text = reader["text"].ToString(),
+                        PostTime = (DateTime)reader["postDate"]
+                    };
+                    toReturn.Add(comment);
+                }
+            }
+            return toReturn;
+        } /* Move this to other context*/
+
+
     }
 }

@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace MVC_ReleaseDateSite.Data {
-    public interface IAccountContext {
-        void Add(User user);
+    public interface IAccountContext : ICrudContext<User> {
         bool CheckLoginCredentials(User user);
-        User GetUserByName(string username);
     }
 }
