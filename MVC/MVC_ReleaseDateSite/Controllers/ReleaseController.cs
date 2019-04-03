@@ -15,7 +15,7 @@ namespace MVC_ReleaseDateSite.Controllers
 {
     public class ReleaseController : Controller {
         private readonly IHostingEnvironment he;
-
+        private bool loggedIn;
         private ReleaseLogic releaseLogic;
         public ReleaseController(IHostingEnvironment he, IConfiguration configuration) {
             this.he = he;
@@ -94,12 +94,14 @@ namespace MVC_ReleaseDateSite.Controllers
         }
 
         public IActionResult Follow(int id) {
-            releaseLogic.FollowRelease(id, HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault());
+           if(HttpContext.Session.GetInt32(SessionHolder.SessionUserId) != null)
+                releaseLogic.FollowRelease(id, HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault());
             return RedirectToAction("index");
         }
 
-        public IActionResult Unfollow(int id) {
-            releaseLogic.UnfollowRelease(id, HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault());
+        public IActionResult Unfollow(int id, string action) {
+            if(HttpContext.Session.GetInt32(SessionHolder.SessionUserId) != null)
+                releaseLogic.UnfollowRelease(id, HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault());
             return RedirectToAction("index");
         }
 

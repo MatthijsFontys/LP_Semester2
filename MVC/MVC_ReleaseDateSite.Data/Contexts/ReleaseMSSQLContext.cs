@@ -42,13 +42,13 @@ namespace MVC_ReleaseDateSite.Data {
             List<Comment> toReturn = new List<Comment>();
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("SELECT id, releaseId, userId, replyId, commentText, postDate FROM dbo.Comment WHERE releaseId = @id", conn);
+                SqlCommand cmd = new SqlCommand("SELECT id, releaseId, userId, replyId, text, postDate FROM dbo.Comment WHERE releaseId = @id", conn);
                 cmd.Parameters.AddWithValue("@id", id);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read()) {
                     Comment comment = new Comment
                     {
-                      Text = reader["commentText"].ToString(),
+                      Text = reader["text"].ToString(),
                       PostTime = (DateTime)reader["postDate"]
                     };
                     toReturn.Add(comment);
@@ -65,15 +65,8 @@ namespace MVC_ReleaseDateSite.Data {
             List<Release> toReturn = new List<Release>();
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand(@"SELECT releaseUser.username, releaseUser.imgLocation as userImage,
-                Release.CategoryName, Release.id as releaseId, Release.releaseName, Release.releaseDescription, Release.imgLocation as ReleaseImage, Release.releaseDate, Release.creationDate, Release.followerCount, Release.ownerId,
-                Category.imgLocation as categoryImage, CASE WHEN release.id IN ( SELECT releaseId
-                FROM dbo.User_Release
-                WHERE dbo.User_Release.userId = @userId
-                ) THEN 1 ELSE 0 END AS isFollowed
-                FROM Dbo.Release
-                LEFT JOIN dbo.releaseUser ON dbo.releaseUser.id = Release.ownerId
-                LEFT JOIN dbo.Category ON dbo.Category.categoryName = Release.categoryName", conn);
+                SqlCommand cmd = new SqlCommand(@"GetAllReleases", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@userId", userId);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read()) {
@@ -84,7 +77,7 @@ namespace MVC_ReleaseDateSite.Data {
                         ReleaseDate = Convert.ToDateTime(reader["releaseDate"]),
                         CreationDate = Convert.ToDateTime(reader["creationDate"]),
                         Id = (int)reader["releaseId"],
-                        Description = reader["releaseDescription"].ToString(),
+                        Description = reader["description"].ToString(),
                         ImgLocation = reader["ReleaseImage"].ToString(),
                         FollowerCount = (int)reader["followerCount"],
                         User = new User
