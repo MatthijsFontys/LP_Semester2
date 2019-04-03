@@ -34,8 +34,24 @@ namespace MVC_ReleaseDateSite.Data {
             throw new NotImplementedException();
         }
 
-        public User GetByPrimaryKey<T2>(T2 id) {
-            throw new NotImplementedException();
+        public User GetByPrimaryKey<T2>(T2 username) {
+            using (SqlConnection conn = new SqlConnection(connectionstring)) {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand("SELECT id, username, passHash, imgLocation, salt FROM dbo.releaseUser WHERE username = @name ", conn);
+                cmd.Parameters.AddWithValue("@name", username);
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read()) {
+                    return new User
+                    {
+                        Id = Convert.ToInt32(reader["id"]),
+                        ImgLocation = reader["imgLocation"].ToString(),
+                        PasswordHash = reader["passHash"].ToString(),
+                        Salt = reader["salt"].ToString(),
+                        Username = reader["username"].ToString()
+                    };
+                }
+                return null;
+            }
         }
 
         public void Update(User type) {
