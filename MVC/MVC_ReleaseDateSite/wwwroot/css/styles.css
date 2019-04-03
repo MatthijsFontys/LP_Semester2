@@ -110,8 +110,7 @@ html, body{
     border: 1px solid var(--side-bg);
     overflow: hidden;
     position: relative;
-    border-radius: 8px;
-    
+    border-radius: 8px;   
 }
 
 .release-img-wrapper img {

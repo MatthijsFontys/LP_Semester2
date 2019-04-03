@@ -44,7 +44,10 @@ namespace MVC_ReleaseDateSite.Controllers
 
         [Route("/release/new")]
         public IActionResult Create() {
-            return View();
+            if (HttpContext.Session.GetInt32(SessionHolder.SessionUserId) != null)
+                return View();
+            else
+                return RedirectToAction("index");
         }
 
         [HttpPost]
