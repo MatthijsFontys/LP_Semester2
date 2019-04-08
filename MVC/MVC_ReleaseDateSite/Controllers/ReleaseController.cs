@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MVC_ReleaseDateSite.ViewModels;
 using MVC_ReleaseDateSite.Logic;
-using MVC_ReleaseDateSite.Models;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using MVC_ReleaseDateSite.Models;
 using System.Linq;
+using MVC_ReleaseDateSite.Interfaces;
 
 namespace MVC_ReleaseDateSite.Data {
    public class ReleaseMemoryContext : IReleaseContext {
@@ -97,7 +98,32 @@ namespace MVC_ReleaseDateSite.Data {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Release> GetAll() {
+        public IList<Release> GetAll() {
+            throw new NotImplementedException();
+        }
+
+        IList<IRelease> IReleaseContext.GetAll(int userId) {
+            throw new NotImplementedException();
+        }
+
+
+        public void Update(IRelease type) {
+            throw new NotImplementedException();
+        }
+
+        public void Add(IRelease type) {
+            throw new NotImplementedException();
+        }
+
+        IRelease IReadContext<IRelease>.GetByPrimaryKey<T2>(T2 id) {
+            throw new NotImplementedException();
+        }
+
+        IList<IRelease> IReadContext<IRelease>.GetAll() {
+            throw new NotImplementedException();
+        }
+
+        IList<IComment> IReleaseContext.GetComments(int id) {
             throw new NotImplementedException();
         }
     }

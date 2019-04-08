@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
+using MVC_ReleaseDateSite.Interfaces;
 
 namespace MVC_ReleaseDateSite.Data {
     public class AccountMSSQLContext : IAccountContext {
@@ -14,7 +15,7 @@ namespace MVC_ReleaseDateSite.Data {
         }
 
         #region Crud
-        public void Add(User user) {
+        public void Add(IUser user) {
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("INSERT INTO dbo.releaseUser (username, passHash, imgLocation, salt) VALUES (@username, @passHash, @img, @salt);", conn);
@@ -30,18 +31,18 @@ namespace MVC_ReleaseDateSite.Data {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<User> GetAll() {
+        public IList<IUser> GetAll() {
             throw new NotImplementedException();
         }
 
-        public User GetByPrimaryKey<T2>(T2 username) {
+        public IUser GetByPrimaryKey<T2>(T2 username) {
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("SELECT id, username, passHash, imgLocation, salt FROM dbo.releaseUser WHERE username = @name ", conn);
                 cmd.Parameters.AddWithValue("@name", username);
                 SqlDataReader reader = cmd.ExecuteReader();
                 if (reader.Read()) {
-                    return new User
+                    return new UserDto
                     {
                         Id = Convert.ToInt32(reader["id"]),
                         ImgLocation = reader["imgLocation"].ToString(),
@@ -54,12 +55,12 @@ namespace MVC_ReleaseDateSite.Data {
             }
         }
 
-        public void Update(User type) {
+        public void Update(IUser type) {
             throw new NotImplementedException();
         }
         #endregion
 
-        public bool CheckLoginCredentials(User user) {
+        public bool CheckLoginCredentials(IUser user) {
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 conn.Open();
                 int result = -1;

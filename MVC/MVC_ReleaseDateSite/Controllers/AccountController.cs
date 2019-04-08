@@ -7,7 +7,6 @@ using MVC_ReleaseDateSite;
 using MVC_ReleaseDateSite.Logic;
 using Microsoft.AspNetCore.Http;
 using MVC_ReleaseDateSite.ViewModels;
-using MVC_ReleaseDateSite.Models;
 
 namespace MVC_ReleaseDateSite.Controllers
 {
@@ -30,7 +29,7 @@ namespace MVC_ReleaseDateSite.Controllers
                 PasswordHash = model.Password
             };
             if (accountLogic.CheckLoginCredentials(user) && ModelState.IsValid) {
-                User tempUser = accountLogic.GetUserByName(model.Username);
+                User tempUser = (User)accountLogic.GetUserByName(model.Username);
                 HttpContext.Session.SetInt32(SessionHolder.SessionUserId, tempUser.Id); // Change this to auth token
                 HttpContext.Session.SetString(SessionHolder.SessionUsername, model.Username);
                 HttpContext.Session.SetString(SessionHolder.SessionUserImg, tempUser.ImgLocation);

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using MVC_ReleaseDateSite.Models;
+using MVC_ReleaseDateSite.Interfaces;
+using System.Linq;
 
 namespace MVC_ReleaseDateSite.Data {
     public class ReleaseRepository {
@@ -12,19 +14,19 @@ namespace MVC_ReleaseDateSite.Data {
             this.categoryContext = categoryContext;
         }
 
-        public void AddRelease(Release release) {
+        public void AddRelease(IRelease release) {
             releaseContext.Add(release);
         }
 
-        public List<Release> GetReleases(int userId) {
+        public IList<IRelease> GetReleases(int userId) {
             return releaseContext.GetAll(userId);
         }
 
-        public Release GetReleaseById(int id) {
+        public IRelease GetReleaseById(int id) {
             return releaseContext.GetByPrimaryKey(id);
         }
 
-        public List<Comment> GetComments(int id) {
+        public IList<IComment> GetComments(int id) {
             return releaseContext.GetComments(id);
         }
 

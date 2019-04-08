@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using MVC_ReleaseDateSite.Models;
 using System.Data.SqlClient;
+using MVC_ReleaseDateSite.Interfaces;
+using System.Linq;
 
 namespace MVC_ReleaseDateSite.Data {
     public class ReleaseMSSQLContext : IReleaseContext {
@@ -16,7 +18,7 @@ namespace MVC_ReleaseDateSite.Data {
         }
 
         #region Crud
-        public void Add(Release release) {
+        public void Add(IRelease release) {
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("INSERT INTO dbo.Release (releaseName, releaseDescription, imgLocation, releaseDate, ownerId) VALUES (@title, @description, @img, @releaseDate, @ownerId);", conn);
@@ -33,20 +35,20 @@ namespace MVC_ReleaseDateSite.Data {
             throw new NotImplementedException();
         }
 
-        public void Update(Release type) {
+        public void Update(IRelease type) {
             throw new NotImplementedException();
         }
 
 
-        public IEnumerable<Release> GetAll() {
+        public IList<IRelease> GetAll() {
             throw new NotImplementedException();
         }
 
         /// <summary>
         /// User this overflow if you also want to get back if the user is following the releases
         /// </summary>
-        public List<Release> GetAll(int userId) {
-            List<Release> toReturn = new List<Release>();
+        public IList<IRelease> GetAll(int userId) {
+            IList<IRelease> toReturn = new List<IRelease>();
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(@"GetAllReleases", conn);
@@ -54,7 +56,7 @@ namespace MVC_ReleaseDateSite.Data {
                 cmd.Parameters.AddWithValue("@userId", userId);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read()) {
-                    Release release = new Release
+                     IRelease release = new ReleaseDto
                     {
                         Title = reader["releaseName"].ToString(),
                         IsFollowed = (int)reader["isFollowed"] == 1,
@@ -64,12 +66,12 @@ namespace MVC_ReleaseDateSite.Data {
                         Description = reader["description"].ToString(),
                         ImgLocation = reader["ReleaseImage"].ToString(),
                         FollowerCount = (int)reader["followCount"],
-                        User = new User
+                        User = new UserDto
                         {
                             ImgLocation = reader["userImage"].ToString(),
                             Username = reader["username"].ToString()
                         },
-                        Category = new Category
+                        Category = new CategoryDto
                         {
                             ImgLocation = reader["categoryImage"].ToString(),
                             Name = reader["CategoryName"].ToString()
@@ -81,7 +83,7 @@ namespace MVC_ReleaseDateSite.Data {
             }
             return toReturn;
         }
-        public Release GetByPrimaryKey<T2>(T2 id) {
+        public IRelease GetByPrimaryKey<T2>(T2 id) {
             throw new NotImplementedException();
         }
 
@@ -110,17 +112,15 @@ namespace MVC_ReleaseDateSite.Data {
             }
         }
 
-
-
-        public List<Comment> GetComments(int id) {
-            List<Comment> toReturn = new List<Comment>();
+        public IList<IComment> GetComments(int id) {
+            IList<IComment> toReturn = new List<IComment>();
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("SELECT id, releaseId, userId, replyId, text, postDate FROM dbo.Comment WHERE releaseId = @id", conn);
                 cmd.Parameters.AddWithValue("@id", id);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read()) {
-                    Comment comment = new Comment
+                    IComment comment = new CommentDto
                     {
                         Text = reader["text"].ToString(),
                         PostTime = (DateTime)reader["postDate"]
