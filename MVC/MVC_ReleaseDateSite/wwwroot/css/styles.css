@@ -4,6 +4,26 @@ body{
 }
 
 
+/* Time toggle bar */
+#toggle-row img {
+    opacity: 0.6;
+    padding: 0 3px;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    border-bottom: 3px solid black;
+    position: relative;
+    transition-duration: .3s;
+}
+
+    #toggle-row img:hover {
+        opacity: 1;
+        bottom: 3px;
+        height: 39px;
+        padding-bottom: 5px;
+        margin-bottom: -5px;
+    }
+
 /* Populair and New */
 .subtitle {
     color: var(--main-text-color);
