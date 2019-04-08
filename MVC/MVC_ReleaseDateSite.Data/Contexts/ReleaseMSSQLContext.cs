@@ -63,7 +63,7 @@ namespace MVC_ReleaseDateSite.Data {
                         Id = (int)reader["releaseId"],
                         Description = reader["description"].ToString(),
                         ImgLocation = reader["ReleaseImage"].ToString(),
-                        FollowerCount = (int)reader["followerCount"],
+                        FollowerCount = (int)reader["followCount"],
                         User = new User
                         {
                             ImgLocation = reader["userImage"].ToString(),

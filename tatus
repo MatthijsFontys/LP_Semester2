@@ -1,0 +1,157 @@
+[1mdiff --git a/MVC/MVC_ReleaseDateSite.Data/Contexts/GenericContext.cs b/MVC/MVC_ReleaseDateSite.Data/Contexts/GenericContext.cs[m
+[1mdeleted file mode 100644[m
+[1mindex 608254f..0000000[m
+[1m--- a/MVC/MVC_ReleaseDateSite.Data/Contexts/GenericContext.cs[m
+[1m+++ /dev/null[m
+[36m@@ -1,8 +0,0 @@[m
+[31m-﻿using System;[m
+[31m-using System.Collections.Generic;[m
+[31m-using System.Text;[m
+[31m-[m
+[31m-namespace MVC_ReleaseDateSite.Data {[m
+[31m-    class GenericContext {[m
+[31m-    }[m
+[31m-}[m
+[1mdiff --git a/MVC/MVC_ReleaseDateSite.Data/Contexts/Interfaces/IGenericContext.cs b/MVC/MVC_ReleaseDateSite.Data/Contexts/Interfaces/IGenericContext.cs[m
+[1mdeleted file mode 100644[m
+[1mindex b212cc0..0000000[m
+[1m--- a/MVC/MVC_ReleaseDateSite.Data/Contexts/Interfaces/IGenericContext.cs[m
+[1m+++ /dev/null[m
+[36m@@ -1,8 +0,0 @@[m
+[31m-﻿using System;[m
+[31m-using System.Collections.Generic;[m
+[31m-using System.Text;[m
+[31m-[m
+[31m-namespace MVC_ReleaseDateSite.Data.Contexts {[m
+[31m-    interface IGenericContext {[m
+[31m-    }[m
+[31m-}[m
+[1mdiff --git a/MVC/MVC_ReleaseDateSite.Data/Contexts/Interfaces/IReleaseContext.cs b/MVC/MVC_ReleaseDateSite.Data/Contexts/Interfaces/IReleaseContext.cs[m
+[1mindex 4c398c7..5191def 100644[m
+[1m--- a/MVC/MVC_ReleaseDateSite.Data/Contexts/Interfaces/IReleaseContext.cs[m
+[1m+++ b/MVC/MVC_ReleaseDateSite.Data/Contexts/Interfaces/IReleaseContext.cs[m
+[36m@@ -4,7 +4,7 @@[m [musing System.Text;[m
+ using MVC_ReleaseDateSite.Models;[m
+ [m
+ namespace MVC_ReleaseDateSite.Data {[m
+[31m-    public interface IReleaseContext {[m
+[32m+[m[32m    public interface IReleaseContext : ICrudContext<Release>{[m
+         List<Release> GetReleases(int userId);[m
+         Release GetReleaseById(int id);[m
+         bool AddRelease(Release release);[m
+[1mdiff --git a/MVC/MVC_ReleaseDateSite.Data/Contexts/ReleaseMSSQLContext.cs b/MVC/MVC_ReleaseDateSite.Data/Contexts/ReleaseMSSQLContext.cs[m
+[1mindex def97df..77b031e 100644[m
+[1m--- a/MVC/MVC_ReleaseDateSite.Data/Contexts/ReleaseMSSQLContext.cs[m
+[1m+++ b/MVC/MVC_ReleaseDateSite.Data/Contexts/ReleaseMSSQLContext.cs[m
+[36m@@ -14,6 +14,11 @@[m [mnamespace MVC_ReleaseDateSite.Data {[m
+             this.connection = connection;[m
+             connectionstring = connection.SqlConnection.ConnectionString;[m
+         }[m
+[32m+[m
+[32m+[m[32m        public void Add(Release type) {[m
+[32m+[m[32m            throw new NotImplementedException();[m
+[32m+[m[32m        }[m
+[32m+[m
+         public bool AddRelease(Release release) {[m
+ [m
+             using (SqlConnection conn = new SqlConnection(connectionstring)) {[m
+[36m@@ -28,6 +33,10 @@[m [mnamespace MVC_ReleaseDateSite.Data {[m
+             }[m
+         }[m
+ [m
+[32m+[m[32m        public void Delete(int id) {[m
+[32m+[m[32m            throw new NotImplementedException();[m
+[32m+[m[32m        }[m
+[32m+[m
+         public void FollowRelease(int releaseId, int userId) {[m
+             using (SqlConnection conn = new SqlConnection(connectionstring)) {[m
+                 conn.Open();[m
+[36m@@ -55,7 +64,7 @@[m [mnamespace MVC_ReleaseDateSite.Data {[m
+                 }[m
+             }[m
+             return toReturn;[m
+[31m-        }[m
+[32m+[m[32m        } /* This in another context ? */[m
+ [m
+         public Release GetReleaseById(int id) {[m
+             throw new NotImplementedException();[m
+[36m@@ -106,5 +115,9 @@[m [mnamespace MVC_ReleaseDateSite.Data {[m
+                 cmd.ExecuteNonQuery();[m
+             }[m
+         }[m
+[32m+[m
+[32m+[m[32m        public void Update(Release type) {[m
+[32m+[m[32m            throw new NotImplementedException();[m
+[32m+[m[32m        }[m
+     }[m
+ }[m
+[1mdiff --git a/MVC/MVC_ReleaseDateSite.Data/Contexts/ReleaseMemoryContext.cs b/MVC/MVC_ReleaseDateSite.Data/Contexts/ReleaseMemoryContext.cs[m
+[1mindex f7be34e..86038f0 100644[m
+[1m--- a/MVC/MVC_ReleaseDateSite.Data/Contexts/ReleaseMemoryContext.cs[m
+[1m+++ b/MVC/MVC_ReleaseDateSite.Data/Contexts/ReleaseMemoryContext.cs[m
+[36m@@ -68,5 +68,21 @@[m [mnamespace MVC_ReleaseDateSite.Data {[m
+         public void UnfollowRelease(int releaseId, int userId) {[m
+             throw new NotImplementedException();[m
+         }[m
+[32m+[m
+[32m+[m[32m        public void Add(Release type) {[m
+[32m+[m[32m            throw new NotImplementedException();[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        public void Update(Release type) {[m
+[32m+[m[32m            throw new NotImplementedException();[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        public void Delete() {[m
+[32m+[m[32m            throw new NotImplementedException();[m
+[32m+[m[32m        }[m
+[32m+[m
+[32m+[m[32m        public void Delete(int id) {[m
+[32m+[m[32m            throw new NotImplementedException();[m
+[32m+[m[32m        }[m
+     }[m
+ }[m
+[1mdiff --git a/MVC/MVC_ReleaseDateSite/Controllers/ReleaseController.cs b/MVC/MVC_ReleaseDateSite/Controllers/ReleaseController.cs[m
+[1mindex 6943453..aa85491 100644[m
+[1m--- a/MVC/MVC_ReleaseDateSite/Controllers/ReleaseController.cs[m
+[1m+++ b/MVC/MVC_ReleaseDateSite/Controllers/ReleaseController.cs[m
+[36m@@ -105,34 +105,13 @@[m [mnamespace MVC_ReleaseDateSite.Controllers[m
+             return RedirectToAction("index");[m
+         }[m
+ [m
+[31m-        [HttpPost][m
+[31m-        public IActionResult UploadImage(IFormFile file) {[m
+[31m-            if (file != null) {[m
+[31m-                // Move this to the logic class[m
+[31m-                string filePath = Path.Combine(he.WebRootPath, @"images\userUploads\");[m
+[31m-                string fileName = Path.GetFileName(file.FileName);[m
+[31m-                string fullPath = Path.Combine(filePath, fileName);[m
+[31m-                string extension = Path.GetExtension(fullPath);[m
+[31m-                using (FileStream stream = new FileStream(fullPath, FileMode.Create)) {[m
+[31m-                    try {[m
+[31m-                        if (extension == ".png" || extension == ".jpg" || extension == ".jpeg") {[m
+[31m-                            file.CopyTo(stream);[m
+[31m-                        }[m
+[31m-                        else[m
+[31m-                            throw new FileLoadException("Only png and jpg allowed");[m
+[31m-                    }[m
+[31m-                    catch (FileNotFoundException ex) {[m
+[31m-                        Console.WriteLine(ex.Message);[m
+[31m-                    }[m
+[31m-[m
+[31m-                }[m
+[31m-                System.IO.File.Move(fullPath, Path.Combine(filePath, GenerateFileName(extension)));[m
+[31m-            }[m
+[31m-            return RedirectToAction("index");[m
+[31m-        }[m
+ [m
+         private string GenerateFileName(string extension) {[m
+             return Guid.NewGuid() + extension;[m
+         }[m
+[32m+[m
+[32m+[m[32m        public IActionResult Following() {[m
+[32m+[m[32m            return View();[m
+[32m+[m[32m        }[m
+     }[m
+ }[m
+\ No newline at end of file[m

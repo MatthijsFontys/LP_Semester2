@@ -37,6 +37,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\images\categories\" />
+    <Folder Include="wwwroot\images\toggleIcons\" />
     <Folder Include="wwwroot\images\userUploads\ProfilePics\" />
     <Folder Include="wwwroot\images\userUploads\Thumbnails\" />
   </ItemGroup>
