@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 namespace MVC_ReleaseDateSite {
-    public class ValidDateAttribute : ValidationAttribute {
+    internal class ValidDateAttribute : ValidationAttribute {
 
         public override bool IsValid(object value) {
             DateTime userEnteredDate = (DateTime)value;

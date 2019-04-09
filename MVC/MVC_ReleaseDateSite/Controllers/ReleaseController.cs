@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MVC_ReleaseDateSite.ViewModels;
+using Microsoft.Extensions.Configuration;
 using MVC_ReleaseDateSite.Logic;
 using MVC_ReleaseDateSite.Models;
-using System.IO;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+using MVC_ReleaseDateSite.ViewModels;
+using System;
 
-namespace MVC_ReleaseDateSite.Controllers
-{
+namespace MVC_ReleaseDateSite.Controllers {
     public class ReleaseController : Controller {
         private readonly IHostingEnvironment he;
-        private bool loggedIn;
         private ReleaseLogic releaseLogic;
         public ReleaseController(IHostingEnvironment he, IConfiguration configuration) {
             this.he = he;
@@ -23,7 +17,6 @@ namespace MVC_ReleaseDateSite.Controllers
             string test = configuration.GetConnectionString("LocalConnection");
         }
         public IActionResult Index() {
-            // End global user
             int id = HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault();
             OverviewIndexViewModel vm = new OverviewIndexViewModel
             {
@@ -37,7 +30,8 @@ namespace MVC_ReleaseDateSite.Controllers
         public IActionResult Single(int id) {
             OverviewSingleViewModel vm = new OverviewSingleViewModel
             {
-                Release = releaseLogic.GetReleaseById(id, HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault()),                Comments = releaseLogic.GetComments(id)
+                Release = releaseLogic.GetReleaseById(id, HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault()),
+                Comments = releaseLogic.GetComments(id)
             };
             return View(vm);
         }
@@ -62,31 +56,8 @@ namespace MVC_ReleaseDateSite.Controllers
                     UserId = HttpContext.Session.GetInt32(SessionHolder.SessionUserId)
                 };
                 IFormFile file = model.ImgFile;
-
-                /* Still have to refactor this */
-                if (file != null) {
-                    string filePath = Path.Combine(he.WebRootPath, @"images\userUploads\");
-                    string fileName = Path.GetFileName(file.FileName);
-                    string fullPath = Path.Combine(filePath, fileName);
-                    string extension = Path.GetExtension(fullPath);
-                    using (FileStream stream = new FileStream(fullPath, FileMode.Create)) {
-                        try {
-                            if (extension == ".png" || extension == ".jpg" || extension == ".jpeg") {
-                                file.CopyTo(stream);
-                            }
-                            else
-                                throw new FileLoadException("Only png and jpg allowed");
-                        }
-                        catch (FileNotFoundException ex) {
-                            Console.WriteLine(ex.Message);
-                        }
-
-                    }
-                    string newFileName = GenerateFileName(extension);
-                    string newFilePath = Path.Combine(filePath, newFileName);
-                    System.IO.File.Move(fullPath, newFilePath);
-                    release.ImgLocation = Path.Combine(@"/images/userUploads", newFileName);
-                }
+                if (ImageHandler.IsImageValid(file))
+                    release.ImgLocation = ImageHandler.SaveImage(he, file);
 
                 releaseLogic.AddRelease(release);
             }
@@ -94,17 +65,16 @@ namespace MVC_ReleaseDateSite.Controllers
         }
 
         public IActionResult Follow(int id) {
-           if(HttpContext.Session.GetInt32(SessionHolder.SessionUserId) != null)
+            if (HttpContext.Session.GetInt32(SessionHolder.SessionUserId) != null)
                 releaseLogic.FollowRelease(id, HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault());
             return RedirectToAction("index");
         }
 
         public IActionResult Unfollow(int id, string action) {
-            if(HttpContext.Session.GetInt32(SessionHolder.SessionUserId) != null)
+            if (HttpContext.Session.GetInt32(SessionHolder.SessionUserId) != null)
                 releaseLogic.UnfollowRelease(id, HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault());
             return RedirectToAction("index");
         }
-
 
         private string GenerateFileName(string extension) {
             return Guid.NewGuid() + extension;
