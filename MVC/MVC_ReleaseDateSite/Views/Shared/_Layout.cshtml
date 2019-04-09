@@ -49,52 +49,60 @@
                 <li />
             </ul>
             <ul class="navbar-nav">
-                <li class="nav-item">
+                <li class="nav-item dropdown" data-offset="100,100">
                     @if (string.IsNullOrEmpty(Context.Session.GetInt32("_userId").ToString())) {
                         <a class="nav-item nav-link main-link" href="/account/login">Login</a>
                         <hr class="foldout" />
                     }
                     else {
-                        <img class="nav-item clickable user-icon mr-2" src=@Context.Session.GetString("_userImg") style="border: .8px solid black" />
+                        <!--<img class="nav-item clickable user-icon mr-2" src=@Context.Session.GetString("_userImg") style="border: .8px solid black" />-->
+                        <a class="nav-link dropdown-toggle text-white dropdown-remove-arrow" accesskey="" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @Context.Session.GetString("_userName")
+                        </a>
+                        <div class="dropdown-menu dropdown-nav-primary" style="right: 0; left: auto;" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">My Account</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Settings</a>
+                        </div>
                     }
-                <li />
-                <li class="nav-item">
-                    @if (string.IsNullOrEmpty(Context.Session.GetInt32("_userId").ToString())) {
-                        <a class="nav-item nav-link main-link" href="/account/register">Sign up</a>
-                    }
-                    else {
-                        <a class="nav-item nav-link main-link" href="/account/logout">Logout</a>
-                    }
-                    <hr class="foldout" />
-                <li />
-            </ul>
-        </div>
+                    </li>
+                    <li class="nav-item">
+                        @if (string.IsNullOrEmpty(Context.Session.GetInt32("_userId").ToString())) {
+                            <a class="nav-item nav-link main-link" href="/account/register">Sign up</a>
+                        }
+                        else {
+                            <a class="nav-item nav-link main-link" href="/account/logout">Logout</a>
+                        }
+                        <hr class="foldout" />
+                    </li>
+                </ul>
+            </div>
 
-    </nav>
-    <!-- Navbar end -->
-    @RenderBody()
+        </nav>
+        <!-- Navbar end -->
+        @RenderBody()
 
-    <!-- Javascript -->
-    <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
-        </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha256-E/V4cWE4qvAeO5MOhjtGtqDzPndRO1LBk8lJ/PR7CA4=">
-        </script>
-    </environment>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/stickyNavbar.js"></script>
-    @RenderSection("Scripts", required: false)
-</body>
+        <!-- Javascript -->
+        <environment include="Development">
+            <script src="~/lib/jquery/dist/jquery.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        </environment>
+        <environment exclude="Development">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                    asp-fallback-test="window.jQuery"
+                    crossorigin="anonymous"
+                    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+            </script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"
+                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                    crossorigin="anonymous"
+                    integrity="sha256-E/V4cWE4qvAeO5MOhjtGtqDzPndRO1LBk8lJ/PR7CA4=">
+            </script>
+        </environment>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/stickyNavbar.js"></script>
+        @RenderSection("Scripts", required: false)
+    </body>
 </html>

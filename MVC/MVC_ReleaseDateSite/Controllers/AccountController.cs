@@ -31,8 +31,11 @@ namespace MVC_ReleaseDateSite.Controllers
             };
             if (accountLogic.CheckLoginCredentials(user) && ModelState.IsValid) {
                 User tempUser = accountLogic.GetUserByName(model.Username);
-                HttpContext.Session.SetInt32(SessionHolder.SessionUserId, tempUser.Id); // Change this to auth token
-                HttpContext.Session.SetString(SessionHolder.SessionUsername, model.Username);
+                HttpContext.Session.SetInt32(SessionHolder.SessionUserId, tempUser.Id); //Todo Change this to auth token
+                string username = model.Username;
+                if (username.Length > 10)
+                    username = username.Substring(0, 10);
+                HttpContext.Session.SetString(SessionHolder.SessionUsername, username);
                 HttpContext.Session.SetString(SessionHolder.SessionUserImg, tempUser.ImgLocation);
                 return RedirectToAction("Index", "Release");
             }

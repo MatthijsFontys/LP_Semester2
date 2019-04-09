@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.IO;
+using System.Text;
 
 namespace MVC_ReleaseDateSite {
     internal static class ImageHandler {
 
-        private const string ImagePathFromRoot = @"/images/userUploads";
+        private const string ImagePathFromRoot = @"images/userUploads";
 
         public static bool IsImageValid(IFormFile file) {
             try {
@@ -22,22 +22,26 @@ namespace MVC_ReleaseDateSite {
             }
             return false;
         }
-        public static string SaveImage(IHostingEnvironment he, IFormFile file) {
-            string filePath = Path.Combine(he.WebRootPath, ImagePathFromRoot);
+        public static string SaveImage(string rootpath, IFormFile file) {
+            string filePath = Path.Combine(rootpath, ImagePathFromRoot);
             string fileName = Path.GetFileName(file.FileName);
             string fullPath = Path.Combine(filePath, fileName);
             string extension = Path.GetExtension(fullPath);
             using (FileStream stream = new FileStream(fullPath, FileMode.Create)) {
                 file.CopyTo(stream);
             }
-            string newFileName = GenerateFileName(extension);
+            string newFileName = GenerateRandomFileName(extension);
             string newFilePath = Path.Combine(filePath, newFileName);
             File.Move(fullPath, newFilePath);
-            return Path.Combine(ImagePathFromRoot, newFileName);
+            return Path.Combine("/", ImagePathFromRoot, newFileName);
         }
 
-        private static string GenerateFileName(string extension) {
+        private static string GenerateRandomFileName(string extension) {
             return Guid.NewGuid() + extension;
+        }
+
+        private static string CreateFileName(string releaseName, string releaseCategory, DateTime releaseDate, string extension) {
+            return releaseName + "_" + releaseCategory + "_" + releaseDate + extension;
         }
     }
 }

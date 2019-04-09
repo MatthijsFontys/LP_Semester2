@@ -35,7 +35,7 @@ namespace MVC_ReleaseDateSite {
             //Enable sessions
             services.AddDistributedMemoryCache();
             services.AddSession(options => {
-                options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time   
+                options.IdleTimeout = TimeSpan.FromDays(1000);//You can set Time   
             });
             //services.Configure<DBSettings>(Configuration.GetSection("ConnectionStrings"));
             services.Configure<CookiePolicyOptions>(options =>

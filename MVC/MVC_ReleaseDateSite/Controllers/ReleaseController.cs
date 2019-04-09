@@ -57,7 +57,7 @@ namespace MVC_ReleaseDateSite.Controllers {
                 };
                 IFormFile file = model.ImgFile;
                 if (ImageHandler.IsImageValid(file))
-                    release.ImgLocation = ImageHandler.SaveImage(he, file);
+                    release.ImgLocation = ImageHandler.SaveImage(he.WebRootPath, file);
 
                 releaseLogic.AddRelease(release);
             }
@@ -82,6 +82,12 @@ namespace MVC_ReleaseDateSite.Controllers {
 
         public IActionResult Following() {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult PostComment(string comment) {
+            Console.WriteLine(comment);
+            return RedirectToAction("index");
         }
     }
 }

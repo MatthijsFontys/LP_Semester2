@@ -182,6 +182,22 @@ li:hover .foldout {
     outline: none;
 }   
 
+/* Overriding bootstrap */
+.dropdown-remove-arrow::after {
+    display: none !important;
+}
+
+.dropdown-nav-primary, .dropdown-nav-primary a {
+    background-color: var(--primary-button-color);
+    color: var(--sub-link) !important;
+    font-weight: 500 !important;
+}
+
+.dropdown-nav-primary a:hover {
+    transition-duration: .5s;
+    color: var(--sub-link-hover) !important;
+    background-color: var(--primary-button-color);
+}
 
 
 /* Animations */
