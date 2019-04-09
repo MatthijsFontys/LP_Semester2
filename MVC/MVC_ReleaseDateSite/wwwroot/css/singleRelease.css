@@ -15,6 +15,7 @@ html,body{
 }
 
 #wrapper{
+    padding-top: 75px;
     min-height: 100%;
     width: 800px;
     margin: 0 auto;

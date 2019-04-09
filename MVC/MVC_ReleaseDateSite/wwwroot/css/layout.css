@@ -29,7 +29,7 @@ html, body {
 }
 
 .wrapper, #wrapper {
-    padding-top: 60px !important; /* Adding padding to top to avoid the navbar overlapping content */
+    padding-top: 60px; /* Adding padding to top to avoid the navbar overlapping content */
     width: 960px;
     min-height: 100%;
     background-color: white;
