@@ -19,6 +19,9 @@ namespace MVC_ReleaseDateSite.Data {
         public List<Release> GetReleases(int userId) {
             return releaseContext.GetAll(userId);
         }
+        public List<Release> GetReleases() {
+            return releaseContext.GetAll();
+        }
 
         public Release GetReleaseById(int id) {
             return releaseContext.GetByPrimaryKey(id);

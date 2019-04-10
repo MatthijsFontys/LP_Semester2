@@ -16,11 +16,11 @@ body{
     transition-duration: .3s;
 }
 
-    #toggle-row img:hover {
-        opacity: 1;
-        padding-bottom: 5px;
-        margin-bottom: -5px;
-    }
+#toggle-row img:hover {
+    opacity: 1;
+    padding-bottom: 5px;
+    margin-bottom: -5px;
+}
 
 /* Populair and New */
 .subtitle {
@@ -65,12 +65,12 @@ html, body{
     background-color: var(--error-opacity);
 }
 
-.releaseUnfollowStyle::after {
+.populair-release-wrapper:hover .releaseUnfollowStyle::after {
     content: "Unfollow";
     color: white;
 }
 
-.releaseFollowStyle::after {
+.populair-release-wrapper:hover .releaseFollowStyle::after {
     content: "Follow";
 }
 
@@ -99,6 +99,7 @@ html, body{
     position: relative;
     align-items: center;
     transition-duration: .3s;
+    overflow:hidden;
 }
 
 .release-img-wrapper:hover .release-follow-small {
@@ -126,7 +127,6 @@ html, body{
     box-sizing: content-box;
     margin-right: 10px;
     border: 1px solid var(--side-bg);
-    overflow: hidden;
     position: relative;
     border-radius: 8px;   
 }
@@ -136,27 +136,27 @@ html, body{
     height: auto;
     max-width: 100%;
     max-height: 150px;*/
-    width: 163.8px;
-    height: 109.2px;
+   /* width: 163.8px;
+    height: 109.2px; */
+   height: 100px;
+   width: 150px;
 }
 
     /* New */
 .new-release-wrapper img {
-    max-width: 75%;
     border-radius: 10px;
-    max-height: 200px;
-    height: auto;
-    width: auto;
+    width: 250px;
+    height: 166px;
     transition-duration: .5s;
 }
 
-.new-release-wrapper img:hover {
+/*.new-release-wrapper img:hover {
     max-height: 250px;
     max-width: 90%;
     margin-top: -50px;
     height: auto;
     width: auto;
-}
+}*/
 
 
 

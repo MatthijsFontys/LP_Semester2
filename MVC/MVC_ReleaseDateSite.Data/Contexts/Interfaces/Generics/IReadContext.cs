@@ -5,6 +5,6 @@ using System.Text;
 namespace MVC_ReleaseDateSite.Data {
     public interface IReadContext<T> {
         T GetByPrimaryKey<T2>(T2 id);
-        IEnumerable<T> GetAll();
+        List<T> GetAll();
     }
 }

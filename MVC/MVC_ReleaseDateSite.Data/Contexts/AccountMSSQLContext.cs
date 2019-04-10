@@ -72,6 +72,10 @@ namespace MVC_ReleaseDateSite.Data {
                 return result == 1;
             }
         }
+
+        List<User> IReadContext<User>.GetAll() {
+            throw new NotImplementedException();
+        }
     }
 }
 

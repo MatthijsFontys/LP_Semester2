@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using MVC_ReleaseDateSite.Logic;
 using MVC_ReleaseDateSite.Models;
 using MVC_ReleaseDateSite.ViewModels;
+using Newtonsoft.Json;
 using System;
 
 namespace MVC_ReleaseDateSite.Controllers {
@@ -64,20 +65,24 @@ namespace MVC_ReleaseDateSite.Controllers {
             return RedirectToAction("index");
         }
 
-        public IActionResult Follow(int id) {
-            if (HttpContext.Session.GetInt32(SessionHolder.SessionUserId) != null)
+        public JsonResult Follow(int id) {
+            if (HttpContext.Session.GetInt32(SessionHolder.SessionUserId) != null) {
                 releaseLogic.FollowRelease(id, HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault());
-            return RedirectToAction("index");
+                int UpdatedFollowerCount = releaseLogic.GetReleaseById(id).FollowerCount;
+                string json = JsonConvert.SerializeObject(new { state = "success", followCount = UpdatedFollowerCount, followState = "unfollow" });
+                return new JsonResult(json);
+            }
+            return null;
         }
 
-        public IActionResult Unfollow(int id, string action) {
-            if (HttpContext.Session.GetInt32(SessionHolder.SessionUserId) != null)
+        public JsonResult Unfollow(int id) {
+            if (HttpContext.Session.GetInt32(SessionHolder.SessionUserId) != null) {
                 releaseLogic.UnfollowRelease(id, HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault());
-            return RedirectToAction("index");
-        }
-
-        private string GenerateFileName(string extension) {
-            return Guid.NewGuid() + extension;
+                int UpdatedFollowerCount = releaseLogic.GetReleaseById(id).FollowerCount;
+                string json = JsonConvert.SerializeObject(new { state = "success", followCount = UpdatedFollowerCount, followState = "follow" });
+                return new JsonResult(json);
+            }
+            return null;
         }
 
         public IActionResult Following() {
@@ -89,5 +94,8 @@ namespace MVC_ReleaseDateSite.Controllers {
             Console.WriteLine(comment);
             return RedirectToAction("index");
         }
+
     }
 }
+
+

@@ -41,6 +41,10 @@ namespace MVC_ReleaseDateSite.Logic {
             return releaseRepository.GetReleases(userId).First(x => x.Id == id);
         }
 
+        public Release GetReleaseById(int id) {
+            return releaseRepository.GetReleases().First(x => x.Id == id);
+        }
+
         public void FollowRelease(int releaseId, int userId) {
             releaseRepository.FollowRelease(releaseId, userId);
         }

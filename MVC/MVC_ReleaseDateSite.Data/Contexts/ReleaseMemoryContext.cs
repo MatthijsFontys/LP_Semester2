@@ -100,5 +100,9 @@ namespace MVC_ReleaseDateSite.Data {
         public IEnumerable<Release> GetAll() {
             throw new NotImplementedException();
         }
+
+        List<Release> IReadContext<Release>.GetAll() {
+            throw new NotImplementedException();
+        }
     }
 }

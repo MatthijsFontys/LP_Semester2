@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using MVC_ReleaseDateSite.Models;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace MVC_ReleaseDateSite.Data {
     public class ReleaseMSSQLContext : IReleaseContext {
         private readonly DatabaseConnection connection;
         private readonly string connectionstring;
-
-
+        
         public ReleaseMSSQLContext(DatabaseConnection connection) {
             this.connection = connection;
             connectionstring = connection.SqlConnection.ConnectionString;
@@ -38,32 +38,24 @@ namespace MVC_ReleaseDateSite.Data {
         }
 
 
-        public IEnumerable<Release> GetAll() {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// User this overflow if you also want to get back if the user is following the releases
-        /// </summary>
-        public List<Release> GetAll(int userId) {
+        public List<Release> GetAll() {
             List<Release> toReturn = new List<Release>();
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(@"GetAllReleases", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@userId", userId);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read()) {
                     Release release = new Release
                     {
                         Title = reader["releaseName"].ToString(),
-                        IsFollowed = (int)reader["isFollowed"] == 1,
+
+                        FollowerCount = (int)reader["followCount"],
                         ReleaseDate = Convert.ToDateTime(reader["releaseDate"]),
                         CreationDate = Convert.ToDateTime(reader["creationDate"]),
                         Id = (int)reader["releaseId"],
                         Description = reader["description"].ToString(),
                         ImgLocation = reader["ReleaseImage"].ToString(),
-                        FollowerCount = (int)reader["followCount"],
                         User = new User
                         {
                             ImgLocation = reader["userImage"].ToString(),
@@ -77,6 +69,29 @@ namespace MVC_ReleaseDateSite.Data {
 
                     };
                     toReturn.Add(release);
+                }
+            }
+            return toReturn;
+        }
+
+        /// <summary>
+        /// User this overflow if you also want to get back if the user is following the releases
+        /// </summary>
+        public List<Release> GetAll(int userId) {
+            List<Release> toReturn = GetAll();
+            using (SqlConnection conn = new SqlConnection(connectionstring)) {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand
+                (@"SELECT R.id, CASE WHEN R.id IN( SELECT releaseId
+                FROM dbo.User_Release UR
+                WHERE UR.userId = @userId
+                ) THEN 1 ELSE 0 END AS isFollowed
+                FROM dbo.Release R", conn);
+                cmd.Parameters.AddWithValue("@userId", userId);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read()) {
+                    Release release = toReturn.Where(x => x.Id == Convert.ToInt32(reader["id"])).FirstOrDefault();
+                    release.IsFollowed = Convert.ToInt32(reader["isFollowed"]) == 1;
                 }
             }
             return toReturn;
