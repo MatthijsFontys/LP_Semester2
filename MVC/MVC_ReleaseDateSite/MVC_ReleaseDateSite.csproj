@@ -6,9 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\css\Frameworks\**" />
     <Compile Remove="wwwroot\js\Frameworks\**" />
+    <Content Remove="wwwroot\css\Frameworks\**" />
     <Content Remove="wwwroot\js\Frameworks\**" />
+    <EmbeddedResource Remove="wwwroot\css\Frameworks\**" />
     <EmbeddedResource Remove="wwwroot\js\Frameworks\**" />
+    <None Remove="wwwroot\css\Frameworks\**" />
     <None Remove="wwwroot\js\Frameworks\**" />
   </ItemGroup>
 
@@ -44,7 +48,6 @@
 
 
   <ItemGroup>
-    <Folder Include="wwwroot\css\Frameworks\" />
     <Folder Include="wwwroot\images\categories\" />
     <Folder Include="wwwroot\images\toggleIcons\" />
     <Folder Include="wwwroot\images\userUploads\ProfilePics\" />

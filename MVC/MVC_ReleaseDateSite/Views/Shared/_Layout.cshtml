@@ -5,10 +5,19 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-    <!-- Css reset -->
-    <!--link rel="stylesheet" href="~/css/css-reset.css" / -->
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    </environment>
+    <environment exclude="Development">
+        <!-- Css reset -->
+        <link rel="stylesheet" href="~/css/css-reset.css" />
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+              crossorigin="anonymous"
+              integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
+    </environment>
     <!-- Font Awesome (for icons) -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <!-- Standard styles for every page -->
@@ -51,45 +60,49 @@
                             @Context.Session.GetString("_userName")
                         </a>
                         <div class="dropdown-menu dropdown-nav-primary" style="right: 0; left: auto;" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">My Account</a>
+                            <a class="dropdown-item" href="/user/account">My Account</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Settings</a>
                         </div>
                     }
-                    </li>
-                    <li class="nav-item">
-                        @if (string.IsNullOrEmpty(Context.Session.GetInt32("_userId").ToString())) {
-                            <a class="nav-item nav-link main-link" href="/account/register">Sign up</a>
-                        }
-                        else {
-                            <a class="nav-item nav-link main-link" href="/account/logout">Logout</a>
-                        }
-                        <hr class="foldout" />
-                    </li>
-                </ul>
-            </div>
+                </li>
+                <li class="nav-item">
+                    @if (string.IsNullOrEmpty(Context.Session.GetInt32("_userId").ToString())) {
+                        <a class="nav-item nav-link main-link" href="/account/register">Sign up</a>
+                    }
+                    else {
+                        <a class="nav-item nav-link main-link" href="/account/logout">Logout</a>
+                    }
+                    <hr class="foldout" />
+                </li>
+            </ul>
+        </div>
 
-        </nav>
-        <!-- Navbar end -->
-        @RenderBody()
+    </nav>
+    <!-- Navbar end -->
+    @RenderBody()
 
-        <!-- Javascript -->
-            <script src="~/lib/jquery/dist/jquery.js"></script>
-            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-            <!-- Alertify -->
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
-                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                    asp-fallback-test="window.jQuery"
-                    crossorigin="anonymous"
-                    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
-            </script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"
-                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
-                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                    crossorigin="anonymous"
-                    integrity="sha256-E/V4cWE4qvAeO5MOhjtGtqDzPndRO1LBk8lJ/PR7CA4=">
-            </script>
-        <!--<script src="~/js/stickyNavbar.js"></script>-->
-        @RenderSection("Scripts", required: false)
-    </body>
+    <!-- Javascript -->
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha256-E/V4cWE4qvAeO5MOhjtGtqDzPndRO1LBk8lJ/PR7CA4=">
+        </script>
+    </environment>
+    <!--<script src="~/js/site.js" asp-append-version="true"></script>-->
+    <script src="~/js/stickyNavbar.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
 </html>

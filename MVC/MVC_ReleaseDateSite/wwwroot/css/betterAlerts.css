@@ -1,0 +1,59 @@
+.betterAlerts {
+    box-sizing: border-box;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+    width: 200px;
+    height: 70px;
+    position: fixed;
+    z-index: 10;
+    right: -200px;
+    bottom: 0px;
+    text-align: center;
+    font-weight: bold;
+    animation-name: alertanimation;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+    user-select: none;
+}
+
+.betterAlerts::first-letter {
+    text-transform: capitalize;
+}
+
+.successAlert {
+    background-color: var(--correct-solid);
+}
+
+.errorAlert {
+    background-color: var(--error-solid);
+}
+
+
+@keyframes alertanimation {
+    0% {
+        right: -200px;
+        opacity: 1;
+    }
+
+    50% {
+        right: 10px;
+        bottom: 10px;
+        opacity: 1;
+    }
+
+    70% {
+        right: 10px;
+        bottom: 10px;
+        opacity: 1;
+    }
+
+    100% {
+        right: 10px;
+        bottom: 10px;
+        opacity: 0;
+    }
+}

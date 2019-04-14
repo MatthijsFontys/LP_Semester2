@@ -9,8 +9,8 @@ function UpdateGui(release, newFollowCount, newFollowState) {
     releasefollow.classList.toggle("releaseFollowStyle");
     let releaseWrapper = release.parentElement.parentElement;
     releaseWrapper.getElementsByClassName("followcounter")[0].innerText = newFollowCount;
-    if(newFollowState == "unfollow")
-        prodSuccess("Now following " + releaseWrapper.querySelector(".title-link").innerText + "." );
+    if (newFollowState == "unfollow")
+        betterAlertSuccess("Now following " + releaseWrapper.querySelector(".title-link").innerText + ".");
     else
-        prodError("No longer following " + releaseWrapper.querySelector(".title-link").innerText + "." );
+        betterAlertError("No longer following " + releaseWrapper.querySelector(".title-link").innerText + ".");
 }

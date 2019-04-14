@@ -98,7 +98,6 @@ html, body{
     display: flex;
     position: relative;
     align-items: center;
-    transition-duration: .3s;
     overflow:hidden;
 }
 
@@ -129,10 +128,9 @@ html, body{
 
 .release-img-wrapper {
     background-color: black;
-    box-sizing: padding-box;
+    box-sizing: border-box;
     margin-right: 10px;
     border: 2px solid silver;
-    padding: -2px;
     position: relative;
     border-radius: 8px;
     height: 100px;
@@ -177,6 +175,10 @@ html, body{
     width: auto;
 }*/
 
+
+.hover-color-box:hover {
+    background-color: var(--gray-hover-color);
+}
 
 
 
