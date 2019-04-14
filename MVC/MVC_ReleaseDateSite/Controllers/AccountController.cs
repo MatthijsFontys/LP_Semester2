@@ -13,8 +13,10 @@ namespace MVC_ReleaseDateSite.Controllers
 {
     public class AccountController : Controller
     {
-        public AccountLogic accountLogic;
+        private AccountLogic accountLogic;
+        private ReleaseLogic releaseLogic;
         public AccountController() {
+            releaseLogic = LogicFactory.CreateReleaseLogic();
             accountLogic = LogicFactory.CreateAccountLogic();
         }
 
@@ -66,6 +68,16 @@ namespace MVC_ReleaseDateSite.Controllers
                 accountLogic.Add(user);
             }
             return RedirectToAction("index", "Release");      
+        }
+
+        public IActionResult AddUserToChapter(int id) {
+            return View();
+        }
+
+        [Route("/User/Account")]
+        public IActionResult AccountPage() {
+            int userId = HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault();
+            return View(releaseLogic.GetFollowedReleases(userId));
         }
     }
 }

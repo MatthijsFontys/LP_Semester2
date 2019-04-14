@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Models\MVC_ReleaseDateSite.Models.csproj" />
     <ProjectReference Include="..\MVC_ReleaseDateSite.Data\MVC_ReleaseDateSite.Data.csproj" />
+    <ProjectReference Include="..\MVC_ReleaseDateSite.Interfaces\MVC_ReleaseDateSite.Interfaces.csproj" />
   </ItemGroup>
 
   <ItemGroup>

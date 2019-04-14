@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MVC_ReleaseDateSite.Interfaces\MVC_ReleaseDateSite.Interfaces.csproj" />
+  </ItemGroup>
+
 </Project>

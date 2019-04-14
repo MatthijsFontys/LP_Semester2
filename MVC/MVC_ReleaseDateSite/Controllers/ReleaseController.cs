@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using MVC_ReleaseDateSite.Interfaces;
 using MVC_ReleaseDateSite.Logic;
 using MVC_ReleaseDateSite.Models;
 using MVC_ReleaseDateSite.ViewModels;
@@ -54,6 +55,9 @@ namespace MVC_ReleaseDateSite.Controllers {
                     ImgLocation = model.ImgLocation,
                     ReleaseDate = model.ReleaseDate,
                     Title = model.Title,
+                    Category = new Category {
+                        Name = model.CategoryName
+                    },
                     UserId = HttpContext.Session.GetInt32(SessionHolder.SessionUserId)
                 };
                 IFormFile file = model.ImgFile;
@@ -66,23 +70,25 @@ namespace MVC_ReleaseDateSite.Controllers {
         }
 
         public JsonResult Follow(int id) {
-            if (HttpContext.Session.GetInt32(SessionHolder.SessionUserId) != null) {
+            int? userId = HttpContext.Session.GetInt32(SessionHolder.SessionUserId);
+            if (userId != null && releaseLogic.ValidateFollowState(FollowState.notFollowing,id, userId.GetValueOrDefault())) {
                 releaseLogic.FollowRelease(id, HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault());
                 int UpdatedFollowerCount = releaseLogic.GetReleaseById(id).FollowerCount;
                 string json = JsonConvert.SerializeObject(new { state = "success", followCount = UpdatedFollowerCount, followState = "unfollow" });
                 return new JsonResult(json);
             }
-            return null;
+            throw new Exception("Incorrect follow state");
         }
 
         public JsonResult Unfollow(int id) {
-            if (HttpContext.Session.GetInt32(SessionHolder.SessionUserId) != null) {
-                releaseLogic.UnfollowRelease(id, HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault());
+            int? userId = HttpContext.Session.GetInt32(SessionHolder.SessionUserId);
+            if (userId != null && releaseLogic.ValidateFollowState(FollowState.following, id, userId.GetValueOrDefault())) {
+                releaseLogic.UnfollowRelease(id, userId.GetValueOrDefault());
                 int UpdatedFollowerCount = releaseLogic.GetReleaseById(id).FollowerCount;
                 string json = JsonConvert.SerializeObject(new { state = "success", followCount = UpdatedFollowerCount, followState = "follow" });
                 return new JsonResult(json);
             }
-            return null;
+            throw new Exception("Incorrect follow state");
         }
 
         public IActionResult Following() {
@@ -90,9 +96,9 @@ namespace MVC_ReleaseDateSite.Controllers {
         }
 
         [HttpPost]
-        public IActionResult PostComment(string comment) {
+        public string PostComment(int id, string comment) {
             Console.WriteLine(comment);
-            return RedirectToAction("index");
+            return comment;
         }
 
     }

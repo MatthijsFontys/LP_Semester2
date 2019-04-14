@@ -1,5 +1,4 @@
 let followBtn = document.querySelector("[data-releaseid]");
-console.log(followBtn);
 followBtn.addEventListener("click", () => UpdateFollowState(followBtn, UpdateGui));
 
 function UpdateGui(release, newFollowCount) {

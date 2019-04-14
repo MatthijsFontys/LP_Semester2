@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using MVC_ReleaseDateSite.Models;
+using MVC_ReleaseDateSite.Interfaces;
 
 namespace MVC_ReleaseDateSite.Data {
     public class ReleaseRepository {
@@ -41,6 +42,10 @@ namespace MVC_ReleaseDateSite.Data {
 
         public void UnfollowRelease(int releaseId, int userId) {
             releaseContext.UnfollowRelease(releaseId, userId);
+        }
+
+        public FollowState GetFollowState(int releaseId, int userId) {
+            return releaseContext.GetFollowState(releaseId, userId);
         }
     }
 }

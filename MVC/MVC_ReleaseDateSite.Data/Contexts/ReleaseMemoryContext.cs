@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using MVC_ReleaseDateSite.Models;
 using System.Linq;
+using MVC_ReleaseDateSite.Interfaces;
 
 namespace MVC_ReleaseDateSite.Data {
    public class ReleaseMemoryContext : IReleaseContext {
@@ -102,6 +103,10 @@ namespace MVC_ReleaseDateSite.Data {
         }
 
         List<Release> IReadContext<Release>.GetAll() {
+            throw new NotImplementedException();
+        }
+
+        public FollowState GetFollowState(int releaseId, int userId) {
             throw new NotImplementedException();
         }
     }

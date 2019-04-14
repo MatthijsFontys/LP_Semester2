@@ -1,0 +1,55 @@
+﻿@model IEnumerable<MVC_ReleaseDateSite.Models.Release>
+
+@{
+    ViewData["Title"] = "AccountPage";
+}
+
+
+@section styles{
+    <!-- My CSS-->
+    <link rel="stylesheet" type="text/css" href="~/css/index.css">
+}
+
+<!-- main content start -->
+<div class="wrapper">
+    <div class="container justify-content-start justify-content-md-between pt-3">
+        <!-- Search bar -->
+        <div class="row justify-content-end">
+            <form class="col-6 col-md-4 form-inline mx-auto justify-content-start justify-content-md-center">
+                <input type="text" class="form-control mb-3 w-75" id="search-bar" placeholder="Search">
+                <a><span class="fas fa-search btn-icon align-top pl-2 clickable"></span></a>
+            </form>
+
+        </div>
+        <div class="row">
+            <h3 class="text-center col-12"><a href="#" class="subtitle">Followed (@Model.Count())</a></h3>
+        </div>
+        <div class="row py-2">
+            <!-- Start populair releases-->
+            @foreach (MVC_ReleaseDateSite.Models.Release item in Model) {
+                <!-- Start release -->
+                <div class="col-sm-6 col-md-4 my-2 populair-release-wrapper">
+                    <div class="release-img-wrapper clickable">
+                        <span>
+                            <img src="@item.ImgLocation" />
+                        </span>
+                    </div>
+                    <div style="display: inline-block;">
+                        <h5><a href=@Url.Action("single", "release", new { id = item.Id }) class="title-link">@item.Title</a></h5>
+                        <h6>@item.ReleaseDate.ToShortDateString()</h6>
+                    </div>
+                </div>
+                <!-- End release -->
+            }
+        </div>
+    </div>
+</div>
+<!-- End populair releases -->
+
+
+@section scripts{
+
+    <!-- tooltips -->
+    <script src="~/js/BootstrapTooltips.js" type="text/javascript"></script>
+
+}

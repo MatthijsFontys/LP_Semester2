@@ -4,6 +4,7 @@ using System.Text;
 using MVC_ReleaseDateSite.Models;
 using System.Data.SqlClient;
 using System.Linq;
+using MVC_ReleaseDateSite.Interfaces;
 
 namespace MVC_ReleaseDateSite.Data {
     public class ReleaseMSSQLContext : IReleaseContext {
@@ -19,12 +20,13 @@ namespace MVC_ReleaseDateSite.Data {
         public void Add(Release release) {
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO dbo.Release (name, description, imgLocation, releaseDate, ownerId) VALUES (@title, @description, @img, @releaseDate, @ownerId);", conn);
+                SqlCommand cmd = new SqlCommand("INSERT INTO dbo.Release (name, description, imgLocation, releaseDate, ownerId, categoryName) VALUES (@title, @description, @img, @releaseDate, @ownerId, @categoryName);", conn);
                 cmd.Parameters.AddWithValue("@title", release.Title);
                 cmd.Parameters.AddWithValue("@description", release.Description);
                 cmd.Parameters.AddWithValue("@img", release.ImgLocation);
                 cmd.Parameters.AddWithValue("@releaseDate", release.ReleaseDate);
                 cmd.Parameters.AddWithValue("@ownerId", release.UserId);
+                cmd.Parameters.AddWithValue("@categoryName", release.Category.Name);
                 cmd.ExecuteNonQuery();
             }
         }
@@ -125,8 +127,6 @@ namespace MVC_ReleaseDateSite.Data {
             }
         }
 
-
-
         public List<Comment> GetComments(int id) {
             List<Comment> toReturn = new List<Comment>();
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
@@ -146,6 +146,21 @@ namespace MVC_ReleaseDateSite.Data {
             return toReturn;
         } /* Move this to other context*/
 
-
+        public FollowState GetFollowState(int releaseId, int userId) {
+            using (SqlConnection conn = new SqlConnection(connectionstring)) {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(@"SELECT TOP 1 COUNT(*) as followState
+                FROM dbo.User_Release
+                WHERE userId = @userId
+                AND releaseId = @releaseId", conn);
+                cmd.Parameters.AddWithValue("@releaseId", releaseId);
+                cmd.Parameters.AddWithValue("@userId", userId);
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read()) {
+                    return Convert.ToInt32(reader["followState"]) == 1 ? FollowState.following : FollowState.notFollowing;
+                }
+                throw new Exception("Couldn't read out of the database");
+            }
+        }
     }
 }

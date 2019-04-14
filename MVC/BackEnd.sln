@@ -8,12 +8,13 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVC_ReleaseDateSite.Data", "MVC_ReleaseDateSite.Data\MVC_ReleaseDateSite.Data.csproj", "{900EEDFA-40CE-4510-9CC0-292855A4C5A0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVC_ReleaseDateSite.Logic", "GoodVersionLogic\MVC_ReleaseDateSite.Logic.csproj", "{BFE0BCAE-A019-4FF5-BC8C-C0CF0D5E8D7D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9454B430-B2BB-4B57-84FF-2183450C4942} = {9454B430-B2BB-4B57-84FF-2183450C4942}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVC_ReleaseDateSite.Models", "Models\MVC_ReleaseDateSite.Models.csproj", "{AA8971E5-F5E6-4392-952E-55DE13A14D9B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Interfaces", "Interfaces\Interfaces.csproj", "{98E40377-9D8A-4C32-8A9E-1D257996A224}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVC_ReleaseDateSite.Interfaces", "MVC_ReleaseDateSite.Interfaces\MVC_ReleaseDateSite.Interfaces.csproj", "{9454B430-B2BB-4B57-84FF-2183450C4942}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVC_ReleaseDateSite.Interfaces", "MVC_ReleaseDateSite.Interfaces\MVC_ReleaseDateSite.Interfaces.csproj", "{9454B430-B2BB-4B57-84FF-2183450C4942}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +38,6 @@ Global
 		{AA8971E5-F5E6-4392-952E-55DE13A14D9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA8971E5-F5E6-4392-952E-55DE13A14D9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA8971E5-F5E6-4392-952E-55DE13A14D9B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{98E40377-9D8A-4C32-8A9E-1D257996A224}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{98E40377-9D8A-4C32-8A9E-1D257996A224}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{98E40377-9D8A-4C32-8A9E-1D257996A224}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{98E40377-9D8A-4C32-8A9E-1D257996A224}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9454B430-B2BB-4B57-84FF-2183450C4942}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9454B430-B2BB-4B57-84FF-2183450C4942}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9454B430-B2BB-4B57-84FF-2183450C4942}.Release|Any CPU.ActiveCfg = Release|Any CPU
