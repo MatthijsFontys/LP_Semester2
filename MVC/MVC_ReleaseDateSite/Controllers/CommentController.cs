@@ -13,18 +13,30 @@ namespace MVC_ReleaseDateSite.Controllers {
     public class CommentController : Controller {
         private CommentLogic commentLogic;
 
-        public CommentController(CommentLogic commentLogic) {
-            this.commentLogic = commentLogic;
+        public CommentController() {
+            this.commentLogic = LogicFactory.CreateCommentLogic();
         }
 
-        public IActionResult PostComment(int releaseId, string commentText) {
+        [HttpPost]
+        public PartialViewResult PostComment(int releaseId, string commentText) {
             IComment comment = new Comment
             {
                 Text = commentText,
-                releaseId = releaseId
+                releaseId = releaseId,
+                userId = HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault()
             };
+
+            Comment toReturn = new Comment
+            {
+                Text = commentText,
+                User = new User
+                {
+                    ImgLocation = HttpContext.Session.GetString(SessionHolder.SessionUserImg)
+                }
+            };
+
             commentLogic.Add(comment);
-            return new EmptyResult();
+            return PartialView("_PostedComment", toReturn);
         }
     }
 }

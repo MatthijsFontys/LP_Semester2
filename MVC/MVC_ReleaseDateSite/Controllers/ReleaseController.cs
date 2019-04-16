@@ -8,14 +8,17 @@ using MVC_ReleaseDateSite.Models;
 using MVC_ReleaseDateSite.ViewModels;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace MVC_ReleaseDateSite.Controllers {
     public class ReleaseController : Controller {
         private readonly IHostingEnvironment he;
         private ReleaseLogic releaseLogic;
+        private CommentLogic commentLogic;
         public ReleaseController(IHostingEnvironment he, IConfiguration configuration) {
             this.he = he;
             releaseLogic = LogicFactory.CreateReleaseLogic();
+            commentLogic = LogicFactory.CreateCommentLogic();
             string test = configuration.GetConnectionString("LocalConnection");
         }
         public IActionResult Index() {
@@ -47,7 +50,7 @@ namespace MVC_ReleaseDateSite.Controllers {
         }
 
         [HttpPost]
-        public IActionResult CreateRelease(CreateReleaseViewModel model) { // Remove the ReleaseViewModel from models, but i cant find it there
+        public IActionResult CreateRelease(CreateReleaseViewModel model) {
             if (ModelState.IsValid) {
                 Release release = new Release
                 {
@@ -55,9 +58,7 @@ namespace MVC_ReleaseDateSite.Controllers {
                     ImgLocation = model.ImgLocation,
                     ReleaseDate = model.ReleaseDate,
                     Title = model.Title,
-                    Category = new Category {
-                        Name = model.CategoryName
-                    },
+                    CategoryId = Convert.ToInt32(model.CategoryId),
                     UserId = HttpContext.Session.GetInt32(SessionHolder.SessionUserId)
                 };
                 IFormFile file = model.ImgFile;
@@ -66,7 +67,7 @@ namespace MVC_ReleaseDateSite.Controllers {
 
                 releaseLogic.AddRelease(release);
             }
-            return RedirectToAction("index");
+            return RedirectToAction("Create");
         }
 
         public JsonResult Follow(int id) {
@@ -90,6 +91,14 @@ namespace MVC_ReleaseDateSite.Controllers {
             }
             throw new Exception("Incorrect follow state");
         }
+
+        [HttpPost]
+        public JsonResult ChangeDate([FromBody] ChangeDateModel[] dates) {
+            releaseLogic.ConverToDaysIfValidDate(dates);
+            string json = JsonConvert.SerializeObject(dates);
+            return new JsonResult(dates);
+        }
+
 
         public IActionResult Following() {
             return View();

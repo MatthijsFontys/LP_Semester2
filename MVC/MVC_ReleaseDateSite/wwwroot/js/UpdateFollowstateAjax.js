@@ -5,3 +5,4 @@ function UpdateFollowState(release, RefreshGuiFunction) {
         RefreshGuiFunction(release, json.followCount, json.followState);
     });
 }
+4

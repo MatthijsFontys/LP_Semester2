@@ -48,6 +48,7 @@
 
 
   <ItemGroup>
+    <Folder Include="ViewModels\Helpers\Json helpers\" />
     <Folder Include="wwwroot\images\categories\" />
     <Folder Include="wwwroot\images\toggleIcons\" />
     <Folder Include="wwwroot\images\userUploads\ProfilePics\" />

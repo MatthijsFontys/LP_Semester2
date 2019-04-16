@@ -18,5 +18,6 @@ namespace MVC_ReleaseDateSite.Models {
         public User User { get; set; }
         public int? UserId { get; set; }
         public bool IsFollowed { get; set; }
+        public int CategoryId { get; set; }
     }
 }

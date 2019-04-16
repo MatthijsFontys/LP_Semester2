@@ -20,13 +20,13 @@ namespace MVC_ReleaseDateSite.Data {
         public void Add(Release release) {
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO dbo.Release (name, description, imgLocation, releaseDate, ownerId, categoryName) VALUES (@title, @description, @img, @releaseDate, @ownerId, @categoryName);", conn);
+                SqlCommand cmd = new SqlCommand("INSERT INTO dbo.Release (name, description, imgLocation, releaseDate, userId_Owner, categoryId) VALUES (@title, @description, @img, @releaseDate, @ownerId, @categoryId);", conn);
                 cmd.Parameters.AddWithValue("@title", release.Title);
                 cmd.Parameters.AddWithValue("@description", release.Description);
                 cmd.Parameters.AddWithValue("@img", release.ImgLocation);
                 cmd.Parameters.AddWithValue("@releaseDate", release.ReleaseDate);
                 cmd.Parameters.AddWithValue("@ownerId", release.UserId);
-                cmd.Parameters.AddWithValue("@categoryName", release.Category.Name);
+                cmd.Parameters.AddWithValue("@categoryId", release.CategoryId);
                 cmd.ExecuteNonQuery();
             }
         }
@@ -131,14 +131,20 @@ namespace MVC_ReleaseDateSite.Data {
             List<Comment> toReturn = new List<Comment>();
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand("SELECT id, releaseId, userId, replyId, text, postDate FROM dbo.Comment WHERE releaseId = @id", conn);
+                SqlCommand cmd = new SqlCommand(@"SELECT C.id, releaseId , imgLocation, commentId_Reply, text, postDate FROM dbo.Comment C
+                JOIN releaseUser U  on u.id = userId
+                WHERE releaseId = @id
+                ORDER BY postDate DESC" , conn);
                 cmd.Parameters.AddWithValue("@id", id);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read()) {
                     Comment comment = new Comment
                     {
                         Text = reader["text"].ToString(),
-                        PostTime = (DateTime)reader["postDate"]
+                        PostTime = (DateTime)reader["postDate"],
+                        User = new User {
+                            ImgLocation = reader["imgLocation"].ToString()
+                        }
                     };
                     toReturn.Add(comment);
                 }

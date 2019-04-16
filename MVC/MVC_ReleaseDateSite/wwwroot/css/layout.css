@@ -38,6 +38,10 @@ html, body {
     border-right: 1px solid var(--outside-border);
 }
 
+.grid-contrainer > div :odd {
+    margin-right:0px;
+}
+
 
 
 /* Navbar styles */

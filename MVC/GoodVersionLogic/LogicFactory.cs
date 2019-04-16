@@ -23,5 +23,13 @@ namespace MVC_ReleaseDateSite.Logic {
                     new AccountMSSQLContext(new DatabaseConnection(connectionstringLocal)))) {
             };
       }
+
+        public static CommentLogic CreateCommentLogic() {
+            return new CommentLogic(
+                new CommentRepository(
+                    new CommentMSSQLContext(new DatabaseConnection(connectionstringLocal))
+                    )
+                );
+        }
     }
 }

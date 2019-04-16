@@ -57,12 +57,37 @@ namespace MVC_ReleaseDateSite.Logic {
 
         // Todo: move this to comment logic
         public List<Comment> GetComments(int id) {
-            return releaseRepository.GetComments(id);
+            List<Comment> toReturn = releaseRepository.GetComments(id);
+            foreach (Comment comment in toReturn) {
+                comment.timeSincePost = GetTimeSincePosted(comment.PostTime);
+            }
+            return toReturn;
         }
 
         // Todo: move this to a query instead
         public List<Release> GetFollowedReleases(int userId) {
             return releaseRepository.GetReleases(userId).Where(x => x.IsFollowed).ToList();
+        }
+
+        public void ConverToDaysIfValidDate(ChangeDateModel[] dates) {
+            foreach (ChangeDateModel date in dates) {
+               if( DateTime.TryParse(date.Date, out DateTime tempDate))
+                date.Date = $"{Math.Ceiling(tempDate.Subtract(DateTime.Now).TotalDays)} days";
+            }
+        }
+
+        public string GetTimeSincePosted(DateTime postTime) {
+            TimeSpan timeDifference = DateTime.Now.Subtract(postTime);
+            if(timeDifference.TotalSeconds < 60)
+                return $"{Math.Floor(timeDifference.TotalSeconds)} seconds ago";
+            else if (timeDifference.TotalMinutes < 60)
+                return $"{Math.Floor(timeDifference.TotalMinutes)} minutes ago";
+            else if (timeDifference.TotalHours < 24)
+                return $"{Math.Floor(timeDifference.TotalHours)} hours ago";
+            else if (timeDifference.TotalDays < 7)
+                return $"{Math.Floor(timeDifference.TotalDays)} days ago";
+            else
+                return $"{Math.Floor(timeDifference.TotalDays / 7)} weeks ago";
         }
     }
 }

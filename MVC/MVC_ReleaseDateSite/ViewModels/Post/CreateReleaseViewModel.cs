@@ -10,17 +10,22 @@ namespace MVC_ReleaseDateSite.ViewModels {
     public class CreateReleaseViewModel {
         [Display(Name = "Image url")]
         public string ImgLocation { get; set; }
+
         [Display(Name = "Upload image")]
         public IFormFile ImgFile { get; set; }
+
         public string Description { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "Required")]
         public string Title { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "Required")]
         [Display(Name = "Release date")]
-        [ValidDate]
+        /*[ValidDate(ErrorMessage = "Invalid release date" )]*/
         public DateTime ReleaseDate { get; set; }
-        [Required]
+
+        [Required(ErrorMessage = "Required")]
         [Display(Name = "Category")]
-        public string CategoryName { get; set; }
+        public string CategoryId { get; set; }
     }
 }
