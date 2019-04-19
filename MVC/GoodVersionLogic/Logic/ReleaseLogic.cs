@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using MVC_ReleaseDateSite.Models;
-using MVC_ReleaseDateSite.Data;
-using System.Linq;
+﻿using MVC_ReleaseDateSite.Data;
 using MVC_ReleaseDateSite.Interfaces;
+using MVC_ReleaseDateSite.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MVC_ReleaseDateSite.Logic {
     public class ReleaseLogic {
@@ -71,23 +70,43 @@ namespace MVC_ReleaseDateSite.Logic {
 
         public void ConverToDaysIfValidDate(ChangeDateModel[] dates) {
             foreach (ChangeDateModel date in dates) {
-               if( DateTime.TryParse(date.Date, out DateTime tempDate))
-                date.Date = $"{Math.Ceiling(tempDate.Subtract(DateTime.Now).TotalDays)} days";
+                if (DateTime.TryParse(date.Date, out DateTime tempDate))
+                    date.Date = $"{Math.Ceiling(tempDate.Subtract(DateTime.Now).TotalDays)} days";
             }
         }
 
         public string GetTimeSincePosted(DateTime postTime) {
             TimeSpan timeDifference = DateTime.Now.Subtract(postTime);
-            if(timeDifference.TotalSeconds < 60)
-                return $"{Math.Floor(timeDifference.TotalSeconds)} seconds ago";
+            // Seconds
+            if (timeDifference.TotalSeconds < 60)
+                if (timeDifference.TotalSeconds < 2)
+                    return "1 second ago";
+                else
+                    return $"{Math.Floor(timeDifference.TotalSeconds)} seconds ago";
+            // Minutes
             else if (timeDifference.TotalMinutes < 60)
-                return $"{Math.Floor(timeDifference.TotalMinutes)} minutes ago";
+                if (timeDifference.TotalMinutes < 2)
+                    return "1 minute ago";
+                else
+                    return $"{Math.Floor(timeDifference.TotalMinutes)} minutes ago";
+            // Hours
             else if (timeDifference.TotalHours < 24)
-                return $"{Math.Floor(timeDifference.TotalHours)} hours ago";
+                if (timeDifference.TotalHours < 2)
+                    return "1 hour ago";
+                else
+                    return $"{Math.Floor(timeDifference.TotalHours)} hours ago";
+            // Days
             else if (timeDifference.TotalDays < 7)
-                return $"{Math.Floor(timeDifference.TotalDays)} days ago";
+                if (timeDifference.TotalDays < 2)
+                    return "1 day ago";
+                else
+                    return $"{Math.Floor(timeDifference.TotalDays)} days ago";
+            // Weeks
             else
-                return $"{Math.Floor(timeDifference.TotalDays / 7)} weeks ago";
+                if (timeDifference.TotalDays / 7 < 2)
+                    return "1 week ago";
+                else
+                    return $"{Math.Floor(timeDifference.TotalDays / 7)} weeks ago";
         }
     }
 }
