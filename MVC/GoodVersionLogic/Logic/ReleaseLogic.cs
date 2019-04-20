@@ -8,8 +8,8 @@ using System.Linq;
 namespace MVC_ReleaseDateSite.Logic {
     public class ReleaseLogic {
 
-        public IEnumerable<int> SearchReleases(string searchQuery = "action movie") {
-            ReleaseSearch rs = new ReleaseSearch(releaseRepository.GetReleasesToSearch(), searchQuery);
+        public IEnumerable<int> SearchReleases(string searchQuery) {
+            ReleaseSearch rs = new ReleaseSearch(releaseRepository.GetReleasesToSearch(searchQuery), searchQuery);
             return rs.GetSearchResultIds();
         }
 

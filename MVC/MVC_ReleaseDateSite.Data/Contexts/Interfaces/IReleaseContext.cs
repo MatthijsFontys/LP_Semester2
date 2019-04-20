@@ -13,7 +13,7 @@ namespace MVC_ReleaseDateSite.Data {
         FollowState GetFollowState(int releaseId, int userId);
 
         #region search
-        IEnumerable<Release> GetReleasesToSearch();
+        IEnumerable<Release> GetReleasesToSearch(string searchQuery);
         #endregion
     }
 }

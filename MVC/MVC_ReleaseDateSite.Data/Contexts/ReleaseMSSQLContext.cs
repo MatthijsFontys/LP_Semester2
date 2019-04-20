@@ -173,34 +173,47 @@ namespace MVC_ReleaseDateSite.Data {
         // Searching
 
         // Step 1, getting all releases that contain one of the keywords
-        public IEnumerable<Release> GetReleasesToSearch() {
+        public IEnumerable<Release> GetReleasesToSearch(string searchQuery) {
+            string[] words = searchQuery.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 List<Release> toReturn = new List<Release>();
                 conn.Open();
-                SqlCommand cmd = new SqlCommand(@"SELECT DISTINCT R.[name] as title, R.[description] as description, Category.[name] as category,
+                    SqlCommand cmd = new SqlCommand(@"SELECT DISTINCT R.[name] as title, R.[description] as description, Category.[name] as category,
                 R.id as id
                 FROM dbo.Release R
                 LEFT JOIN dbo.Comment ON Comment.releaseId = R.id
                 JOIN dbo.Category Category ON Category.id = R.categoryId
-                WHERE 
-                R.[name] LIKE '%action%' OR R.[name] LIKE '%movie%' OR
-                R.[description] LIKE '%action%' OR R.[description] LIKE '%movie%' OR
-                Category.[name]  LIKE '%action%' OR Category.[name] LIKE '%movie%' OR
-                Comment.[text] LIKE '%action%' OR Comment.[text] LIKE '%movie%'", conn);
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read()) {
-                    Release tempRelease = new Release
-                    {
-                        Category = new Category
-                        {
-                            Name = reader["category"].ToString()
-                        },
-                        Title = reader["title"].ToString(),
-                        Description = reader["description"].ToString(),
-                        Id = Convert.ToInt32(reader["id"])
-                    };
-                    toReturn.Add(tempRelease);
+                WHERE R.[description] LIKE '%' + @searchWord + '%' OR
+                R.[name] LIKE '%' + @searchWord + '%' OR
+                Category.[name] LIKE '%' + @searchWord + '%' OR
+                Comment.[text] LIKE '%' + @searchWord + '%'
+                ", conn);
+                SqlParameter searchWord = new SqlParameter("@searchWord", System.Data.SqlDbType.VarChar, 200);
+
+                foreach (string word in words) {
+                    searchWord.Value = word;
+                    if(! cmd.Parameters.Contains(searchWord))
+                        cmd.Parameters.Add(searchWord);
+                    cmd.Prepare();
+                    using (SqlDataReader reader = cmd.ExecuteReader()) {
+                        while (reader.Read()) {
+                            Release tempRelease = new Release
+                            {
+                                Category = new Category
+                                {
+                                    Name = reader["category"].ToString()
+                                },
+                                Title = reader["title"].ToString(),
+                                Description = reader["description"].ToString(),
+                                Id = Convert.ToInt32(reader["id"])
+                            };
+                            toReturn.Add(tempRelease);
+                        }
+                    }
                 }
+                // Removes duplicates from the list
+                toReturn = toReturn.GroupBy(x => x.Id).Select(g => g.FirstOrDefault()).ToList();
                 return toReturn;
             }
         }

@@ -13,8 +13,8 @@ namespace MVC_ReleaseDateSite.Data {
             this.categoryContext = categoryContext;
         }
 
-        public IEnumerable<Release> GetReleasesToSearch() {
-            return releaseContext.GetReleasesToSearch();
+        public IEnumerable<Release> GetReleasesToSearch(string searchQuery) {
+            return releaseContext.GetReleasesToSearch(searchQuery);
         }
 
         public void AddRelease(Release release) {
