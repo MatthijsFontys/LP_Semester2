@@ -110,6 +110,12 @@ namespace MVC_ReleaseDateSite.Controllers {
             return comment;
         }
 
+
+        public IActionResult Search(string searchQuery = "action movie") {
+            TempData["search"] = releaseLogic.SearchReleases(searchQuery);
+            return View(releaseLogic.SearchReleases(searchQuery));
+        }
+
     }
 }
 

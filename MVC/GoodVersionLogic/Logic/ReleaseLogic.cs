@@ -8,6 +8,12 @@ using System.Linq;
 namespace MVC_ReleaseDateSite.Logic {
     public class ReleaseLogic {
 
+        public IEnumerable<int> SearchReleases(string searchQuery = "action movie") {
+            ReleaseSearch rs = new ReleaseSearch(releaseRepository.GetReleasesToSearch(), searchQuery);
+            return rs.GetSearchResultIds();
+        }
+
+        #region CRUD
         private ReleaseRepository releaseRepository;
         public ReleaseLogic(ReleaseRepository releaseRepository) {
             this.releaseRepository = releaseRepository;
@@ -68,6 +74,7 @@ namespace MVC_ReleaseDateSite.Logic {
             return releaseRepository.GetReleases(userId).Where(x => x.IsFollowed).ToList();
         }
 
+        // Todo: move this to a place for time calculations
         public void ConverToDaysIfValidDate(ChangeDateModel[] dates) {
             foreach (ChangeDateModel date in dates) {
                 if (DateTime.TryParse(date.Date, out DateTime tempDate))
@@ -108,5 +115,6 @@ namespace MVC_ReleaseDateSite.Logic {
                 else
                     return $"{Math.Floor(timeDifference.TotalDays / 7)} weeks ago";
         }
+        #endregion
     }
 }

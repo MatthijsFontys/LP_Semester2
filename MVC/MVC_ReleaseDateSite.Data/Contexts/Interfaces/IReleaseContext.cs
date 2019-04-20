@@ -11,5 +11,9 @@ namespace MVC_ReleaseDateSite.Data {
         void FollowRelease(int releaseId, int userId);
         void UnfollowRelease(int releaseId, int userId);
         FollowState GetFollowState(int releaseId, int userId);
+
+        #region search
+        IEnumerable<Release> GetReleasesToSearch();
+        #endregion
     }
 }

@@ -7,4 +7,12 @@ namespace MVC_ReleaseDateSite.Interfaces {
         following,
         notFollowing
     }
+
+    // Todo: put these in the database instead
+    public enum SearchZones {
+        title,
+        description,
+        comments,
+        category
+    }
 }
