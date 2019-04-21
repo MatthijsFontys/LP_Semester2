@@ -41,7 +41,7 @@ namespace MVC_ReleaseDateSite.Logic {
             return releasesWithWord;
         }
 
-        private double GivePointsByFrequencyCount(string searchWord, string textToSearch, double zoneBias = 1) {
+        private double GivePointsByFrequencyCount(string searchWord, string textToSearch, double zoneBias) {
             double score = 0;
             string[] wordsInText = textToSearch.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             foreach (string word in wordsInText) {
@@ -54,6 +54,8 @@ namespace MVC_ReleaseDateSite.Logic {
 
         private void ApplyTermFrequencyInverseToScore(int releasesWithWord) {
             double termFrequencyInverse = Math.Log((double)releasesToSearchCount / (releasesWithWord + 1));
+            if (termFrequencyInverse < 0)
+                termFrequencyInverse = 0.004;
 
             for (int i = 0; i < releasesWithScore.Keys.Count(); i++) {
                 Release key = currentWordScore.ElementAt(i).Key;

@@ -111,9 +111,25 @@ namespace MVC_ReleaseDateSite.Controllers {
         }
 
 
-        public IActionResult Search(string searchQuery = "action movie") {
-            TempData["search"] = releaseLogic.SearchReleases(searchQuery);
-            return View(releaseLogic.SearchReleases(searchQuery));
+        public IActionResult Search(string searchQuery) {
+            List<ReleaseViewModelSmall> vm = new List<ReleaseViewModelSmall>();
+            foreach (int id in releaseLogic.SearchReleases(searchQuery)) {
+                Release releaseModel = releaseLogic.GetReleaseById(id);
+                ReleaseViewModelSmall tempRelease = new ReleaseViewModelSmall
+                {
+                    Title = releaseModel.Title,
+                    Id = releaseModel.Id,
+                    FollowerCount = releaseModel.FollowerCount,
+                    ImgLocation = releaseModel.ImgLocation,
+                    ReleaseDate = releaseModel.ReleaseDate.ToShortDateString(),
+                    Category = new CategoryViewModel
+                    {
+                        ImgLocation = releaseModel.Category.ImgLocation
+                    }
+                };
+                vm.Add(tempRelease);
+            } 
+            return View(vm);
         }
 
     }
