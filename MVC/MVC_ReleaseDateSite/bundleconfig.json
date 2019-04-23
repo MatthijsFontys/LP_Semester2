@@ -1,0 +1,36 @@
+[
+    {
+        "outputFileName": "wwwroot/css/site.min.css",
+        "inputFiles": [
+            "wwwroot/css/site.css"
+        ]
+    },
+    {
+        "outputFileName": "wwwroot/js/Bundles/index.min.js",
+        "inputFiles": [
+            "wwwroot/js/BootstrapTooltips.js",
+            "wwwroot/js/timeToggleBar.js",
+            "wwwroot/js/betterAlerts.js",
+            "wwwroot/js/setFollowEventhandlersIndex.js",
+            "wwwroot/js/UpdateFollowstateAjax.js"
+        ],
+        "minify": {
+            "enabled": true,
+            "renameLocals": true
+        },
+        "sourceMap": false
+    },
+    {
+        "outputFileName": "wwwroot/js/Bundles/single.min.js",
+        "inputFiles": [
+            "wwwroot/js/setFollowEventhandlersSingle.js",
+            "wwwroot/js/UpdateFollowstateAjax.js",
+            "wwwroot/js/PostComment.js"
+        ],
+        "minify": {
+            "enabled": true,
+            "renameLocals": true
+        },
+        "sourceMap": false
+    }
+]
