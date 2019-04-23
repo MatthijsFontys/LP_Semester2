@@ -32,6 +32,7 @@
   <ItemGroup>
     <PackageReference Include="AD.System.Web.Helpers.dll" Version="2.0.0" />
     <PackageReference Include="AlertifyJS" Version="1.11.2" />
+    <PackageReference Include="FluentValidation" Version="8.2.3" />
     <PackageReference Include="Foolproof" Version="0.9.4518" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />

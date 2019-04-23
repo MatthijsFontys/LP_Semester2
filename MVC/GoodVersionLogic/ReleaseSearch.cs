@@ -32,7 +32,7 @@ namespace MVC_ReleaseDateSite.Logic {
         private int ScoreReleases(string searchWord) {
             int releasesWithWord = 0;
             foreach (Release release in releasesWithScore.Keys) {
-                currentWordScore[release]  +=  GivePointsByFrequencyCount(searchWord, release.Title, 1);
+                currentWordScore[release]  +=  GivePointsByFrequencyCount(searchWord, release.Title, 1.2);
                 currentWordScore[release] +=  GivePointsByFrequencyCount(searchWord, release.Description, .7);
                 currentWordScore[release] +=  GivePointsByFrequencyCount(searchWord, release.Category.Name, .5);
                 if (currentWordScore[release] > 0)

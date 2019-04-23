@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using FluentValidation.Results;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using MVC_ReleaseDateSite.Helpers.CustomAttributes;
 using MVC_ReleaseDateSite.Interfaces;
 using MVC_ReleaseDateSite.Logic;
 using MVC_ReleaseDateSite.Models;
@@ -51,7 +53,9 @@ namespace MVC_ReleaseDateSite.Controllers {
 
         [HttpPost]
         public IActionResult CreateRelease(CreateReleaseViewModel model) {
-            if (ModelState.IsValid) {
+            FluentReuiredIfAttribute validator = new FluentReuiredIfAttribute();
+            ValidationResult result = validator.Validate(model);
+            if (ModelState.IsValid && result.IsValid) {
                 Release release = new Release
                 {
                     Description = model.Description,

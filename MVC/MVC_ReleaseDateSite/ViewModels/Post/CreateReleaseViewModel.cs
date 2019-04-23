@@ -9,6 +9,7 @@ using Foolproof;
 namespace MVC_ReleaseDateSite.ViewModels {
     public class CreateReleaseViewModel {
         [Display(Name = "Image url")]
+        [DataType(DataType.ImageUrl)]
         public string ImgLocation { get; set; }
 
         [Display(Name = "Upload image")]
@@ -16,15 +17,17 @@ namespace MVC_ReleaseDateSite.ViewModels {
 
         public string Description { get; set; }
 
-        [Required(ErrorMessage = "Required")]
+        [Required(ErrorMessage = "Title is required")]
         public string Title { get; set; }
 
-        [Required(ErrorMessage = "Required")]
+        [Required(ErrorMessage = "Release date is required")]
         [Display(Name = "Release date")]
-        /*[ValidDate(ErrorMessage = "Invalid release date" )]*/
+        [DataType(DataType.Date)]
+        [ValidDate(ErrorMessage = "Invalid release date" )]
         public DateTime ReleaseDate { get; set; }
 
-        [Required(ErrorMessage = "Required")]
+        [Required]
+        [Range(1,3)] //Todo dont hardcode this range
         [Display(Name = "Category")]
         public string CategoryId { get; set; }
     }

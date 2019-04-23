@@ -22,7 +22,10 @@ namespace MVC_ReleaseDateSite.Data {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("INSERT INTO dbo.Release (name, description, imgLocation, releaseDate, userId_Owner, categoryId) VALUES (@title, @description, @img, @releaseDate, @ownerId, @categoryId);", conn);
                 cmd.Parameters.AddWithValue("@title", release.Title);
-                cmd.Parameters.AddWithValue("@description", release.Description);
+                if (string.IsNullOrEmpty(release.Description))
+                    cmd.Parameters.AddWithValue("@description", DBNull.Value);
+                else
+                    cmd.Parameters.AddWithValue("@description", release.Description);
                 cmd.Parameters.AddWithValue("@img", release.ImgLocation);
                 cmd.Parameters.AddWithValue("@releaseDate", release.ReleaseDate);
                 cmd.Parameters.AddWithValue("@ownerId", release.UserId);

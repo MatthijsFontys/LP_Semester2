@@ -41,7 +41,7 @@ namespace MVC_ReleaseDateSite.Controllers
                 HttpContext.Session.SetString(SessionHolder.SessionUserImg, tempUser.ImgLocation);
                 return RedirectToAction("Index", "Release");
             }
-            return RedirectToAction("Login, Account");
+            return RedirectToAction("Login");
         }
 
         public IActionResult Logout() {
