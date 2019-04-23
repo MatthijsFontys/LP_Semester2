@@ -15,7 +15,6 @@ using MVC_ReleaseDateSite.Data;
 namespace MVC_ReleaseDateSite {
     public class Startup {
 
-
         public Startup(IConfiguration configuration) {
             Configuration = configuration;
         }

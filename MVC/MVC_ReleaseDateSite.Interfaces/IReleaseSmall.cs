@@ -3,6 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace MVC_ReleaseDateSite.Interfaces {
-    interface IReleaseSmall : IRelease {
+    public interface IReleaseSmall : IRelease {
     }
 }
