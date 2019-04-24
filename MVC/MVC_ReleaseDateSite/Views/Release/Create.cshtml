@@ -1,0 +1,92 @@
+﻿@model MVC_ReleaseDateSite.ViewModels.CreateReleaseViewModel
+
+@{
+    //ViewData["Title"] = "Create";
+}
+
+@section Styles{
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style type="text/css">
+        table td.ui-datepicker-today a {
+            border: 2px solid var(--primary) !important;
+            /*background-color: var(--primary) !important;
+            color: white !important;
+            font-weight: 500 !important;*/
+            color: black !important;
+            background-color: var(--side-bg) !important;
+        }
+
+        a.ui-state-active {
+            background-color: var(--primary) !important;
+            color: white !important;
+            font-weight: 500 !important;
+            border: 2px solid var(--side-bg) !important;
+        }
+    </style>
+}
+
+<div class="wrapper">
+    <h1>@TempData["ValidationResults"]</h1>
+    <div class="row pt-3">
+        <h2 class="col-12 text-center mb-4">Add a new release</h2>
+        <div class="col-md-4 offset-4">
+            <form asp-action="CreateRelease" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CategoryId" class="control-label"></label>
+                    <br />
+                    <select asp-for="CategoryId" class="w-50">
+                        <option value="2">Game</option>
+                        <option value="1">Book</option>
+                        <option value="3">Movie</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ImgFile" class="control-label"></label>
+                    <input asp-for="ImgFile" class="form-control pl-0" style="border: none;" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="ImgLocation" class="control-label"></label>
+                    <input asp-for="ImgLocation" class="form-control" />
+                    <span asp-validation-for="ImgLocation" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <textarea asp-for="Description" class="form-control standard-text-box" style="border: 1px solid silver"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReleaseDate" class="control-label"></label>
+                    <!-- <input asp-for="ReleaseDate" type="date" class="form-control" /> -->
+                    <input asp-for="ReleaseDate" type="text" id="datepicker" class="form-control" placeholder="dd-mm-yyyy" autocomplete="off">
+                    <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+                    @Html.ValidationMessageFor(model => model.ReleaseDate, null, new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn primary-button" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+        $(function () {
+            $("#datepicker").datepicker({
+                dateFormat: "dd-mm-yy",
+                minDate: "0d",
+                maxDate: "720d",
+                changeYear: true,
+                changeMonth: true
+            });
+        });
+    </script>
+}
