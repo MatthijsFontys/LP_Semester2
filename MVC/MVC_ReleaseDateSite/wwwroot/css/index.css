@@ -155,7 +155,7 @@ html, body{
 .new-release-wrapper img {
     max-width: 100%;
     width: auto;
-    height: 166px;
+    height: 100%;
 }
 
 .new-release-wrapper {

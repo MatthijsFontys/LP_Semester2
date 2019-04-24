@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="~/css/index.css">
     <!-- Better alerts -->
     <link rel="stylesheet" type="text/css" href="~/css/betterAlerts.css" />
+    <!-- Todo: bundle this -->
 }
 
 @{bool loggedIn = (!string.IsNullOrEmpty(Context.Session.GetInt32("_userId").ToString())); }
