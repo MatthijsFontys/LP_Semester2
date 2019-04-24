@@ -16,9 +16,11 @@ namespace MVC_ReleaseDateSite.Controllers
     {
         private AccountLogic accountLogic;
         private ReleaseLogic releaseLogic;
+        private ReleaseMapper releaseMapper;
         public AccountController() {
             releaseLogic = LogicFactory.CreateReleaseLogic();
             accountLogic = LogicFactory.CreateAccountLogic();
+            releaseMapper = new ReleaseMapper();
         }
 
         public IActionResult Index()
@@ -74,7 +76,7 @@ namespace MVC_ReleaseDateSite.Controllers
         [Route("/User/Account")]
         public IActionResult AccountPage() {
             int userId = HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault();
-            return View(releaseLogic.GetFollowedReleases(userId));
+            return View(releaseMapper.MapToSmallReleaseViewModelCollection(releaseLogic.GetFollowedReleases(userId)));
         }
     }
 }

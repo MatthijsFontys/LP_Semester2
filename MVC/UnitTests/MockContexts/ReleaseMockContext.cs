@@ -14,7 +14,7 @@ namespace UnitTests {
             this.releasesToSearch = releasesToSearch;
         }
 
-        public void Add(Release type) {
+        public void Add(IRelease type) {
             throw new NotImplementedException();
         }
 
@@ -26,15 +26,15 @@ namespace UnitTests {
             throw new NotImplementedException();
         }
 
-        public List<Release> GetAll(int userId) {
+        public List<IRelease> GetAll(int userId) {
             throw new NotImplementedException();
         }
 
-        public List<Release> GetAll() {
+        public List<IRelease> GetAll() {
             throw new NotImplementedException();
         }
 
-        public Release GetByPrimaryKey<T2>(T2 id) {
+        public IRelease GetByPrimaryKey<T2>(T2 id) {
             throw new NotImplementedException();
         }
 
@@ -54,7 +54,11 @@ namespace UnitTests {
             throw new NotImplementedException();
         }
 
-        public void Update(Release type) {
+        public void Update(IRelease type) {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<IRelease> IReleaseContext.GetReleasesToSearch(string searchQuery) {
             throw new NotImplementedException();
         }
     }
