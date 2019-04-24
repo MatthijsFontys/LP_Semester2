@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using MVC_ReleaseDateSite;
+﻿using Microsoft.AspNetCore.Mvc;
 using MVC_ReleaseDateSite.Logic;
 using Microsoft.AspNetCore.Http;
 using MVC_ReleaseDateSite.ViewModels;

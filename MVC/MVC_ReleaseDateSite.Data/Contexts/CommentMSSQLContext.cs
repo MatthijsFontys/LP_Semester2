@@ -19,7 +19,7 @@ namespace MVC_ReleaseDateSite.Data {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("INSERT INTO dbo.Comment (releaseId, userId, text) VALUES (@releaseId, @userId, @text);", conn);
                 cmd.Parameters.AddWithValue("@releaseId", comment.releaseId);
-                cmd.Parameters.AddWithValue("@userId", comment.userId);
+                cmd.Parameters.AddWithValue("@userId", comment.User.Id);
                 cmd.Parameters.AddWithValue("@text", comment.Text);
                 cmd.ExecuteNonQuery();
             }

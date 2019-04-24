@@ -14,7 +14,7 @@ namespace MVC_ReleaseDateSite.Controllers {
         private CommentLogic commentLogic;
 
         public CommentController() {
-            this.commentLogic = LogicFactory.CreateCommentLogic();
+            commentLogic = LogicFactory.CreateCommentLogic();
         }
 
         [HttpPost]
@@ -23,14 +23,15 @@ namespace MVC_ReleaseDateSite.Controllers {
             {
                 Text = commentText,
                 releaseId = releaseId,
-                userId = HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault()
+                User = new User {
+                    Id = HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault()
+                }
             };
 
-            Comment toReturn = new Comment
+            CommentViewModel toReturn = new CommentViewModel
             {
                 Text = commentText,
-                User = new User
-                {
+                Owner = new UserViewModel{
                     ImgLocation = HttpContext.Session.GetString(SessionHolder.SessionUserImg)
                 }
             };

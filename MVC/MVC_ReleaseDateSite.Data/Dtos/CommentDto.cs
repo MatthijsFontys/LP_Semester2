@@ -10,6 +10,5 @@ namespace MVC_ReleaseDateSite.Data {
         public IUser User { get; set; }
         public IComment RepliedComment { get; set; }
         public int releaseId { get; set; }
-        public int userId { get; set; }
     }
 }

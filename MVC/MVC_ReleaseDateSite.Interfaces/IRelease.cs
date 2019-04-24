@@ -15,7 +15,6 @@ namespace MVC_ReleaseDateSite.Interfaces {
         Category Category { get; set; }
         IUser User { get; set; }
         bool IsFollowed { get; set; }
-        int? UserId { get; set; }
         int CategoryId { get; set; }
     }
 }

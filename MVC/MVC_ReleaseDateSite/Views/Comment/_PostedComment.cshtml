@@ -1,7 +1,7 @@
-﻿@model MVC_ReleaseDateSite.Models.Comment
+﻿@model CommentViewModel
 
 <div class="d-flex col-sm-10 offset-sm-1 col-md-6 offset-md-3 my-2 standard-border comment">
-    <img src="@Model.User.ImgLocation" class="my-auto user-icon clickable"> <p class="pl-2 text-left">@Model.Text</p>
+    <img src="@Model.Owner.ImgLocation" class="my-auto user-icon clickable"> <p class="pl-2 text-left">@Model.Text</p>
     <div class="mt-auto text-info position-absolute pb-1 pl-1 abs-bot abs-left clickable"><strong>Reply</strong></div>
     <div class="mt-auto text-secondary position-absolute abs-bot abs-right pb-1 pr-1">1 second ago</div>
 </div>

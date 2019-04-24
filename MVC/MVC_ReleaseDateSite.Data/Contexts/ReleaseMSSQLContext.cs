@@ -5,6 +5,7 @@ using MVC_ReleaseDateSite.Models;
 using System.Data.SqlClient;
 using System.Linq;
 using MVC_ReleaseDateSite.Interfaces;
+using System.Data;
 
 namespace MVC_ReleaseDateSite.Data {
     public class ReleaseMSSQLContext : IReleaseContext {
@@ -28,7 +29,7 @@ namespace MVC_ReleaseDateSite.Data {
                     cmd.Parameters.AddWithValue("@description", release.Description);
                 cmd.Parameters.AddWithValue("@img", release.ImgLocation);
                 cmd.Parameters.AddWithValue("@releaseDate", release.ReleaseDate);
-                cmd.Parameters.AddWithValue("@ownerId", release.UserId);
+                cmd.Parameters.AddWithValue("@ownerId", release.User.Id);
                 cmd.Parameters.AddWithValue("@categoryId", release.CategoryId);
                 cmd.ExecuteNonQuery();
             }
@@ -48,7 +49,7 @@ namespace MVC_ReleaseDateSite.Data {
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(@"GetAllReleases", conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.CommandType = CommandType.StoredProcedure;
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read()) {
                     IRelease release = new ReleaseDto
@@ -157,17 +158,9 @@ namespace MVC_ReleaseDateSite.Data {
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 List<IRelease> toReturn = new List<IRelease>();
                 conn.Open();
-                    SqlCommand cmd = new SqlCommand(@"SELECT DISTINCT R.[name] as title, R.[description] as description, Category.[name] as category,
-                R.id as id
-                FROM dbo.Release R
-                LEFT JOIN dbo.Comment ON Comment.releaseId = R.id
-                JOIN dbo.Category Category ON Category.id = R.categoryId
-                WHERE R.[description] LIKE '%' + @searchWord + '%' OR
-                R.[name] LIKE '%' + @searchWord + '%' OR
-                Category.[name] LIKE '%' + @searchWord + '%' OR
-                Comment.[text] LIKE '%' + @searchWord + '%'
-                ", conn);
-                SqlParameter searchWord = new SqlParameter("@searchWord", System.Data.SqlDbType.VarChar, 200);
+                SqlCommand cmd = new SqlCommand(@"GetReleasesToSearch", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlParameter searchWord = new SqlParameter("@searchWord", SqlDbType.VarChar, 200);
 
                 foreach (string word in words) {
                     searchWord.Value = word;

@@ -25,7 +25,6 @@ namespace MVC_ReleaseDateSite.Controllers {
             releaseLogic = LogicFactory.CreateReleaseLogic();
             commentLogic = LogicFactory.CreateCommentLogic();
             timeLogic = LogicFactory.CreateTimeCalculationLogic();
-            string test = configuration.GetConnectionString("LocalConnection");
         }
         public IActionResult Index() {
             int id = HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault();
@@ -67,7 +66,9 @@ namespace MVC_ReleaseDateSite.Controllers {
                     ReleaseDate = model.ReleaseDate,
                     Title = model.Title,
                     CategoryId = Convert.ToInt32(model.CategoryId),
-                    UserId = HttpContext.Session.GetInt32(SessionHolder.SessionUserId)
+                    User = new User {
+                        Id = HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault()
+                    }
                 };
                 IFormFile file = model.ImgFile;
                 if (ImageHandler.IsImageValid(file))
