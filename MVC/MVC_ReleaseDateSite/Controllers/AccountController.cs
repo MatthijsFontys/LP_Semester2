@@ -20,7 +20,7 @@ namespace MVC_ReleaseDateSite.Controllers
         public AccountController() {
             releaseLogic = LogicFactory.CreateReleaseLogic();
             accountLogic = LogicFactory.CreateAccountLogic();
-            releaseMapper = new ReleaseMapper();
+            releaseMapper = new ReleaseMapper(LogicFactory.CreateTimeCalculationLogic());
         }
 
         public IActionResult Index()

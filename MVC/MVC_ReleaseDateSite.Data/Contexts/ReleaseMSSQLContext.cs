@@ -130,31 +130,6 @@ namespace MVC_ReleaseDateSite.Data {
             }
         }
 
-        public List<Comment> GetComments(int id) {
-            List<Comment> toReturn = new List<Comment>();
-            using (SqlConnection conn = new SqlConnection(connectionstring)) {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand(@"SELECT C.id, releaseId , imgLocation, commentId_Reply, text, postDate FROM dbo.Comment C
-                JOIN releaseUser U  on u.id = userId
-                WHERE releaseId = @id
-                ORDER BY postDate DESC" , conn);
-                cmd.Parameters.AddWithValue("@id", id);
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read()) {
-                    Comment comment = new Comment
-                    {
-                        Text = reader["text"].ToString(),
-                        PostTime = (DateTime)reader["postDate"],
-                        User = new UserDto {
-                            ImgLocation = reader["imgLocation"].ToString()
-                        }
-                    };
-                    toReturn.Add(comment);
-                }
-            }
-            return toReturn;
-        } /* Move this to other context*/
-
         public FollowState GetFollowState(int releaseId, int userId) {
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 conn.Open();

@@ -1,13 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using MVC_ReleaseDateSite.Interfaces;
+﻿using MVC_ReleaseDateSite.Interfaces;
+using MVC_ReleaseDateSite.Logic;
 using MVC_ReleaseDateSite.ViewModels;
+using System.Collections.Generic;
 
 namespace MVC_ReleaseDateSite {
     public class ReleaseMapper {
+
+        private TimeCalculationLogic timeLogic;
+
+        public ReleaseMapper(TimeCalculationLogic timeLogic) {
+            this.timeLogic = timeLogic;
+        }
 
         public ReleaseViewModelBig MapToBigReleaseViewModel(IRelease release) {
             ReleaseViewModelBig toReturn = new ReleaseViewModelBig()
@@ -24,7 +27,8 @@ namespace MVC_ReleaseDateSite {
                     Name = release.Category.Name
                 },
                 Description = release.Description,
-                Owner = new UserViewModel {
+                Owner = new UserViewModel
+                {
                     ImgLocation = release.User.ImgLocation,
                     Username = release.User.Username
                 }
@@ -58,6 +62,25 @@ namespace MVC_ReleaseDateSite {
             return toReturn;
         }
 
+        public CommentViewModel ToCommentViewModel(IComment comment) {
+            CommentViewModel toReturn = new CommentViewModel
+            {
+                TimeSincePosted = timeLogic.GetTimeSincePosted(comment.PostTime),
+                Text = comment.Text,
+                Owner = new UserViewModel
+                {
+                    ImgLocation = comment.User.ImgLocation
+                }
+            };
+            return toReturn;
+        }
+
+        public IReadOnlyCollection<CommentViewModel> ToCommentViewModelCollection(IEnumerable<IComment> comments) {
+            List<CommentViewModel> toReturn = new List<CommentViewModel>();
+            foreach (IComment comment in comments)
+                toReturn.Add(ToCommentViewModel(comment));
+            return toReturn;
+        }
 
     }
 }

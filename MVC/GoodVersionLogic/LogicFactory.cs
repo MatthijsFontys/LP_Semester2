@@ -31,5 +31,9 @@ namespace MVC_ReleaseDateSite.Logic {
                     )
                 );
         }
+
+        public static TimeCalculationLogic CreateTimeCalculationLogic() {
+            return new TimeCalculationLogic();
+        }
     }
 }

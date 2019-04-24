@@ -29,7 +29,10 @@ namespace MVC_ReleaseDateSite.Logic {
         }
 
         public IList<IComment> GetAllFromRelease(int releaseId) {
-           throw new NotImplementedException();
+            IList<IComment> toReturn = repository.GetAllFromRelease(releaseId);
+            return toReturn;
         }
+
+
     }
 }

@@ -31,7 +31,7 @@ namespace MVC_ReleaseDateSite.Data {
         }
 
         public IList<IComment> GetAllFromRelease(int releaseId) {
-            throw new NotImplementedException();
+            return context.GetAllFromRelease(releaseId);
         }
     }
 }

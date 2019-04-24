@@ -17,12 +17,14 @@ namespace MVC_ReleaseDateSite.Controllers {
         private readonly IHostingEnvironment he;
         private ReleaseLogic releaseLogic;
         private CommentLogic commentLogic;
+        private TimeCalculationLogic timeLogic;
         private ReleaseMapper mapper;
         public ReleaseController(IHostingEnvironment he, IConfiguration configuration) {
             this.he = he;
-            mapper = new ReleaseMapper();
+            mapper = new ReleaseMapper(LogicFactory.CreateTimeCalculationLogic());
             releaseLogic = LogicFactory.CreateReleaseLogic();
             commentLogic = LogicFactory.CreateCommentLogic();
+            timeLogic = LogicFactory.CreateTimeCalculationLogic();
             string test = configuration.GetConnectionString("LocalConnection");
         }
         public IActionResult Index() {
@@ -40,7 +42,7 @@ namespace MVC_ReleaseDateSite.Controllers {
             OverviewSingleViewModel vm = new OverviewSingleViewModel
             {
                 Release = mapper.MapToBigReleaseViewModel(releaseLogic.GetReleaseById(id, HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault())),
-                Comments = releaseLogic.GetComments(id)
+                Comments = mapper.ToCommentViewModelCollection(commentLogic.GetAllFromRelease(id))
             };
             return View(vm);
         }
@@ -100,7 +102,7 @@ namespace MVC_ReleaseDateSite.Controllers {
 
         [HttpPost]
         public JsonResult ChangeDate([FromBody] ChangeDateModel[] dates) {
-            releaseLogic.ConverToDaysIfValidDate(dates);
+            timeLogic.ConvertToDaysIfValidDate(dates);
             string json = JsonConvert.SerializeObject(dates);
             return new JsonResult(dates);
         }

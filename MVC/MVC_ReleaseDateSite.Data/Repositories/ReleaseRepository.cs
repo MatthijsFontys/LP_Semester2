@@ -32,10 +32,6 @@ namespace MVC_ReleaseDateSite.Data {
             return releaseContext.GetByPrimaryKey(id);
         }
 
-        public List<Comment> GetComments(int id) {
-            return releaseContext.GetComments(id);
-        }
-
         public IEnumerable<string> GetAllCategories() {
             return categoryContext.GetAllCategories();
         }
