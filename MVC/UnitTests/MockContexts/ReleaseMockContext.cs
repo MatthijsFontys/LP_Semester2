@@ -8,9 +8,9 @@ using MVC_ReleaseDateSite.Models;
 namespace UnitTests {
     class ReleaseMockContext : IReleaseContext {
 
-        private IEnumerable<Release> releasesToSearch;
+        private IEnumerable<IRelease> releasesToSearch;
 
-        public ReleaseMockContext(IEnumerable<Release> releasesToSearch) {
+        public ReleaseMockContext(IEnumerable<IRelease> releasesToSearch) {
             this.releasesToSearch = releasesToSearch;
         }
 
@@ -46,10 +46,6 @@ namespace UnitTests {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Release> GetReleasesToSearch(string searchQuery) {
-            return releasesToSearch;
-        }
-
         public void UnfollowRelease(int releaseId, int userId) {
             throw new NotImplementedException();
         }
@@ -58,8 +54,8 @@ namespace UnitTests {
             throw new NotImplementedException();
         }
 
-        IEnumerable<IRelease> IReleaseContext.GetReleasesToSearch(string searchQuery) {
-            throw new NotImplementedException();
+        public IEnumerable<IRelease> GetReleasesToSearch(string searchQuery) {
+            return releasesToSearch;
         }
     }
 }
