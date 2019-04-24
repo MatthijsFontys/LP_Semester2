@@ -22,13 +22,13 @@
             <!-- Holds the user who posted and the follow button-->
             <div class="col-sm-6 col-md-3 offset-md-1 text-center my-auto " style="display: flex; flex-direction:column;">
                 <div class="d-flex justify-content-end">
-                    <img src=@Html.DisplayFor(model => model.Release.Owner.ImgLocation) class="clickable user-icon d-inline-block" />
+                    <img src=@Html.DisplayFor(model => model.Release.Owner.ImgLocation) class="clickable user-icon d-inline-block" style="transform: translateY(-25%)" />
                     <p class="text-left text-muted ml-2 w-50 d-inline-block">@Html.DisplayFor(model => model.Release.Owner.Username) <br /> @Model.Release.PostDate</p>
                 </div>
                 <!-- Follow button -->
                 @if (!string.IsNullOrEmpty(Context.Session.GetInt32("_userId").ToString())) {
                     <!-- a href=@((Model.Release.Followed) ? Url.Action("unfollow","Release", new {id=Model.Release.Id}) :  Url.Action("follow","Release", new {id=Model.Release.Id})) Model.Release.Id)-->
-                    <div class="primary-button @((Model.Release.Followed) ? "error-button" : "correct-button") btn clickable d-block w-75 mx-auto" id="followBtn" data-followstate=@followState data-releaseid=@Model.Release.Id style="flex-wrap:wrap"></div>
+                    <div class="primary-button @((Model.Release.Followed) ? "error-button" : "correct-button") btn clickable d-block w-75 mx-auto" id="followBtn" data-followstate=@followState data-releaseid=@Model.Release.Id></div>
                     <!--/a-->
                 }
             </div>
@@ -79,7 +79,7 @@
 </div>
 
 @section scripts{
-    <script src="~/js/Bundle/single.min.js"></script>
+    <script src="~/js/Bundles/single.min.js"></script>
 }
 
 
