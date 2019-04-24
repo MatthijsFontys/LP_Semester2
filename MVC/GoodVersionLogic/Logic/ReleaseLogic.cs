@@ -18,20 +18,20 @@ namespace MVC_ReleaseDateSite.Logic {
         public ReleaseLogic(ReleaseRepository releaseRepository) {
             this.releaseRepository = releaseRepository;
         }
-        public void AddRelease(Release release) {
+        public void AddRelease(IRelease release) {
             // Do more validation here
             releaseRepository.AddRelease(release);
         }
 
-        public List<Release> GetPopulairReleases(int userId) {
+        public List<IRelease> GetPopulairReleases(int userId) {
             if (releaseRepository.GetReleases(userId).Count > 6)
                 return releaseRepository.GetReleases(userId).OrderByDescending(x => x.FollowerCount).ToList().GetRange(0, 6);
             else
                 return releaseRepository.GetReleases(userId);
         }
 
-        public List<Release> GetNewReleases(int userId) {
-            List<Release> releases = releaseRepository.GetReleases(userId).OrderByDescending(x => x.CreationDate).ToList();
+        public List<IRelease> GetNewReleases(int userId) {
+            List<IRelease> releases = releaseRepository.GetReleases(userId).OrderByDescending(x => x.CreationDate).ToList();
             if (releases.Count > 3)
                 return releases.GetRange(0, 3);
             else
@@ -39,11 +39,11 @@ namespace MVC_ReleaseDateSite.Logic {
         }
 
 
-        public Release GetReleaseById(int id, int userId) {
+        public IRelease GetReleaseById(int id, int userId) {
             return releaseRepository.GetReleases(userId).First(x => x.Id == id);
         }
 
-        public Release GetReleaseById(int id) {
+        public IRelease GetReleaseById(int id) {
             return releaseRepository.GetReleases().First(x => x.Id == id);
         }
 
@@ -70,7 +70,7 @@ namespace MVC_ReleaseDateSite.Logic {
         }
 
         // Todo: move this to a query instead
-        public List<Release> GetFollowedReleases(int userId) {
+        public List<IRelease> GetFollowedReleases(int userId) {
             return releaseRepository.GetReleases(userId).Where(x => x.IsFollowed).ToList();
         }
 

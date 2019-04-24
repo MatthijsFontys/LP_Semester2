@@ -17,7 +17,7 @@ namespace MVC_ReleaseDateSite.Data {
         }
 
         #region Crud
-        public void Add(Release release) {
+        public void Add(IRelease release) {
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("INSERT INTO dbo.Release (name, description, imgLocation, releaseDate, userId_Owner, categoryId) VALUES (@title, @description, @img, @releaseDate, @ownerId, @categoryId);", conn);
@@ -38,20 +38,20 @@ namespace MVC_ReleaseDateSite.Data {
             throw new NotImplementedException();
         }
 
-        public void Update(Release type) {
+        public void Update(IRelease release) {
             throw new NotImplementedException();
         }
 
 
-        public List<Release> GetAll() {
-            List<Release> toReturn = new List<Release>();
+        public List<IRelease> GetAll() {
+            List<IRelease> toReturn = new List<IRelease>();
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(@"GetAllReleases", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read()) {
-                    Release release = new Release
+                    IRelease release = new ReleaseDto
                     {
                         Title = reader["releaseName"].ToString(),
 
@@ -61,7 +61,7 @@ namespace MVC_ReleaseDateSite.Data {
                         Id = (int)reader["releaseId"],
                         Description = reader["description"].ToString(),
                         ImgLocation = reader["ReleaseImage"].ToString(),
-                        User = new User
+                        User = new UserDto
                         {
                             ImgLocation = reader["userImage"].ToString(),
                             Username = reader["username"].ToString()
@@ -82,8 +82,8 @@ namespace MVC_ReleaseDateSite.Data {
         /// <summary>
         /// User this overflow if you also want to get back if the user is following the releases
         /// </summary>
-        public List<Release> GetAll(int userId) {
-            List<Release> toReturn = GetAll();
+        public List<IRelease> GetAll(int userId) {
+            List<IRelease> toReturn = GetAll();
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand
@@ -95,13 +95,13 @@ namespace MVC_ReleaseDateSite.Data {
                 cmd.Parameters.AddWithValue("@userId", userId);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read()) {
-                    Release release = toReturn.Where(x => x.Id == Convert.ToInt32(reader["id"])).FirstOrDefault();
+                    IRelease release = toReturn.Where(x => x.Id == Convert.ToInt32(reader["id"])).FirstOrDefault();
                     release.IsFollowed = Convert.ToInt32(reader["isFollowed"]) == 1;
                 }
             }
             return toReturn;
         }
-        public Release GetByPrimaryKey<T2>(T2 id) {
+        public IRelease GetByPrimaryKey<T2>(T2 id) {
             throw new NotImplementedException();
         }
 
@@ -145,7 +145,7 @@ namespace MVC_ReleaseDateSite.Data {
                     {
                         Text = reader["text"].ToString(),
                         PostTime = (DateTime)reader["postDate"],
-                        User = new User {
+                        User = new UserDto {
                             ImgLocation = reader["imgLocation"].ToString()
                         }
                     };
@@ -176,11 +176,11 @@ namespace MVC_ReleaseDateSite.Data {
         // Searching
 
         // Step 1, getting all releases that contain one of the keywords
-        public IEnumerable<Release> GetReleasesToSearch(string searchQuery) {
+        public IEnumerable<IRelease> GetReleasesToSearch(string searchQuery) {
             string[] words = searchQuery.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
-                List<Release> toReturn = new List<Release>();
+                List<IRelease> toReturn = new List<IRelease>();
                 conn.Open();
                     SqlCommand cmd = new SqlCommand(@"SELECT DISTINCT R.[name] as title, R.[description] as description, Category.[name] as category,
                 R.id as id
@@ -201,7 +201,7 @@ namespace MVC_ReleaseDateSite.Data {
                     cmd.Prepare();
                     using (SqlDataReader reader = cmd.ExecuteReader()) {
                         while (reader.Read()) {
-                            Release tempRelease = new Release
+                            IRelease tempRelease = new ReleaseDto
                             {
                                 Category = new Category
                                 {

@@ -8,14 +8,13 @@ using MVC_ReleaseDateSite.Interfaces;
 namespace MVC_ReleaseDateSite.Logic {
     class ReleaseSearch {
 
-        private Dictionary<Release, double> releasesWithScore;
-        private Dictionary<Release, double> currentWordScore;
+        private Dictionary<IRelease, double> releasesWithScore;
+        private Dictionary<IRelease, double> currentWordScore;
         private string[] searchQuery;
         private int releasesToSearchCount;
 
-        public ReleaseSearch(IEnumerable<Release> releasesToSearch, string searchQuery) {
+        public ReleaseSearch(IEnumerable<IRelease> releasesToSearch, string searchQuery) {
             this.searchQuery = searchQuery.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            releasesWithScore = new Dictionary<Release, double>();
             releasesToSearchCount = releasesToSearch.Count();
             InitPointDictionaries(releasesToSearch);
         }
@@ -31,7 +30,7 @@ namespace MVC_ReleaseDateSite.Logic {
 
         private int ScoreReleases(string searchWord) {
             int releasesWithWord = 0;
-            foreach (Release release in releasesWithScore.Keys) {
+            foreach (IRelease release in releasesWithScore.Keys) {
                 currentWordScore[release]  +=  GivePointsByFrequencyCount(searchWord, release.Title, 1.2);
                 currentWordScore[release] +=  GivePointsByFrequencyCount(searchWord, release.Description, .7);
                 currentWordScore[release] +=  GivePointsByFrequencyCount(searchWord, release.Category.Name, .5);
@@ -58,17 +57,17 @@ namespace MVC_ReleaseDateSite.Logic {
                 termFrequencyInverse = 0.004;
 
             for (int i = 0; i < releasesWithScore.Keys.Count(); i++) {
-                Release key = currentWordScore.ElementAt(i).Key;
+                IRelease key = currentWordScore.ElementAt(i).Key;
                 double score = currentWordScore[key] *= termFrequencyInverse;
                 releasesWithScore[key] += score;
             }
         }
 
-        private void InitPointDictionaries(IEnumerable<Release>releasesForDictionary) {
-            currentWordScore = new Dictionary<Release, double>();
-            releasesWithScore = new Dictionary<Release, double>();
+        private void InitPointDictionaries(IEnumerable<IRelease>releasesForDictionary) {
+            currentWordScore = new Dictionary<IRelease, double>();
+            releasesWithScore = new Dictionary<IRelease, double>();
 
-            foreach (Release release in releasesForDictionary) {
+            foreach (IRelease release in releasesForDictionary) {
                 currentWordScore.Add(release, 0);
                 releasesWithScore.Add(release, 0);
             }
@@ -76,7 +75,7 @@ namespace MVC_ReleaseDateSite.Logic {
 
         private void ResetCurrentWordPoints() {
             for (int i = 0; i < currentWordScore.Keys.Count(); i++) {
-                Release key = currentWordScore.ElementAt(i).Key;
+                IRelease key = currentWordScore.ElementAt(i).Key;
                 currentWordScore[key] = 0;
             }
         }

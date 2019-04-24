@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using MVC_ReleaseDateSite.Interfaces;
 namespace MVC_ReleaseDateSite.Data {
-    class ReleaseDto : IReleaseBig, IReleaseSmall  {
+    class ReleaseDto : IRelease  {
         public int Id { get; set; }
         public string ImgLocation { get; set; }
         public string Description { get; set; }
@@ -15,5 +15,7 @@ namespace MVC_ReleaseDateSite.Data {
         public Category Category { get; set; }
         public IUser User { get; set; }
         public bool IsFollowed { get; set; }
+        public int? UserId { get; set; }
+        public int CategoryId { get; set; }
     }
 }

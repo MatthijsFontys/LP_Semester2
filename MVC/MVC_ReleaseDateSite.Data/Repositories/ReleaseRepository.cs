@@ -13,22 +13,22 @@ namespace MVC_ReleaseDateSite.Data {
             this.categoryContext = categoryContext;
         }
 
-        public IEnumerable<Release> GetReleasesToSearch(string searchQuery) {
+        public IEnumerable<IRelease> GetReleasesToSearch(string searchQuery) {
             return releaseContext.GetReleasesToSearch(searchQuery);
         }
 
-        public void AddRelease(Release release) {
+        public void AddRelease(IRelease release) {
             releaseContext.Add(release);
         }
 
-        public List<Release> GetReleases(int userId) {
+        public List<IRelease> GetReleases(int userId) {
             return releaseContext.GetAll(userId);
         }
-        public List<Release> GetReleases() {
+        public List<IRelease> GetReleases() {
             return releaseContext.GetAll();
         }
 
-        public Release GetReleaseById(int id) {
+        public IRelease GetReleaseById(int id) {
             return releaseContext.GetByPrimaryKey(id);
         }
 

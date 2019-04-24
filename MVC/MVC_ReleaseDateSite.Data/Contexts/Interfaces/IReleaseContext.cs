@@ -5,15 +5,12 @@ using MVC_ReleaseDateSite.Models;
 using MVC_ReleaseDateSite.Interfaces;
 
 namespace MVC_ReleaseDateSite.Data {
-    public interface IReleaseContext : ICrudContext<Release>{
-        List<Release> GetAll(int userId);
+    public interface IReleaseContext : ICrudContext<IRelease>{
+        List<IRelease> GetAll(int userId);
         List<Comment> GetComments(int id);
         void FollowRelease(int releaseId, int userId);
         void UnfollowRelease(int releaseId, int userId);
         FollowState GetFollowState(int releaseId, int userId);
-
-        #region search
-        IEnumerable<Release> GetReleasesToSearch(string searchQuery);
-        #endregion
+        IEnumerable<IRelease> GetReleasesToSearch(string searchQuery);
     }
 }

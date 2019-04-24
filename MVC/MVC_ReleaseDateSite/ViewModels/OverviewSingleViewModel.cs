@@ -7,7 +7,7 @@ using MVC_ReleaseDateSite.Models;
 
 namespace MVC_ReleaseDateSite.ViewModels {
     public class OverviewSingleViewModel {
-        public Release Release { get; set; }
+        public ReleaseViewModelBig Release { get; set; }
         public List<Comment> Comments { get; set; }
     }
 }

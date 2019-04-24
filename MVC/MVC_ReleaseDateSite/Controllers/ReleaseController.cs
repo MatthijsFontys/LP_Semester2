@@ -17,8 +17,10 @@ namespace MVC_ReleaseDateSite.Controllers {
         private readonly IHostingEnvironment he;
         private ReleaseLogic releaseLogic;
         private CommentLogic commentLogic;
+        private ReleaseMapper mapper;
         public ReleaseController(IHostingEnvironment he, IConfiguration configuration) {
             this.he = he;
+            mapper = new ReleaseMapper();
             releaseLogic = LogicFactory.CreateReleaseLogic();
             commentLogic = LogicFactory.CreateCommentLogic();
             string test = configuration.GetConnectionString("LocalConnection");
@@ -27,8 +29,8 @@ namespace MVC_ReleaseDateSite.Controllers {
             int id = HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault();
             OverviewIndexViewModel vm = new OverviewIndexViewModel
             {
-                NewReleases = releaseLogic.GetNewReleases(id),
-                PopulairReleases = releaseLogic.GetPopulairReleases(id)
+                NewReleases = mapper.MapToSmallReleaseViewModelCollection(releaseLogic.GetNewReleases(id)),
+                PopulairReleases = mapper.MapToSmallReleaseViewModelCollection(releaseLogic.GetPopulairReleases(id)) 
             };
 
             return View(vm);
@@ -37,7 +39,7 @@ namespace MVC_ReleaseDateSite.Controllers {
         public IActionResult Single(int id) {
             OverviewSingleViewModel vm = new OverviewSingleViewModel
             {
-                Release = releaseLogic.GetReleaseById(id, HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault()),
+                Release = mapper.MapToBigReleaseViewModel(releaseLogic.GetReleaseById(id, HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault())),
                 Comments = releaseLogic.GetComments(id)
             };
             return View(vm);
@@ -56,7 +58,7 @@ namespace MVC_ReleaseDateSite.Controllers {
             FluentReuiredIfAttribute validator = new FluentReuiredIfAttribute();
             ValidationResult result = validator.Validate(model);
             if (ModelState.IsValid && result.IsValid) {
-                Release release = new Release
+                IRelease release = new Release
                 {
                     Description = model.Description,
                     ImgLocation = model.ImgLocation,
@@ -118,7 +120,7 @@ namespace MVC_ReleaseDateSite.Controllers {
         public IActionResult Search(string searchQuery) {
             List<ReleaseViewModelSmall> vm = new List<ReleaseViewModelSmall>();
             foreach (int id in releaseLogic.SearchReleases(searchQuery)) {
-                Release releaseModel = releaseLogic.GetReleaseById(id);
+                IRelease releaseModel = releaseLogic.GetReleaseById(id);
                 ReleaseViewModelSmall tempRelease = new ReleaseViewModelSmall
                 {
                     Title = releaseModel.Title,

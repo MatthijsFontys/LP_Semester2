@@ -8,6 +8,7 @@ using MVC_ReleaseDateSite.Logic;
 using Microsoft.AspNetCore.Http;
 using MVC_ReleaseDateSite.ViewModels;
 using MVC_ReleaseDateSite.Models;
+using MVC_ReleaseDateSite.Interfaces;
 
 namespace MVC_ReleaseDateSite.Controllers
 {
@@ -32,7 +33,7 @@ namespace MVC_ReleaseDateSite.Controllers
                 PasswordHash = model.Password
             };
             if (accountLogic.CheckLoginCredentials(user) && ModelState.IsValid) {
-                User tempUser = accountLogic.GetUserByName(model.Username);
+                IUser tempUser = accountLogic.GetUserByName(model.Username);
                 HttpContext.Session.SetInt32(SessionHolder.SessionUserId, tempUser.Id); //Todo Change this to auth token
                 string username = model.Username;
                 if (username.Length > 10)
@@ -68,10 +69,6 @@ namespace MVC_ReleaseDateSite.Controllers
                 accountLogic.Add(user);
             }
             return RedirectToAction("index", "Release");      
-        }
-
-        public IActionResult AddUserToChapter(int id) {
-            return View();
         }
 
         [Route("/User/Account")]

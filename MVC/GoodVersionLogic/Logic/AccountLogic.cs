@@ -1,4 +1,5 @@
 ﻿using MVC_ReleaseDateSite.Data;
+using MVC_ReleaseDateSite.Interfaces;
 using MVC_ReleaseDateSite.Models;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace MVC_ReleaseDateSite.Logic {
             return accountRepository.CheckLoginCredentials(user);
         }
 
-        public User GetUserByName(string username) {
+        public IUser GetUserByName(string username) {
             return accountRepository.GetUserByName(username);
         }
 

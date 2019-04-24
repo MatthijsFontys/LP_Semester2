@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace MVC_ReleaseDateSite.ViewModels {
     public class ReleaseViewModelBig : ReleaseViewModel {
-        List<CommentViewModel> Comments { get; set; }
-        UserViewModel Owner { get; set; }
-        string PostDate { get; set; }
-        string Description { get; set; }
+        public List<CommentViewModel> Comments { get; set; }
+        public UserViewModel Owner { get; set; }
+        public string PostDate { get; set; }
+        public string Description { get; set; }
     }
 }

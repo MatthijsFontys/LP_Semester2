@@ -7,11 +7,15 @@ namespace MVC_ReleaseDateSite.Interfaces {
     public interface IRelease {
         int Id { get; set; }
         string ImgLocation { get; set; }
-        DateTime ReleaseDate { get; set; }
+        string Description { get; set; }
         string Title { get; set; }
+        DateTime ReleaseDate { get; set; }
+        DateTime CreationDate { get; set; }
         int FollowerCount { get; set; }
-       // Category Category { get; set; }
+        Category Category { get; set; }
         IUser User { get; set; }
         bool IsFollowed { get; set; }
+        int? UserId { get; set; }
+        int CategoryId { get; set; }
     }
 }
