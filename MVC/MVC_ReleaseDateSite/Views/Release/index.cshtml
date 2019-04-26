@@ -24,10 +24,10 @@
             </form>
             <!-- Time until release toggle bar-->
             <div class=" position-absolute abs-left ml-4" id="toggle-row">
-                <img id="releaseday-toggle" src="~/images/toggleIcons/baseline-calendar_today-24px.svg" data-toggle="tooltip" data-placement="top" title="Release date" />
-                <img id="day-toggle" src="~/images/toggleIcons/baseline-view_week-24px.svg" data-toggle="tooltip" data-placement="top" title="Days until release">
-                <img id="clock-toggle" src="~/images/toggleIcons/baseline-alarm-24px.svg" data-toggle="tooltip" data-placement="top" title="Time until release" />
-            </div>
+               <a href="#releaseday-toggle"> <img id="releaseday-toggle" src="~/images/toggleIcons/baseline-calendar_today-24px.svg" data-toggle="tooltip" data-placement="top" title="Release date" /> </a>
+                <a href="#day-toggle"><img id="day-toggle" src="~/images/toggleIcons/baseline-view_week-24px.svg" data-toggle="tooltip" data-placement="top" title="Days until release"></a>
+                <a href="#clock-toggle"><img id="clock-toggle" src="~/images/toggleIcons/baseline-alarm-24px.svg" data-toggle="tooltip" data-placement="top" title="Time until release" /></a>
+</div>
             <!-- Add button-->
             @if (loggedIn) {
                 <a class="no-style-link" href="/release/new"><div class="col-1 btn primary-button position-absolute abs-right mr-2">Add</div></a>
@@ -73,7 +73,9 @@
         <div class="row py-0 my-0 justify-content-center">
             @foreach (ReleaseViewModelSmall item in Model.NewReleases) {
                 <div class="col-12 col-sm-6 col-md-3 mb-3 mx-4 text-center new-release-wrapper">
-                    <a href=@Url.Action("single", "release", new { id = item.Id })> <img class="my-auto clickable" src="@item.ImgLocation" /> </a>
+                    <a href=@Url.Action("single", "release", new { id = item.Id })> <img class="my-auto clickable" src="@item.ImgLocation" />
+                    <div id="new-hover-effect">@item.Title</div>
+                    </a>
                 </div>
             }
         </div>
@@ -86,15 +88,4 @@
 
 @section scripts{
     <script src="~/js/Bundles/index.min.js"></script>
-    @*<!-- Change datetype -->
-    <script type="text/javascript" src="~/js/timeToggleBar.js"></script>
-    <!-- Better alerts -->
-    <script src="~/js/betterAlerts.js"></script>
-    <!-- tooltips -->
-    <script src="~/js/BootstrapTooltips.js" type="text/javascript"></script>
-    @if (Context.Session.GetInt32("_userId") != null) {
-        <!-- Ajax for following -->
-        <script src="~/js/setFollowEventhandlersIndex.js" type="text/javascript"></script>
-        <script src="~/js/UpdateFollowstateAjax.js" type="text/javascript"></script>
-    }*@
 }
