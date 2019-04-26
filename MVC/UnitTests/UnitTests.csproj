@@ -12,12 +12,4 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\GoodVersionLogic\MVC_ReleaseDateSite.Logic.csproj" />
-    <ProjectReference Include="..\Models\MVC_ReleaseDateSite.Models.csproj" />
-    <ProjectReference Include="..\MVC_ReleaseDateSite.Data\MVC_ReleaseDateSite.Data.csproj" />
-    <ProjectReference Include="..\MVC_ReleaseDateSite.Interfaces\MVC_ReleaseDateSite.Interfaces.csproj" />
-    <ProjectReference Include="..\MVC_ReleaseDateSite\MVC_ReleaseDateSite.csproj" />
-  </ItemGroup>
-
 </Project>
