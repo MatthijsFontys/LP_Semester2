@@ -1,7 +1,10 @@
-let releases = document.querySelectorAll("[data-releaseId]");
-releases.forEach((release) => {
-    release.addEventListener("click", () => UpdateFollowState(release, UpdateGui));
-})
+window.onload = function () {
+    document.querySelector("#releaseday-toggle").click();
+    let releases = document.querySelectorAll("[data-releaseId]");
+    releases.forEach((release) => {
+        release.addEventListener("click", () => UpdateFollowState(release, UpdateGui));
+    })
+}
 
 function UpdateGui(release, newFollowCount, newFollowState) {
     let releasefollow = release.getElementsByClassName("release-follow-small")[0];
