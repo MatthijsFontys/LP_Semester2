@@ -53,7 +53,7 @@ namespace MVC_ReleaseDateSite.Logic {
 
         private void ApplyTermFrequencyInverseToScore(int releasesWithWord) {
             double termFrequencyInverse = Math.Log((double)releasesToSearchCount / (releasesWithWord + 1));
-            if (termFrequencyInverse < 0)
+            if (termFrequencyInverse <= 0)
                 termFrequencyInverse = 0.004;
 
             for (int i = 0; i < releasesWithScore.Keys.Count(); i++) {
