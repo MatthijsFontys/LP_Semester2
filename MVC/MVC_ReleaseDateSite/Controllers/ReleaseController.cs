@@ -9,8 +9,12 @@ using MVC_ReleaseDateSite.Logic;
 using MVC_ReleaseDateSite.Models;
 using MVC_ReleaseDateSite.ViewModels;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Text;
 
 namespace MVC_ReleaseDateSite.Controllers {
     public class ReleaseController : Controller {
@@ -139,6 +143,18 @@ namespace MVC_ReleaseDateSite.Controllers {
                 vm.Add(tempRelease);
             } 
             return View(vm);
+        }
+
+        public JsonResult Test(string title) {
+            // Api request here 
+            // full url: http://www.omdbapi.com/?s=frozen&y=2015&apikey=649d5450
+            const string URL = "http://www.omdbapi.com/";
+            string urlParameters = $"?t={title}&y=2019&plot=full&apikey=649d5450";
+            var client = new RestClient(URL + urlParameters);
+            var request = new RestRequest(Method.GET);
+            IRestResponse response = client.Execute(request);
+            JObject json = JObject.Parse(response.Content);
+            return new JsonResult(json);
         }
 
     }

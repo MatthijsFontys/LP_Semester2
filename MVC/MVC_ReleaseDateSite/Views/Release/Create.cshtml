@@ -28,19 +28,20 @@
 <div class="wrapper">
     <h1>@TempData["ValidationResults"]</h1>
     <div class="row pt-3">
-        <h2 class="col-12 text-center mb-4">Add a new release</h2>
+        <h2 class="col-4 offset-4 text-center mb-4">Add a new release</h2>
+        <h4 class="col-4 text-center text-muted d-none">Suggestion<br /><span class="pt-2 suggestion" style="font-size: 18px;"></span></h4>
         <div class="col-md-4 offset-4">
             <form asp-action="CreateRelease" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Title" class="control-label"></label>
-                    <input asp-for="Title" class="form-control" />
+                    <input asp-for="Title" class="form-control" id="title" onblur="GetSuggestion()" />
                     <span asp-validation-for="Title" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="CategoryId" class="control-label"></label>
                     <br />
-                    <select asp-for="CategoryId" class="w-50">
+                    <select asp-for="CategoryId" class="w-50" id="category-selector" onchange="GetSuggestion()">
                         <option value="2">Game</option>
                         <option value="1">Book</option>
                         <option value="3">Movie</option>
@@ -52,12 +53,12 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="ImgLocation" class="control-label"></label>
-                    <input asp-for="ImgLocation" class="form-control" />
+                    <input asp-for="ImgLocation" class="form-control" id="image" onfocus="ClearSuggestionInput(this)" />
                     <span asp-validation-for="ImgLocation" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Description" class="control-label"></label>
-                    <textarea asp-for="Description" class="form-control standard-text-box" style="border: 1px solid silver"></textarea>
+                    <textarea asp-for="Description" onfocus="ClearSuggestionInput(this)" class="form-control standard-text-box" style="border: 1px solid silver" id="description"></textarea>
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -71,6 +72,10 @@
                     <input type="submit" value="Create" class="btn primary-button" />
                 </div>
             </form>
+        </div> <!-- end column-->
+        <div class="col-4 d-none">
+            <div class="m-0 text-center" style="background-color: transparent; height: 200px;"><img class="suggestion" src="https://m.media-amazon.com/images/M/MV5BODYwMzYzODEzNV5BMl5BanBnXkFtZTgwOTgxOTE0NzM@@._V1_SX300.jpg" style="height: inherit; max-width: 200px; width: auto;" /></div>
+            <div class="mt-3 d-block mx-auto p-1 suggestion" style="width: 200px; max-height: 200px; font-size: 13.5px; border: 1px solid #36454f;">Anna, Elsa, Kristoff, and Olaf are going far in the forest to learn the truth about an ancient mystery of their kingdom.</div>
         </div>
     </div>
 </div>
@@ -79,6 +84,45 @@
     <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script type="text/javascript">
+        let gotSuggestion = false;
+        function GetSuggestion() {
+            let title = document.querySelector("#title").value;
+            let dropdown = document.querySelector("#category-selector");
+            if (title != "") {
+                if (dropdown.value == 3)
+                    $.get("/release/test?title=" + title, GetMovieData);
+                else if (dropdown.value == 2)
+                    GetGameData(title);
+            }
+        }
+
+        function GetMovieData(data) {
+            if (data.Response == "True") {
+                FillSuggestionFields(data.Title, data.Poster, data.Plot);
+                gotSuggestion = true;
+            }
+        }
+
+        function GetGameData(title) {
+
+        }
+
+        function FillSuggestionFields(title, image, summary){
+            document.querySelector("span.suggestion").innerText = title; //+ " " + data.Year;
+            document.querySelector("img.suggestion").src = image;
+            document.querySelector("div.suggestion").innerText = summary;
+            document.querySelectorAll(".d-none").forEach(
+                (val) => val.classList.remove("d-none"));
+            document.querySelector("#image").value = image;
+            document.querySelector("#description").value = summary;
+        }
+
+        // Let the user clear the suggested input easily
+        function ClearSuggestionInput(inputBox) {
+            if (gotSuggestion)
+                inputBox.value = "";
+        }
+
         $(function () {
             $("#datepicker").datepicker({
                 dateFormat: "dd-mm-yy",
