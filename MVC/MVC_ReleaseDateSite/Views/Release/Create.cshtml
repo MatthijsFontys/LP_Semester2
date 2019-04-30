@@ -7,6 +7,15 @@
 @section Styles{
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <style type="text/css">
+        .read-more {
+            text-align: center;
+            font-weight: bold;
+            user-select: none;
+            text-transform: capitalize;
+            color: var(--title-secondary-color);
+            margin-top: 7px;
+            cursor: pointer;
+        }
         table td.ui-datepicker-today a {
             border: 2px solid var(--primary) !important;
             /*background-color: var(--primary) !important;
@@ -58,7 +67,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Description" class="control-label"></label>
-                    <textarea asp-for="Description" onfocus="ClearSuggestionInput(this)" class="form-control standard-text-box" style="border: 1px solid silver" id="description"></textarea>
+                    <textarea asp-for="Description" onfocus="ClearSuggestionInput(this)" class="form-control standard-text-box" style="border: 1px solid silver;" id="description"></textarea>
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -74,8 +83,9 @@
             </form>
         </div> <!-- end column-->
         <div class="col-4 d-none">
-            <div class="m-0 text-center" style="background-color: transparent; height: 200px;"><img class="suggestion" src="https://m.media-amazon.com/images/M/MV5BODYwMzYzODEzNV5BMl5BanBnXkFtZTgwOTgxOTE0NzM@@._V1_SX300.jpg" style="height: inherit; max-width: 200px; width: auto;" /></div>
-            <div class="mt-3 d-block mx-auto p-1 suggestion" style="width: 200px; max-height: 200px; font-size: 13.5px; border: 1px solid #36454f;">Anna, Elsa, Kristoff, and Olaf are going far in the forest to learn the truth about an ancient mystery of their kingdom.</div>
+            <div class="m-0 text-center" style="background-color: transparent; height: 200px;"><img class="suggestion" src="#" style="height: inherit; max-width: 200px; width: auto;" /></div>
+            <div class="mt-3 d-block mx-auto p-1 suggestion" style="width: 200px; height: 202px; line-height: 17.72px; font-size: 15px; padding: 5px !important; border: 1px solid #36454f; overflow:hidden;"></div>
+            <p class="read-more d-none" onclick="ReadMore(this)">Read more</p>
         </div>
     </div>
 </div>
@@ -90,31 +100,57 @@
             let dropdown = document.querySelector("#category-selector");
             if (title != "") {
                 if (dropdown.value == 3)
-                    $.get("/release/test?title=" + title, GetMovieData);
+                    $.get("/Api/MovieSuggestion?title=" + title, GetMovieData);
                 else if (dropdown.value == 2)
-                    GetGameData(title);
+                    $.get("/Api/GameSuggestion?title=" + title, GetGameData);
             }
         }
 
         function GetMovieData(data) {
             if (data.Response == "True") {
-                FillSuggestionFields(data.Title, data.Poster, data.Plot);
+                FillSuggestionFields(data.Title, data.Poster, data.Plot); 
                 gotSuggestion = true;
             }
         }
 
-        function GetGameData(title) {
-
+        function GetGameData(data) {
+            if (data.name != null) {
+                let imageUrl = data.cover.url.replace("thumb", "720p");
+                FillSuggestionFields(data.name, imageUrl, data.summary);
+                gotSuggestion = true;
+            }
         }
 
         function FillSuggestionFields(title, image, summary){
             document.querySelector("span.suggestion").innerText = title; //+ " " + data.Year;
             document.querySelector("img.suggestion").src = image;
-            document.querySelector("div.suggestion").innerText = summary;
+            let descriptionBox = document.querySelector("div.suggestion");
+            descriptionBox.innerText = summary;
             document.querySelectorAll(".d-none").forEach(
                 (val) => val.classList.remove("d-none"));
             document.querySelector("#image").value = image;
             document.querySelector("#description").value = summary;
+            if (isElementOverflown(descriptionBox)) {
+                //descriptionBox.style.height = "auto";
+            }
+        }
+
+        
+        function isElementOverflown(element) {
+            document.querySelector(".read-more").classList.remove("d-none");
+            return element.scrollHeight > element.clientHeight;
+        }
+
+        function ReadMore(element) {
+            let overflownBox = document.querySelector("div.suggestion");
+            if (element.innerText.toLowerCase().includes("more")) {
+                element.innerText = "show less";
+                overflownBox.style.height = "auto"; 
+            }
+            else {
+                element.innerText = "read more";
+                overflownBox.style.height = "202px"; 
+            }
         }
 
         // Let the user clear the suggested input easily

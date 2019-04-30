@@ -145,18 +145,6 @@ namespace MVC_ReleaseDateSite.Controllers {
             return View(vm);
         }
 
-        public JsonResult Test(string title) {
-            // Api request here 
-            // full url: http://www.omdbapi.com/?s=frozen&y=2015&apikey=649d5450
-            const string URL = "http://www.omdbapi.com/";
-            string urlParameters = $"?t={title}&y=2019&plot=full&apikey=649d5450";
-            var client = new RestClient(URL + urlParameters);
-            var request = new RestRequest(Method.GET);
-            IRestResponse response = client.Execute(request);
-            JObject json = JObject.Parse(response.Content);
-            return new JsonResult(json);
-        }
-
     }
 }
 

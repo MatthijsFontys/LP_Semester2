@@ -73,5 +73,16 @@ namespace MVC_ReleaseDateSite.Controllers
             int userId = HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault();
             return View(releaseMapper.MapToSmallReleaseViewModelCollection(releaseLogic.GetFollowedReleases(userId)));
         }
+
+        [HttpPost]
+        public IActionResult test2(float id, float rest) {
+            float test = id;
+            float test2 = rest;
+            return View("test");
+        }
+
+        public IActionResult test() {
+            return View();
+        }
     }
 }
