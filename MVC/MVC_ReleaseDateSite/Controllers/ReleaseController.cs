@@ -23,6 +23,7 @@ namespace MVC_ReleaseDateSite.Controllers {
         private CommentLogic commentLogic;
         private TimeCalculationLogic timeLogic;
         private ReleaseMapper mapper;
+
         public ReleaseController(IHostingEnvironment he, IConfiguration configuration) {
             this.he = he;
             mapper = new ReleaseMapper(LogicFactory.CreateTimeCalculationLogic());
@@ -37,7 +38,6 @@ namespace MVC_ReleaseDateSite.Controllers {
                 NewReleases = mapper.ToSmallReleaseViewModelCollection(releaseLogic.GetNewReleases(id)),
                 PopulairReleases = mapper.ToSmallReleaseViewModelCollection(releaseLogic.GetPopulairReleases(id)) 
             };
-
             return View(vm);
         }
 
@@ -85,24 +85,33 @@ namespace MVC_ReleaseDateSite.Controllers {
 
         public JsonResult Follow(int id) {
             int? userId = HttpContext.Session.GetInt32(SessionHolder.SessionUserId);
-            if (userId != null && releaseLogic.ValidateFollowState(FollowState.notFollowing,id, userId.GetValueOrDefault())) {
-                releaseLogic.FollowRelease(id, HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault());
-                int UpdatedFollowerCount = releaseLogic.GetReleaseById(id).FollowerCount;
-                string json = JsonConvert.SerializeObject(new { state = "success", followCount = UpdatedFollowerCount, followState = "unfollow" });
-                return new JsonResult(json);
+            if (IsFollowStateValid(FollowState.notFollowing, id)) {
+                releaseLogic.FollowRelease(id, userId.GetValueOrDefault());
+                return CreateFollowStateJson(id, "unfollow");
+
             }
             throw new Exception("Incorrect follow state");
         }
 
         public JsonResult Unfollow(int id) {
             int? userId = HttpContext.Session.GetInt32(SessionHolder.SessionUserId);
-            if (userId != null && releaseLogic.ValidateFollowState(FollowState.following, id, userId.GetValueOrDefault())) {
+            if (IsFollowStateValid(FollowState.following, id)) {
                 releaseLogic.UnfollowRelease(id, userId.GetValueOrDefault());
-                int UpdatedFollowerCount = releaseLogic.GetReleaseById(id).FollowerCount;
-                string json = JsonConvert.SerializeObject(new { state = "success", followCount = UpdatedFollowerCount, followState = "follow" });
-                return new JsonResult(json);
+                return CreateFollowStateJson(id, "follow");
+               
             }
             throw new Exception("Incorrect follow state");
+        }
+
+        private JsonResult CreateFollowStateJson(int id, string updatedFollowState) {
+            int UpdatedFollowerCount = releaseLogic.GetReleaseById(id).FollowerCount;
+            string json = JsonConvert.SerializeObject(new { state = "success", followCount = UpdatedFollowerCount, followState = updatedFollowState });
+            return new JsonResult(json);
+        }
+
+        private bool IsFollowStateValid(FollowState followState, int id) {
+            int? userId = HttpContext.Session.GetInt32(SessionHolder.SessionUserId);
+            return userId != null && releaseLogic.ValidateFollowState(followState, id, userId.GetValueOrDefault());
         }
 
         [HttpPost]

@@ -56,7 +56,6 @@
     <Folder Include="wwwroot\images\toggleIcons\" />
     <Folder Include="wwwroot\images\userUploads\ProfilePics\" />
     <Folder Include="wwwroot\images\userUploads\Thumbnails\" />
-    <Folder Include="wwwroot\js\Bundles\" />
   </ItemGroup>
 
 </Project>
