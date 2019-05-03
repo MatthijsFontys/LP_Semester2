@@ -71,7 +71,7 @@ namespace MVC_ReleaseDateSite.Controllers
         [Route("/User/Account")]
         public IActionResult AccountPage() {
             int userId = HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault();
-            return View(releaseMapper.MapToSmallReleaseViewModelCollection(releaseLogic.GetFollowedReleases(userId)));
+            return View(releaseMapper.ToSmallReleaseViewModelCollection(releaseLogic.GetFollowedReleases(userId)));
         }
 
         [HttpPost]

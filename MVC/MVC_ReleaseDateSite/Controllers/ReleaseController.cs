@@ -34,8 +34,8 @@ namespace MVC_ReleaseDateSite.Controllers {
             int id = HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault();
             OverviewIndexViewModel vm = new OverviewIndexViewModel
             {
-                NewReleases = mapper.MapToSmallReleaseViewModelCollection(releaseLogic.GetNewReleases(id)),
-                PopulairReleases = mapper.MapToSmallReleaseViewModelCollection(releaseLogic.GetPopulairReleases(id)) 
+                NewReleases = mapper.ToSmallReleaseViewModelCollection(releaseLogic.GetNewReleases(id)),
+                PopulairReleases = mapper.ToSmallReleaseViewModelCollection(releaseLogic.GetPopulairReleases(id)) 
             };
 
             return View(vm);
@@ -44,7 +44,7 @@ namespace MVC_ReleaseDateSite.Controllers {
         public IActionResult Single(int id) {
             OverviewSingleViewModel vm = new OverviewSingleViewModel
             {
-                Release = mapper.MapToBigReleaseViewModel(releaseLogic.GetReleaseById(id, HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault())),
+                Release = mapper.ToBigReleaseViewModel(releaseLogic.GetReleaseById(id, HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault())),
                 Comments = mapper.ToCommentViewModelCollection(commentLogic.GetAllFromRelease(id))
             };
             return View(vm);

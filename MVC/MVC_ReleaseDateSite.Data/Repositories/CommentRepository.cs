@@ -17,11 +17,6 @@ namespace MVC_ReleaseDateSite.Data {
             context.Add(comment);
         }
 
-        public void AddReply() {
-            throw new NotImplementedException();
-
-        }
-
         public void Delete() {
             throw new NotImplementedException();
         }

@@ -12,7 +12,7 @@ namespace MVC_ReleaseDateSite {
             this.timeLogic = timeLogic;
         }
 
-        public ReleaseViewModelBig MapToBigReleaseViewModel(IRelease release) {
+        public ReleaseViewModelBig ToBigReleaseViewModel(IRelease release) {
             ReleaseViewModelBig toReturn = new ReleaseViewModelBig()
             {
                 Id = release.Id,
@@ -36,15 +36,15 @@ namespace MVC_ReleaseDateSite {
             return toReturn;
         }
 
-        public IReadOnlyCollection<ReleaseViewModelSmall> MapToSmallReleaseViewModelCollection(IEnumerable<IRelease> releases) {
+        public IReadOnlyCollection<ReleaseViewModelSmall> ToSmallReleaseViewModelCollection(IEnumerable<IRelease> releases) {
             List<ReleaseViewModelSmall> toReturn = new List<ReleaseViewModelSmall>();
             foreach (IRelease release in releases)
-                toReturn.Add(MapToSmallReleaseViewModel(release));
+                toReturn.Add(ToSmallReleaseViewModel(release));
             return toReturn;
         }
 
 
-        public ReleaseViewModelSmall MapToSmallReleaseViewModel(IRelease release) {
+        public ReleaseViewModelSmall ToSmallReleaseViewModel(IRelease release) {
             ReleaseViewModelSmall toReturn = new ReleaseViewModelSmall()
             {
                 Id = release.Id,
@@ -70,7 +70,8 @@ namespace MVC_ReleaseDateSite {
                 Owner = new UserViewModel
                 {
                     ImgLocation = comment.User.ImgLocation
-                }
+                },
+                Id = comment.Id
             };
             return toReturn;
         }

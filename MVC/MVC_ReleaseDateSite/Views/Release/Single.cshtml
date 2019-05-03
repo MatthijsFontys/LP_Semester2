@@ -13,7 +13,7 @@
         }
     </style>
 }
-@{string followState = (Model.Release.Followed) ? "unfollow" : "follow"; }4
+@{string followState = (Model.Release.Followed) ? "unfollow" : "follow"; }
 
 
 <div id="wrapper">
@@ -64,9 +64,9 @@
 
             <!-- Other comments -->
             @foreach (CommentViewModel comment in Model.Comments) {
-                <div class="d-flex col-sm-10 offset-sm-1 col-md-6 offset-md-3 my-2 standard-border comment">
+                <div class="d-flex col-sm-10 offset-sm-1 col-md-6 offset-md-3 my-2 standard-border comment" data-commentId="@comment.Id">
                     <img src="@comment.Owner.ImgLocation" class="my-auto user-icon clickable"> <p class="pl-2 text-left">@comment.Text</p>
-                    <div class="mt-auto text-info position-absolute pb-1 pl-1 abs-bot abs-left clickable"><strong>Reply</strong></div>
+                    <div class="mt-auto text-info position-absolute pb-1 pl-1 abs-bot abs-left clickable BtnReply"><strong>Reply</strong></div>
                     <div class="mt-auto text-secondary position-absolute abs-bot abs-right pb-1 pr-1">@comment.TimeSincePosted</div>
                 </div>
             }
@@ -79,7 +79,10 @@
 </div>
 
 @section scripts{
-    <script src="~/js/Bundles/single.min.js"></script>
+    <!--<script src="~/js/Bundles/single.min.js"></script> -->
+    <script type="text/javascript" src="~/js/setFollowEventhandlersSingle.js"></script>
+    <script type="text/javascript" src="~/js/UpdateFollowstateAjax.js"></script>
+    <script type="text/javascript" src="~/js/PostComment.js"></script>
 }
 
 

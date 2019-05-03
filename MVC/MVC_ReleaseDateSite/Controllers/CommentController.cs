@@ -18,26 +18,38 @@ namespace MVC_ReleaseDateSite.Controllers {
         }
 
         [HttpPost]
-        public PartialViewResult PostComment(int releaseId, string commentText) {
-            IComment comment = new Comment
-            {
-                Text = commentText,
-                releaseId = releaseId,
-                User = new User {
-                    Id = HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault()
-                }
-            };
+        public PartialViewResult PostComment(int releaseId, string commentText, int replyId = -1) {
+            IComment comment = CreateComment(releaseId, commentText, replyId);
+            CommentViewModel toReturn = CreateCommentViewModel(commentText);
+            commentLogic.Add(comment);
+            return PartialView("_PostedComment", toReturn);
+        }
 
-            CommentViewModel toReturn = new CommentViewModel
+
+        private CommentViewModel CreateCommentViewModel(string commentText) {
+            return new CommentViewModel
             {
                 Text = commentText,
-                Owner = new UserViewModel{
+                Owner = new UserViewModel
+                {
                     ImgLocation = HttpContext.Session.GetString(SessionHolder.SessionUserImg)
                 }
             };
+        }
 
-            commentLogic.Add(comment);
-            return PartialView("_PostedComment", toReturn);
+        private IComment CreateComment(int releaseId, string commentText, int commentId = -1) {
+            IComment toReturn = new Comment
+            {
+                Text = commentText,
+                releaseId = releaseId,
+                User = new User
+                {
+                    Id = HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault()
+                }
+            };
+            if (commentId > 0)
+                toReturn.RepliedCommentId = commentId;
+            return toReturn;
         }
     }
 }

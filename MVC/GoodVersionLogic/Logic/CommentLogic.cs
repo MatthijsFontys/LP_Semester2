@@ -15,11 +15,6 @@ namespace MVC_ReleaseDateSite.Logic {
             repository.Add(comment);
         }
 
-        public void AddReply() {
-            throw new NotImplementedException();
-           
-        }
-
         public void Delete() {
            throw new NotImplementedException();
         }

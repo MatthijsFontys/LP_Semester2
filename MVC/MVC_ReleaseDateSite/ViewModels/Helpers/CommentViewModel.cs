@@ -9,5 +9,6 @@ namespace MVC_ReleaseDateSite.ViewModels {
         public string TimeSincePosted { get; set; }
         public string Text { get; set; }
         public CommentViewModel CommentRepliedTo { get; set; }
+        public int Id { get; set; }
     }
 }
