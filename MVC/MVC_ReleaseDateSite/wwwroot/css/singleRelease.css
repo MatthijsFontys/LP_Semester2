@@ -40,6 +40,11 @@ html,body{
 .description {
     text-align: left;
     font-size: 15px;
-    max-height: 295px;
+    line-height: 15px;
+    /* max-height: 280px;*/
     overflow: hidden;
+    max-height: 202px;
+    line-height: 17.72px;
+    font-size: 15px;
+    padding: 5px;
 }

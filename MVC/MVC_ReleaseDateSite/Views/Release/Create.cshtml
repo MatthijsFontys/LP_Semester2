@@ -15,12 +15,12 @@
             color: var(--title-secondary-color);
             margin-top: 7px;
             cursor: pointer;
+            user-select: none;
         }
+
+        /* Overriding jquery datepicker*/
         table td.ui-datepicker-today a {
             border: 2px solid var(--primary) !important;
-            /*background-color: var(--primary) !important;
-            color: white !important;
-            font-weight: 500 !important;*/
             color: black !important;
             background-color: var(--side-bg) !important;
         }
@@ -128,13 +128,13 @@
             descriptionBox.innerText = summary;
             document.querySelectorAll(".d-none").forEach(
                 (val) => val.classList.remove("d-none"));
-            ApplyReadMore(descriptionBox);
+            ShowReadMoreIfOverflown(descriptionBox);
             document.querySelector("#image").value = image;
             document.querySelector("#description").value = summary;
         }
 
         
-        function ApplyReadMore(element) {
+        function ShowReadMoreIfOverflown(element) {
             if (element.scrollHeight <= element.clientHeight)
                 document.querySelector(".read-more").classList.add("d-none");
         }
