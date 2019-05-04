@@ -85,6 +85,10 @@ namespace MVC_ReleaseDateSite.Controllers {
 
         public JsonResult Follow(int id) {
             int? userId = HttpContext.Session.GetInt32(SessionHolder.SessionUserId);
+            if (userId == null) {
+                RedirectToAction("single", new { id });
+                return null;
+            }
             if (IsFollowStateValid(FollowState.notFollowing, id)) {
                 releaseLogic.FollowRelease(id, userId.GetValueOrDefault());
                 return CreateFollowStateJson(id, "unfollow");
