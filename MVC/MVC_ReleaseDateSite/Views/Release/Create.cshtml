@@ -82,89 +82,20 @@
                 </div>
             </form>
         </div> <!-- end column-->
+        <!-- Suggestion image and description-->
         <div class="col-4 d-none">
             <div class="m-0 text-center" style="background-color: transparent; height: 200px;"><img class="suggestion" src="#" style="height: inherit; max-width: 200px; width: auto;" /></div>
             <div class="mt-3 d-block mx-auto p-1 suggestion" style="width: 200px; height: auto; max-height: 202px; line-height: 17.72px; font-size: 15px; padding: 5px !important; border: 1px solid #36454f; overflow:hidden;"></div>
-            <p class="read-more d-none" onclick="ReadMore(this)">Read more</p>
+            <p class="read-more d-none">Read more</p>
         </div>
     </div>
 </div>
 
 @section Scripts {
-    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> <!-- Datepicker -->
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script type="text/javascript">
-        let gotSuggestion = false;
-        function GetSuggestion() {
-            let title = document.querySelector("#title").value;
-            let dropdown = document.querySelector("#category-selector");
-            if (title != "") {
-                if (dropdown.value == 3)
-                    $.get("/Api/MovieSuggestion?title=" + title, GetMovieData);
-                else if (dropdown.value == 2)
-                    $.get("/Api/GameSuggestion?title=" + title, GetGameData);
-            }
-        }
-
-        function GetMovieData(data) {
-            if (data.Response == "True") {
-                FillSuggestionFields(data.Title, data.Poster, data.Plot); 
-                gotSuggestion = true;
-            }
-        }
-
-        function GetGameData(data) {
-            if (data.name != null) {
-                let imageUrl = data.cover.url.replace("thumb", "720p");
-                FillSuggestionFields(data.name, imageUrl, data.summary);
-                gotSuggestion = true;
-            }
-        }
-
-        function FillSuggestionFields(title, image, summary) {
-            let descriptionBox = document.querySelector("div.suggestion");
-            document.querySelector("span.suggestion").innerText = title; //+ " " + data.Year;
-            document.querySelector("img.suggestion").src = image;
-            descriptionBox.innerText = summary;
-            document.querySelectorAll(".d-none").forEach(
-                (val) => val.classList.remove("d-none"));
-            ShowReadMoreIfOverflown(descriptionBox);
-            document.querySelector("#image").value = image;
-            document.querySelector("#description").value = summary;
-        }
-
-        
-        function ShowReadMoreIfOverflown(element) {
-            if (element.scrollHeight <= element.clientHeight)
-                document.querySelector(".read-more").classList.add("d-none");
-        }
-
-        function ReadMore(element) {
-            let overflownBox = document.querySelector("div.suggestion");
-            if (element.innerText.toLowerCase().includes("more")) {
-                element.innerText = "show less";
-                overflownBox.style.maxHeight = "unset";
-            }
-            else {
-                element.innerText = "read more";
-                overflownBox.style.maxHeight = "202px";
-            }
-        }
-
-        // Let the user clear the suggested input easily
-        function ClearSuggestionInput(inputBox) {
-            if (gotSuggestion)
-                inputBox.value = "";
-        }
-
-        $(function () {
-            $("#datepicker").datepicker({
-                dateFormat: "dd-mm-yy",
-                minDate: "0d",
-                maxDate: "720d",
-                changeYear: true,
-                changeMonth: true
-            });
-        });
-    </script>
+    <script type="text/javascript" src="~/js/ReadMoreContainer.js"></script>
+    <script type="text/javascript" src="~/js/Release/Create/SetupCreate.js"></script>
+    <script type="text/javascript" src="~/js/Release/Create/SuggestionApis.js"></script>
+    <script type="text/javascript" src="~/js/Release/Create/DatePickerConfig.js"></script>
 }
