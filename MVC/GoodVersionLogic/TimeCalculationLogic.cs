@@ -42,8 +42,18 @@ namespace MVC_ReleaseDateSite.Logic {
 
         public void ConvertToDaysIfValidDate(ChangeDateModel[] dates) {
             foreach (ChangeDateModel date in dates) {
-                if (DateTime.TryParse(date.Date, out DateTime tempDate))
-                    date.Date = $"{Math.Ceiling(tempDate.Subtract(DateTime.Now).TotalDays)} days";
+                if (DateTime.TryParse(date.Date, out DateTime tempDate)) {
+                    double days = Math.Ceiling(tempDate.Subtract(DateTime.Now).TotalDays);
+                    if (days < 0)
+                        if (days != -1)
+                            date.Date = (days *= -1) + " days ago";
+                        else
+                            date.Date = "1 day ago";
+                    else if (days > 1)
+                        date.Date = days + " days";
+                    else
+                        date.Date = "1 day"; 
+                }
             }
         }
     }

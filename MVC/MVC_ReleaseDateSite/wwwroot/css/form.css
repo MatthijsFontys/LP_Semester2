@@ -1,7 +1,7 @@
 /* CSS variabele */
 :root{
     --primary: #2C3E50;
-    --primary-opacity:  rgba(57,55,55, .3); /*rgba(54, 69, 79, .8); rgba(0, 0, 0, 0.5);*/
+    --primary-opacity:  rgba(57,55,55, .3);
     --main-link: #ffffff;
     --sub-link: #D7DADB;
     --sub-link-hover : #ffffff;

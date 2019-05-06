@@ -1,0 +1,12 @@
+﻿table td.ui-datepicker-today a {
+    border: 2px solid var(--primary) !important;
+    color: black !important;
+    background-color: var(--side-bg) !important;
+}
+
+a.ui-state-active {
+    background-color: var(--primary) !important;
+    color: white !important;
+    font-weight: 500 !important;
+    border: 2px solid var(--side-bg) !important;
+}
