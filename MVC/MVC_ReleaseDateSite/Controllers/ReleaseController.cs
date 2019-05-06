@@ -120,7 +120,7 @@ namespace MVC_ReleaseDateSite.Controllers {
 
         [HttpPost]
         public JsonResult ChangeDate([FromBody] ChangeDateModel[] dates) {
-            timeLogic.ConvertToDaysIfValidDate(dates);
+            timeLogic.ConvertToDaysIfValidDate(DateTime.Now, dates);
             string json = JsonConvert.SerializeObject(dates);
             return new JsonResult(dates);
         }

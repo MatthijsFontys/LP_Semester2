@@ -40,10 +40,10 @@ namespace MVC_ReleaseDateSite.Logic {
             // Todo implement months and years
         }
 
-        public void ConvertToDaysIfValidDate(ChangeDateModel[] dates) {
+        public void ConvertToDaysIfValidDate(DateTime startDate, ChangeDateModel[] dates) {
             foreach (ChangeDateModel date in dates) {
                 if (DateTime.TryParse(date.Date, out DateTime tempDate)) {
-                    double days = Math.Ceiling(tempDate.Subtract(DateTime.Now).TotalDays);
+                    double days = Math.Ceiling(tempDate.Subtract(startDate).TotalDays);
                     if (days < 0)
                         if (days != -1)
                             date.Date = (days *= -1) + " days ago";
