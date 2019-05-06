@@ -5,8 +5,8 @@ using System.Text;
 
 namespace MVC_ReleaseDateSite.Logic {
     public class TimeCalculationLogic {
-        public string GetTimeSincePosted(DateTime postTime) {
-            TimeSpan timeDifference = DateTime.Now.Subtract(postTime);
+        public string GetTimeSincePosted(DateTime postTime, DateTime now) {
+            TimeSpan timeDifference = now.Subtract(postTime);
             // Seconds
             if (timeDifference.TotalSeconds < 60)
                 if (timeDifference.TotalSeconds < 2)

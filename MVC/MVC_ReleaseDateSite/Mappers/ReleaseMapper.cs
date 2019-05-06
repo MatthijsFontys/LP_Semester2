@@ -1,6 +1,7 @@
 ﻿using MVC_ReleaseDateSite.Interfaces;
 using MVC_ReleaseDateSite.Logic;
 using MVC_ReleaseDateSite.ViewModels;
+using System;
 using System.Collections.Generic;
 
 namespace MVC_ReleaseDateSite {
@@ -65,7 +66,7 @@ namespace MVC_ReleaseDateSite {
         public CommentViewModel ToCommentViewModel(IComment comment) {
             CommentViewModel toReturn = new CommentViewModel
             {
-                TimeSincePosted = timeLogic.GetTimeSincePosted(comment.PostTime),
+                TimeSincePosted = timeLogic.GetTimeSincePosted(comment.PostTime, DateTime.Now),
                 Text = comment.Text,
                 Owner = new UserViewModel
                 {
