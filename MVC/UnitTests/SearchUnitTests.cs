@@ -14,7 +14,7 @@ namespace UnitTests {
         */
 
         [Fact]
-        public void TestZoneBiasTitleDescriptionCategory() {
+        public void ZoneBiasTitleDescriptionCategory() {
             int[] expected = { 1, 3, 2 };
             ReleaseLogic logic = new ReleaseLogic( new ReleaseRepository(new ReleaseMockContext(
                 new List<Release> {
@@ -31,12 +31,12 @@ namespace UnitTests {
         }
 
         [Fact]
-        public void TestWordFrequency() {
+        public void BetterScoreBasedOnWordFrequency() {
             int[] expected = { 2, 3, 1 };
             ReleaseLogic logic = new ReleaseLogic(new ReleaseRepository(new ReleaseMockContext(
                 new List<Release> {
                     new Release{ Id = 2, Title = "query query", Category = new Category{ Name = "none" }, Description = "none" },
-                    new Release{ Id = 3, Title = "query query query", Category = new Category{ Name = "none" }, Description = "nonew" },
+                    new Release{ Id = 3, Title = "query query query", Category = new Category{ Name = "none" }, Description = "none" },
                     new Release{ Id = 1, Title = "query", Category = new Category{ Name = "none" }, Description = "none" }
                 }
             ), new CategoryMockContext()));
@@ -48,7 +48,7 @@ namespace UnitTests {
         }
 
         [Fact]
-        public void TestCompensateForDocumentLength() {
+        public void CompensateScoreWithDocumentLength() {
             int[] expected = { 1, 2, 3 };
             ReleaseLogic logic = new ReleaseLogic(new ReleaseRepository(new ReleaseMockContext(
                 new List<Release> {
@@ -65,7 +65,7 @@ namespace UnitTests {
         }
 
         [Fact]
-        public void TestGiveLessValueToDeadWords() {
+        public void GiveLessValueToDeadWords() {
             int[] expected = { 2, 1, 3 };
             ReleaseLogic logic = new ReleaseLogic(new ReleaseRepository(new ReleaseMockContext(
                 new List<Release> {
