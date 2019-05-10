@@ -12,22 +12,22 @@ namespace MVC_ReleaseDateSite.Logic {
         public static ReleaseLogic CreateReleaseLogic() {
             return new ReleaseLogic(
                 new ReleaseRepository(
-                    new ReleaseMSSQLContext(new DatabaseConnection(connectionstringLocal)),
-                    new CategoryMSSQLContext(new DatabaseConnection(connectionstringLocal))
+                    new ReleaseMSSQLContext(new DatabaseConnection(connectionstringSchool)),
+                    new CategoryMSSQLContext(new DatabaseConnection(connectionstringSchool))
                     ));
         }
 
       public static AccountLogic CreateAccountLogic() {
             return new AccountLogic(
                 new AccountRepository(
-                    new AccountMSSQLContext(new DatabaseConnection(connectionstringLocal)))) {
+                    new AccountMSSQLContext(new DatabaseConnection(connectionstringSchool)))) {
             };
       }
 
         public static CommentLogic CreateCommentLogic() {
             return new CommentLogic(
                 new CommentRepository(
-                    new CommentMSSQLContext(new DatabaseConnection(connectionstringLocal))
+                    new CommentMSSQLContext(new DatabaseConnection(connectionstringSchool))
                     )
                 );
         }
