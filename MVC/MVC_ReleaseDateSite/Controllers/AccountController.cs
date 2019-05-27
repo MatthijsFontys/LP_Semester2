@@ -39,7 +39,8 @@ namespace MVC_ReleaseDateSite.Controllers
                 HttpContext.Session.SetString(SessionHolder.SessionUserImg, tempUser.ImgLocation);
                 return RedirectToAction("Index", "Release");
             }
-            return RedirectToAction("Login");
+            ModelState.AddModelError(string.Empty, "Invalid username and password combination");
+            return View("Login", model);
         }
 
         public IActionResult Logout() {

@@ -22,8 +22,9 @@ namespace MVC_ReleaseDateSite.ViewModels {
 
         [Required(ErrorMessage = "Release date is required")]
         [Display(Name = "Release date")]
+        [DisplayFormat(DataFormatString = "{0:dd/mm/yy}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
-        [ValidDate(ErrorMessage = "Invalid release date" )]
+        [ValidDate(ErrorMessage = "Invalid release date")]
         public DateTime ReleaseDate { get; set; }
 
         [Required]

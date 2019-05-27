@@ -9,12 +9,9 @@ using MVC_ReleaseDateSite.Logic;
 using MVC_ReleaseDateSite.Models;
 using MVC_ReleaseDateSite.ViewModels;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using RestSharp;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
+using System.Data.SqlClient;
 
 namespace MVC_ReleaseDateSite.Controllers {
     public class ReleaseController : Controller {
@@ -36,7 +33,7 @@ namespace MVC_ReleaseDateSite.Controllers {
             OverviewIndexViewModel vm = new OverviewIndexViewModel
             {
                 NewReleases = mapper.ToSmallReleaseViewModelCollection(releaseLogic.GetNewReleases(id)),
-                PopulairReleases = mapper.ToSmallReleaseViewModelCollection(releaseLogic.GetPopulairReleases(id)) 
+                PopulairReleases = mapper.ToSmallReleaseViewModelCollection(releaseLogic.GetPopulairReleases(id))
             };
             return View(vm);
         }
@@ -70,7 +67,8 @@ namespace MVC_ReleaseDateSite.Controllers {
                     ReleaseDate = model.ReleaseDate,
                     Title = model.Title,
                     CategoryId = Convert.ToInt32(model.CategoryId),
-                    User = new User {
+                    User = new User
+                    {
                         Id = HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault()
                     }
                 };
@@ -78,9 +76,25 @@ namespace MVC_ReleaseDateSite.Controllers {
                 if (ImageHandler.IsImageValid(file))
                     release.ImgLocation = ImageHandler.SaveImage(he.WebRootPath, file);
 
-                releaseLogic.AddRelease(release);
+                try {
+                    releaseLogic.AddRelease(release);
+                }
+
+                catch (SqlException ex) {
+                    if (ex.Number == Convert.ToInt32(SqlErrorCodes.insertRolledback))
+                        ModelState.AddModelError(string.Empty, "You have reached your daily creation limit");
+                    else
+                        ModelState.AddModelError(string.Empty, "Something went wrong in the database");
+
+                }
             }
-            return RedirectToAction("Create");
+            else {
+                foreach (ValidationFailure error in result.Errors)
+                    ModelState.AddModelError(string.Empty, error.ErrorMessage);
+            }
+            if (ModelState.ErrorCount > 0)
+                return View("Create", model);
+            return RedirectToAction("index");
         }
 
         public JsonResult Follow(int id) {
@@ -92,7 +106,6 @@ namespace MVC_ReleaseDateSite.Controllers {
             if (IsFollowStateValid(FollowState.notFollowing, id)) {
                 releaseLogic.FollowRelease(id, userId.GetValueOrDefault());
                 return CreateFollowStateJson(id, "unfollow");
-
             }
             throw new Exception("Incorrect follow state");
         }
@@ -102,7 +115,6 @@ namespace MVC_ReleaseDateSite.Controllers {
             if (IsFollowStateValid(FollowState.following, id)) {
                 releaseLogic.UnfollowRelease(id, userId.GetValueOrDefault());
                 return CreateFollowStateJson(id, "follow");
-               
             }
             throw new Exception("Incorrect follow state");
         }
@@ -125,7 +137,6 @@ namespace MVC_ReleaseDateSite.Controllers {
             return new JsonResult(dates);
         }
 
-
         public IActionResult Following() {
             return View();
         }
@@ -135,7 +146,6 @@ namespace MVC_ReleaseDateSite.Controllers {
             Console.WriteLine(comment);
             return comment;
         }
-
 
         public IActionResult Search(string searchQuery) {
             List<ReleaseViewModelSmall> vm = new List<ReleaseViewModelSmall>();
@@ -154,7 +164,7 @@ namespace MVC_ReleaseDateSite.Controllers {
                     }
                 };
                 vm.Add(tempRelease);
-            } 
+            }
             return View(vm);
         }
 

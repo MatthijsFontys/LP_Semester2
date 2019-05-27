@@ -203,6 +203,21 @@ li:hover .foldout {
     background-color: var(--primary-button-color);
 }
 
+/* ASP helper styles*/
+.validation-summary ul{
+    list-style-type: none;
+    text-align: center;
+    font-size: 16px;
+    padding-left: 0;
+}
+
+.validation-summary-white {
+    color: white !important;
+}
+
+.validation-summary ul li {
+    margin-bottom: 10px;
+}
 
 /* Animations */
 @keyframes foldout-hr {

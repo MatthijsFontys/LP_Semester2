@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using MVC_ReleaseDateSite.Models;
 using MVC_ReleaseDateSite.Interfaces;
+using System.Data.SqlClient;
 
 namespace MVC_ReleaseDateSite.Data {
     public class ReleaseRepository {

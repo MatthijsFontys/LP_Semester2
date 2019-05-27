@@ -15,4 +15,8 @@ namespace MVC_ReleaseDateSite.Interfaces {
         comments,
         category
     }
+
+    public enum SqlErrorCodes {
+        insertRolledback = 3609
+    }
 }

@@ -38,10 +38,10 @@
     <h1>@TempData["ValidationResults"]</h1>
     <div class="row pt-3">
         <h2 class="col-4 offset-4 text-center mb-4">Add a new release</h2>
+        <div asp-validation-summary="ModelOnly" class="text-danger col-4 offset-4 validation-summary"></div>
         <h4 class="col-4 text-center text-muted d-none">Suggestion<br /><span class="pt-2 suggestion" style="font-size: 18px;"></span></h4>
         <div class="col-md-4 offset-4">
             <form asp-action="CreateRelease" enctype="multipart/form-data">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Title" class="control-label"></label>
                     <input asp-for="Title" class="form-control" id="title" onblur="GetSuggestion()" />
@@ -72,10 +72,8 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="ReleaseDate" class="control-label"></label>
-                    <!-- <input asp-for="ReleaseDate" type="date" class="form-control" /> -->
-                    <input asp-for="ReleaseDate" type="text" id="datepicker" class="form-control" placeholder="dd-mm-yyyy" autocomplete="off">
+                    <input asp-for="ReleaseDate" type="text" id="datepicker" class="form-control" runat="server" placeholder="dd-mm-yyyy" autocomplete="off">
                     <span asp-validation-for="ReleaseDate" class="text-danger"></span>
-                    @Html.ValidationMessageFor(model => model.ReleaseDate, null, new { @class = "text-danger" })
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Create" class="btn primary-button" />

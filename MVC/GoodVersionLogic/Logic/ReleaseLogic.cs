@@ -18,8 +18,9 @@ namespace MVC_ReleaseDateSite.Logic {
         public ReleaseLogic(ReleaseRepository releaseRepository) {
             this.releaseRepository = releaseRepository;
         }
+
         public void AddRelease(IRelease release) {
-            releaseRepository.AddRelease(release);
+           releaseRepository.AddRelease(release);
         }
 
         public List<IRelease> GetPopulairReleases(int userId) {
@@ -60,13 +61,10 @@ namespace MVC_ReleaseDateSite.Logic {
             return followstate == actualFollowState;
         }
 
-
         // Todo: move this to a query instead
         public List<IRelease> GetFollowedReleases(int userId) {
             return releaseRepository.GetReleases(userId).Where(x => x.IsFollowed).ToList();
         }
-        #region MoveToOtherPlace
-        // Todo: move this to a place for time calculations
-        #endregion
+
     }
 }

@@ -13,6 +13,7 @@ namespace MVC_ReleaseDateSite.Controllers {
     public class CommentController : Controller {
         private CommentLogic commentLogic;
 
+
         public CommentController() {
             commentLogic = LogicFactory.CreateCommentLogic();
         }

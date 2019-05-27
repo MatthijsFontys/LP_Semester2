@@ -1,17 +1,15 @@
-﻿using System;
+﻿using MVC_ReleaseDateSite.Interfaces;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using MVC_ReleaseDateSite.Models;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using MVC_ReleaseDateSite.Interfaces;
-using System.Data;
 
 namespace MVC_ReleaseDateSite.Data {
     public class ReleaseMSSQLContext : IReleaseContext {
         private readonly DatabaseConnection connection;
         private readonly string connectionstring;
-        
+
         public ReleaseMSSQLContext(DatabaseConnection connection) {
             this.connection = connection;
             connectionstring = connection.SqlConnection.ConnectionString;
@@ -20,18 +18,20 @@ namespace MVC_ReleaseDateSite.Data {
         #region Crud
         public void Add(IRelease release) {
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO dbo.Release (name, description, imgLocation, releaseDate, userId_Owner, categoryId) VALUES (@title, @description, @img, @releaseDate, @ownerId, @categoryId);", conn);
-                cmd.Parameters.AddWithValue("@title", release.Title);
-                if (string.IsNullOrEmpty(release.Description))
-                    cmd.Parameters.AddWithValue("@description", DBNull.Value);
-                else
-                    cmd.Parameters.AddWithValue("@description", release.Description);
-                cmd.Parameters.AddWithValue("@img", release.ImgLocation);
-                cmd.Parameters.AddWithValue("@releaseDate", release.ReleaseDate);
-                cmd.Parameters.AddWithValue("@ownerId", release.User.Id);
-                cmd.Parameters.AddWithValue("@categoryId", release.CategoryId);
-                cmd.ExecuteNonQuery();
+                using (SqlCommand cmd = new SqlCommand(@"INSERT INTO dbo.Release (name, description, imgLocation, releaseDate, userId_Owner, categoryId)
+                                                VALUES (@title, @description, @img, @releaseDate, @ownerId, @categoryId);", conn)) {
+                    cmd.Parameters.AddWithValue("@title", release.Title);
+                    if (string.IsNullOrEmpty(release.Description))
+                        cmd.Parameters.AddWithValue("@description", DBNull.Value);
+                    else
+                        cmd.Parameters.AddWithValue("@description", release.Description);
+                    cmd.Parameters.AddWithValue("@img", release.ImgLocation);
+                    cmd.Parameters.AddWithValue("@releaseDate", release.ReleaseDate);
+                    cmd.Parameters.AddWithValue("@ownerId", release.User.Id);
+                    cmd.Parameters.AddWithValue("@categoryId", release.CategoryId);
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
 
@@ -164,7 +164,7 @@ namespace MVC_ReleaseDateSite.Data {
 
                 foreach (string word in words) {
                     searchWord.Value = word;
-                    if(! cmd.Parameters.Contains(searchWord))
+                    if (!cmd.Parameters.Contains(searchWord))
                         cmd.Parameters.Add(searchWord);
                     cmd.Prepare();
                     using (SqlDataReader reader = cmd.ExecuteReader()) {
