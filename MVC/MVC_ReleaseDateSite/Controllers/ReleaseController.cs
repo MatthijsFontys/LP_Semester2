@@ -149,6 +149,8 @@ namespace MVC_ReleaseDateSite.Controllers {
 
         public IActionResult Search(string searchQuery) {
             List<ReleaseViewModelSmall> vm = new List<ReleaseViewModelSmall>();
+            if (string.IsNullOrEmpty(searchQuery))
+                return RedirectToAction("index");
             foreach (int id in releaseLogic.SearchReleases(searchQuery)) {
                 IRelease releaseModel = releaseLogic.GetReleaseById(id);
                 ReleaseViewModelSmall tempRelease = new ReleaseViewModelSmall

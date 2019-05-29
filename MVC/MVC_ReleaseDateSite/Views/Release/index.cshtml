@@ -18,9 +18,9 @@
     <div class="container justify-content-start justify-content-md-between pt-3">
         <!-- Search bar -->
         <div class="row justify-content-end">
-            <form asp-action="search" class="col-6 col-md-4 form-inline mx-auto justify-content-start justify-content-md-center">
+            <form asp-action="search" id="search-form" class="col-6 col-md-4 form-inline mx-auto justify-content-start justify-content-md-center">
                 <input type="text" class="form-control mb-3 w-75" id="search-bar" placeholder="Search" name="searchQuery">
-                <a><span class="fas fa-search btn-icon align-top pl-2 clickable" onclick="this.parentElement.parentElement.submit()"></span></a>
+                <a><span class="fas fa-search btn-icon align-top pl-2 clickable" onclick="SubmitFormIfSearchNotEmpty()"></span></a>
             </form>
             <!-- Time until release toggle bar-->
             <div class=" position-absolute abs-left ml-4" id="toggle-row">
@@ -91,4 +91,5 @@
     <script type="text/javascript" src="~/js/Release/timeToggleBar.js"></script>
     <script type="text/javascript" src="~/js/Release/UpdateFollowstateAjax.js"></script>
     <script type="text/javascript" src="~/js/Release/Index/setFollowEventhandlersIndex.js"></script>
+    <script type="text/javascript" src="~/js/Release/Index/validateSearchBar.js"></script>
 }
