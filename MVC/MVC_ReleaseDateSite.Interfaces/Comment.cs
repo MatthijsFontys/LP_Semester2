@@ -12,8 +12,8 @@ namespace MVC_ReleaseDateSite.Models {
 
 
         // New
-        public int releaseId { get; set; }
-        public string timeSincePost { get; set; }
+        public int ReleaseId { get; set; }
+        public string TimeSincePost { get; set; }
         public IComment RepliedComment { get ; set ; }
         public int RepliedCommentId { get; set; }
     }

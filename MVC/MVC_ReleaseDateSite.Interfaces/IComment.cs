@@ -9,7 +9,7 @@ namespace MVC_ReleaseDateSite.Interfaces {
          IUser User { get; set; }
          IComment RepliedComment { get; set; }
          int RepliedCommentId { get; set; }
-         int releaseId { get; set; }
+         int ReleaseId { get; set; }
          int Id { get; set; }
     }
 }

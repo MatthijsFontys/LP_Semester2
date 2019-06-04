@@ -42,7 +42,7 @@ namespace MVC_ReleaseDateSite.Controllers {
             IComment toReturn = new Comment
             {
                 Text = commentText,
-                releaseId = releaseId,
+                ReleaseId = releaseId,
                 User = new User
                 {
                     Id = HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault()

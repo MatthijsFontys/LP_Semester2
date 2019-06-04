@@ -9,8 +9,8 @@ namespace MVC_ReleaseDateSite.Logic {
     public class ReleaseLogic {
 
         public IEnumerable<int> SearchReleases(string searchQuery) {
-            ReleaseSearch rs = new ReleaseSearch(releaseRepository.GetReleasesToSearch(searchQuery), searchQuery);
-            return rs.GetSearchResultIds();
+            ReleaseSearcher releaseSearcher = new ReleaseSearcher(releaseRepository.GetReleasesToSearch(searchQuery), searchQuery);
+            return releaseSearcher.GetSearchResultIds();
         }
 
         #region CRUD
@@ -19,7 +19,7 @@ namespace MVC_ReleaseDateSite.Logic {
             this.releaseRepository = releaseRepository;
         }
 
-        public void AddRelease(IRelease release) {
+        public void Add(IRelease release) {
            releaseRepository.AddRelease(release);
         }
 
@@ -56,9 +56,9 @@ namespace MVC_ReleaseDateSite.Logic {
             releaseRepository.UnfollowRelease(releaseId, userId);
         }
 
-        public bool ValidateFollowState(FollowState followstate, int releaseId, int userId) {
+        public bool ValidateFollowState(FollowState followState, int releaseId, int userId) {
             FollowState actualFollowState = releaseRepository.GetFollowState(releaseId, userId);
-            return followstate == actualFollowState;
+            return followState == actualFollowState;
         }
 
         // Todo: move this to a query instead

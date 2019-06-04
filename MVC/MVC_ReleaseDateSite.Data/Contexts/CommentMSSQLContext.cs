@@ -18,7 +18,7 @@ namespace MVC_ReleaseDateSite.Data {
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("INSERT INTO dbo.Comment (releaseId, userId, text, commentId_Reply) VALUES (@releaseId, @userId, @text, @replyId);", conn);
-                cmd.Parameters.AddWithValue("@releaseId", comment.releaseId);
+                cmd.Parameters.AddWithValue("@releaseId", comment.ReleaseId);
                 cmd.Parameters.AddWithValue("@userId", comment.User.Id);
                 cmd.Parameters.AddWithValue("@text", comment.Text);
                 if(comment.RepliedCommentId > 0)
@@ -69,7 +69,7 @@ namespace MVC_ReleaseDateSite.Data {
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand("INSERT INTO dbo.Comment (releaseId, userId, text, commentId_Reply) VALUES (@releaseId, @userId, @text, @replyId);", conn);
-                cmd.Parameters.AddWithValue("@releaseId", comment.releaseId);
+                cmd.Parameters.AddWithValue("@releaseId", comment.ReleaseId);
                 cmd.Parameters.AddWithValue("@userId", comment.User.Id);
                 cmd.Parameters.AddWithValue("@text", comment.Text);
                 cmd.Parameters.AddWithValue("@replyId", comment.RepliedCommentId);

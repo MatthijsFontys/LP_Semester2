@@ -13,14 +13,14 @@ namespace MVC_ReleaseDateSite.Logic {
             this.accountRepository = accountRepository;
             random = new Random();
     }
-        public void Add(User user) {
+        public void Add(IUser user) {
             user.ImgLocation = GenerateStandardProfilePicture(user.Username);
             user.Salt = Encryptor.GenerateSalt(); //Todo: encrypt the users pass and generate salt in the controller instead, because it is safer to do it earlier
             user.PasswordHash = Encryptor.Hash(user.PasswordHash + user.Salt);
             accountRepository.Add(user);
         }
 
-        public bool CheckLoginCredentials(User user) {
+        public bool CheckLoginCredentials(IUser user) {
             string salt = GetUserByName(user.Username).Salt;
             user.PasswordHash = Encryptor.Hash(user.PasswordHash + salt);
             return accountRepository.CheckLoginCredentials(user);

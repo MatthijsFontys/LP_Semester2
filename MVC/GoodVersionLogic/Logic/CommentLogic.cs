@@ -6,13 +6,13 @@ using System.Text;
 
 namespace MVC_ReleaseDateSite.Logic {
    public class CommentLogic {
-        private CommentRepository repository;
+        private CommentRepository commentRepository;
         public CommentLogic(CommentRepository repository) {
-            this.repository = repository;
+            this.commentRepository = repository;
         }
 
         public void Add(IComment comment) {
-            repository.Add(comment);
+            commentRepository.Add(comment);
         }
 
         public void Delete() {
@@ -24,7 +24,7 @@ namespace MVC_ReleaseDateSite.Logic {
         }
 
         public IList<IComment> GetAllFromRelease(int releaseId) {
-            IList<IComment> toReturn = repository.GetAllFromRelease(releaseId);
+            IList<IComment> toReturn = commentRepository.GetAllFromRelease(releaseId);
             return toReturn;
         }
 

@@ -6,14 +6,14 @@ using System.Linq;
 using MVC_ReleaseDateSite.Interfaces;
 
 namespace MVC_ReleaseDateSite.Logic {
-    class ReleaseSearch {
+    class ReleaseSearcher {
 
         private Dictionary<IRelease, double> releasesWithScore;
         private Dictionary<IRelease, double> currentWordScore;
         private string[] searchQuery;
         private int releasesToSearchCount;
 
-        public ReleaseSearch(IEnumerable<IRelease> releasesToSearch, string searchQuery) {
+        public ReleaseSearcher(IEnumerable<IRelease> releasesToSearch, string searchQuery) {
             this.searchQuery = searchQuery.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             releasesToSearchCount = releasesToSearch.Count();
             InitPointDictionaries(releasesToSearch);

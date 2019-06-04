@@ -77,7 +77,7 @@ namespace MVC_ReleaseDateSite.Controllers {
                     release.ImgLocation = ImageHandler.SaveImage(he.WebRootPath, file);
 
                 try {
-                    releaseLogic.AddRelease(release);
+                    releaseLogic.Add(release);
                 }
 
                 catch (SqlException ex) {

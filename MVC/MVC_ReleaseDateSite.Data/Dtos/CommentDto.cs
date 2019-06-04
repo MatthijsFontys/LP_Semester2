@@ -10,7 +10,7 @@ namespace MVC_ReleaseDateSite.Data {
         public string Text { get; set; }
         public IUser User { get; set; }
         public IComment RepliedComment { get; set; }
-        public int releaseId { get; set; }
+        public int ReleaseId { get; set; }
         public int RepliedCommentId { get; set; }
     }
 }

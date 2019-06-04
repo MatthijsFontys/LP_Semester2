@@ -30,6 +30,6 @@ namespace MVC_ReleaseDateSite.ViewModels {
         [Required]
         [Range(1,3)] //Todo dont hardcode this range
         [Display(Name = "Category")]
-        public string CategoryId { get; set; }
+        public int CategoryId { get; set; }
     }
 }
