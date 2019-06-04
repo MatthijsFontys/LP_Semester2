@@ -13,11 +13,13 @@ namespace MVC_ReleaseDateSite.Data {
         public IEnumerable<string> GetAllCategories() {
             List<string> toReturn = new List<string>();
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("SELECT categoryName FROM dbo.Category;",conn);
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read()) {
-                    toReturn.Add(reader.GetString(0));
+                using (SqlCommand cmd = new SqlCommand("SELECT categoryName FROM dbo.Category;", conn)) {
+                    conn.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader()) {
+                        while (reader.Read()) {
+                            toReturn.Add(reader.GetString(0));
+                        }
+                    }
                 }
             }
             return toReturn;

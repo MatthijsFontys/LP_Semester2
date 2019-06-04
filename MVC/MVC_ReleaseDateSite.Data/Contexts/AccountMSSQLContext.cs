@@ -17,13 +17,14 @@ namespace MVC_ReleaseDateSite.Data {
         #region Crud
         public void Add(IUser user) {
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("INSERT INTO dbo.releaseUser (username, passHash, imgLocation, salt) VALUES (@username, @passHash, @img, @salt);", conn);
+                using (SqlCommand cmd = new SqlCommand("INSERT INTO dbo.releaseUser (username, passHash, imgLocation, salt) VALUES (@username, @passHash, @img, @salt);", conn)) {
                 cmd.Parameters.AddWithValue("@username", user.Username);
                 cmd.Parameters.AddWithValue("@passHash", user.PasswordHash);
                 cmd.Parameters.AddWithValue("@img", user.ImgLocation);
                 cmd.Parameters.AddWithValue("@salt", user.Salt);
-                cmd.ExecuteNonQuery();
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
 
@@ -37,21 +38,23 @@ namespace MVC_ReleaseDateSite.Data {
 
         public IUser GetByPrimaryKey<T2>(T2 username) {
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand("SELECT id, username, passHash, imgLocation, salt FROM dbo.releaseUser WHERE username = @name ", conn);
-                cmd.Parameters.AddWithValue("@name", username);
-                SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.Read()) {
-                    return new UserDto
-                    {
-                        Id = Convert.ToInt32(reader["id"]),
-                        ImgLocation = reader["imgLocation"].ToString(),
-                        PasswordHash = reader["passHash"].ToString(),
-                        Salt = reader["salt"].ToString(),
-                        Username = reader["username"].ToString()
-                    };
+                using (SqlCommand cmd = new SqlCommand("SELECT id, username, passHash, imgLocation, salt FROM dbo.releaseUser WHERE username = @name ", conn)) {
+                    cmd.Parameters.AddWithValue("@name", username);
+                    conn.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader()) {
+                        if (reader.Read()) {
+                            return new UserDto
+                            {
+                                Id = Convert.ToInt32(reader["id"]),
+                                ImgLocation = reader["imgLocation"].ToString(),
+                                PasswordHash = reader["passHash"].ToString(),
+                                Salt = reader["salt"].ToString(),
+                                Username = reader["username"].ToString()
+                            };
+                        }
+                        return null;
+                    }
                 }
-                return null;
             }
         }
 
@@ -61,17 +64,19 @@ namespace MVC_ReleaseDateSite.Data {
         #endregion
 
         public bool CheckLoginCredentials(IUser user) {
+            int result = -1;
             using (SqlConnection conn = new SqlConnection(connectionstring)) {
-                conn.Open();
-                int result = -1;
-                SqlCommand cmd = new SqlCommand("SELECT Count(*) FROM dbo.releaseUser WHERE passHash = @passHash AND username = @username", conn);
-                cmd.Parameters.AddWithValue("@username", user.Username);
-                cmd.Parameters.AddWithValue("@passHash", user.PasswordHash);
-                SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.Read())
-                    result = reader.GetInt32(0);
-                return result == 1;
+                using (SqlCommand cmd = new SqlCommand("SELECT Count(*) FROM dbo.releaseUser WHERE passHash = @passHash AND username = @username", conn)) {
+                    cmd.Parameters.AddWithValue("@username", user.Username);
+                    cmd.Parameters.AddWithValue("@passHash", user.PasswordHash);
+                    conn.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader()) {
+                        if (reader.Read())
+                            result = reader.GetInt32(0);
+                    }
+                }
             }
+            return result == 1;
         }
 
     }
