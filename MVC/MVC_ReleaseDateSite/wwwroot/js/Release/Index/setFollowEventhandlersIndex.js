@@ -1,5 +1,4 @@
 window.onload = function () {
-    document.querySelector("#releaseday-toggle").click();
     let releases = document.querySelectorAll("[data-releaseId]");
     releases.forEach((release) => {
         release.addEventListener("click", () => UpdateFollowState(release, UpdateGui));

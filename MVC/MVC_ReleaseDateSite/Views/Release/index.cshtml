@@ -24,9 +24,9 @@
             </form>
             <!-- Time until release toggle bar-->
             <div class=" position-absolute abs-left ml-4" id="toggle-row">
-               <a href="#releaseday-toggle"> <img id="releaseday-toggle" src="~/images/toggleIcons/baseline-calendar_today-24px.svg" data-toggle="tooltip" data-placement="top" title="Release date" /> </a>
-                <a href="#day-toggle"><img id="day-toggle" src="~/images/toggleIcons/baseline-view_week-24px.svg" data-toggle="tooltip" data-placement="top" title="Days until release"></a>
-                <a href="#clock-toggle"><img id="clock-toggle" src="~/images/toggleIcons/baseline-alarm-24px.svg" data-toggle="tooltip" data-placement="top" title="Time until release" /></a>
+                <img id="releaseday-toggle" src="~/images/toggleIcons/baseline-calendar_today-24px.svg" data-toggle="tooltip" data-placement="top" title="Release date" class="time-toggle-active"/> 
+                <img id="day-toggle" src="~/images/toggleIcons/baseline-view_week-24px.svg" data-toggle="tooltip" data-placement="top" title="Days until release" />
+                <img id="clock-toggle" src="~/images/toggleIcons/baseline-alarm-24px.svg" data-toggle="tooltip" data-placement="top" title="Time until release" />
             </div>
             <!-- Add button-->
             @if (loggedIn) {

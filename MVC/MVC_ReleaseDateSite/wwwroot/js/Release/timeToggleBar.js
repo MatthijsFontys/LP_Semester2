@@ -1,4 +1,5 @@
-document.querySelector("#day-toggle").addEventListener("click", function () {
+document.querySelector("#day-toggle").addEventListener("click", function (e) {
+    ToggleButtonActiveClass(e.target);
     let releases = document.querySelectorAll("[data-releaseId]");
     let dates = [];
     for (let i = 0; i < releases.length; i++) {
@@ -27,12 +28,21 @@ document.querySelector("#day-toggle").addEventListener("click", function () {
     })
 });
 
-document.querySelector("#releaseday-toggle").addEventListener("click", function () {
+document.querySelector("#releaseday-toggle").addEventListener("click", function (e) {
+    ToggleButtonActiveClass(e.target);
     let dates = document.querySelectorAll("[data-releasedate]");
     dates.forEach(function (val) {
         val.innerText = val.dataset.releasedate;
     })
 });
 
-document.querySelector("#clock-toggle").addEventListener("click", function () {
+document.querySelector("#clock-toggle").addEventListener("click", function (e) {
+    ToggleButtonActiveClass(e.target);
 });
+
+
+
+function ToggleButtonActiveClass(clickedBtn) {
+    document.querySelector(".time-toggle-active").classList.remove("time-toggle-active");
+    clickedBtn.classList.add("time-toggle-active");
+}

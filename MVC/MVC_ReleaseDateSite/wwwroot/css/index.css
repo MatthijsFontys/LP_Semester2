@@ -22,7 +22,7 @@ body{
     margin-bottom: -5px;
 }
 
-#releaseday-toggle:target, #day-toggle:target, #clock-toggle:target {
+#toggle-row img.time-toggle-active {
     opacity: 1;
     transform: scale(1.1);
     cursor: default;
