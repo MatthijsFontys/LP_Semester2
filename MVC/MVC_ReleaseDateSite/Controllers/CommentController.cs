@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using MVC_ReleaseDateSite.Logic;
-using MVC_ReleaseDateSite.Models;
 using MVC_ReleaseDateSite.Interfaces;
 using MVC_ReleaseDateSite.ViewModels;
 using Newtonsoft.Json;
@@ -49,7 +48,7 @@ namespace MVC_ReleaseDateSite.Controllers {
                 }
             };
             if (commentId > 0)
-                toReturn.RepliedCommentId = commentId;
+                toReturn.RepliedComment.Id = commentId;
             return toReturn;
         }
     }

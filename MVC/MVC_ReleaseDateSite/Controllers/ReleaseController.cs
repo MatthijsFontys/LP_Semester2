@@ -6,7 +6,6 @@ using Microsoft.Extensions.Configuration;
 using MVC_ReleaseDateSite.Helpers.CustomAttributes;
 using MVC_ReleaseDateSite.Interfaces;
 using MVC_ReleaseDateSite.Logic;
-using MVC_ReleaseDateSite.Models;
 using MVC_ReleaseDateSite.ViewModels;
 using Newtonsoft.Json;
 using System;
@@ -66,7 +65,9 @@ namespace MVC_ReleaseDateSite.Controllers {
                     ImgLocation = model.ImgLocation,
                     ReleaseDate = model.ReleaseDate,
                     Title = model.Title,
-                    CategoryId = Convert.ToInt32(model.CategoryId),
+                    Category = new Category {
+                        Id = model.CategoryId,
+                    },
                     User = new User
                     {
                         Id = HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault()

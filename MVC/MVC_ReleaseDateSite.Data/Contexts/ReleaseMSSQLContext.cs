@@ -28,7 +28,7 @@ namespace MVC_ReleaseDateSite.Data {
                     cmd.Parameters.AddWithValue("@img", release.ImgLocation);
                     cmd.Parameters.AddWithValue("@releaseDate", release.ReleaseDate);
                     cmd.Parameters.AddWithValue("@ownerId", release.User.Id);
-                    cmd.Parameters.AddWithValue("@categoryId", release.CategoryId);
+                    cmd.Parameters.AddWithValue("@categoryId", release.Category.Id);
                     conn.Open();
                     cmd.ExecuteNonQuery();
                 }
@@ -67,7 +67,7 @@ namespace MVC_ReleaseDateSite.Data {
                                     ImgLocation = reader["userImage"].ToString(),
                                     Username = reader["username"].ToString()
                                 },
-                                Category = new Category
+                                Category = new CategoryDto
                                 {
                                     ImgLocation = reader["categoryImage"].ToString(),
                                     Name = reader["CategoryName"].ToString()
@@ -180,7 +180,7 @@ namespace MVC_ReleaseDateSite.Data {
                             while (reader.Read()) {
                                 IRelease tempRelease = new ReleaseDto
                                 {
-                                    Category = new Category
+                                    Category = new CategoryDto
                                     {
                                         Name = reader["category"].ToString()
                                     },

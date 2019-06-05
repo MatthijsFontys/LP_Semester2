@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 
-
 namespace MVC_ReleaseDateSite.Interfaces {
     public interface IRelease {
         int Id { get; set; }
@@ -12,9 +11,8 @@ namespace MVC_ReleaseDateSite.Interfaces {
         DateTime ReleaseDate { get; set; }
         DateTime CreationDate { get; set; }
         int FollowerCount { get; set; }
-        Category Category { get; set; }
+        ICategory Category { get; set; }
         IUser User { get; set; }
         bool IsFollowed { get; set; }
-        int CategoryId { get; set; }
     }
 }

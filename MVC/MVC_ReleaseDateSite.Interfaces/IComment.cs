@@ -8,7 +8,6 @@ namespace MVC_ReleaseDateSite.Interfaces {
          string Text { get; set; }
          IUser User { get; set; }
          IComment RepliedComment { get; set; }
-         int RepliedCommentId { get; set; }
          int ReleaseId { get; set; }
          int Id { get; set; }
     }

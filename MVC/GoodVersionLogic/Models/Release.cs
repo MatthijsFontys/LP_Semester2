@@ -5,7 +5,7 @@ using System.Text;
 using MVC_ReleaseDateSite.Interfaces;
 
 
-namespace MVC_ReleaseDateSite.Models {
+namespace MVC_ReleaseDateSite.Logic {
     public class Release : IRelease {
         public string ImgLocation { get; set; }
         public string Description { get; set; }
@@ -15,10 +15,8 @@ namespace MVC_ReleaseDateSite.Models {
         public string ReleaseString { get { return ReleaseDate.ToShortDateString(); } }
         public int FollowerCount { get; set; }
         public int Id { get; set; }
-        public Category Category{ get; set; }
+        public ICategory Category{ get; set; }
         public IUser User { get; set; }
-        public int? UserId { get; set; }
         public bool IsFollowed { get; set; }
-        public int CategoryId { get; set; }
     }
 }

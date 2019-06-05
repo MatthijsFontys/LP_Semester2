@@ -19,8 +19,8 @@ namespace MVC_ReleaseDateSite.Data {
                     cmd.Parameters.AddWithValue("@releaseId", comment.ReleaseId);
                     cmd.Parameters.AddWithValue("@userId", comment.User.Id);
                     cmd.Parameters.AddWithValue("@text", comment.Text);
-                    if (comment.RepliedCommentId > 0)
-                        cmd.Parameters.AddWithValue("@replyId", comment.RepliedCommentId);
+                    if (comment.RepliedComment.Id > 0)
+                        cmd.Parameters.AddWithValue("@replyId", comment.RepliedComment.Id);
                     else
                         cmd.Parameters.AddWithValue("@replyId", DBNull.Value);
                     conn.Open();
