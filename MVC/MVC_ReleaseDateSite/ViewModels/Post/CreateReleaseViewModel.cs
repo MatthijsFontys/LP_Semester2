@@ -10,13 +10,16 @@ namespace MVC_ReleaseDateSite.ViewModels {
     public class CreateReleaseViewModel {
         [Display(Name = "Image url")]
         [DataType(DataType.ImageUrl)]
+        [StringLength(200, ErrorMessage = "The url is too long")]
         public string ImgLocation { get; set; }
 
         [Display(Name = "Upload image")]
         public IFormFile ImgFile { get; set; }
 
+        [StringLength(2000, ErrorMessage = "The description is too long")]
         public string Description { get; set; }
 
+        [StringLength(200, ErrorMessage = "The title is too long")]
         [Required(ErrorMessage = "Title is required")]
         public string Title { get; set; }
 

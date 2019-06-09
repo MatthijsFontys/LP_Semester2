@@ -1,0 +1,136 @@
+<!doctype html>
+ 
+<html lang="en" style="height: 100%;">
+<head>
+  <meta charset="utf-8">
+ 
+  <title>The HTML5 Herald</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+  <link rel="stylesheet" href="css/styles.css?v=1.0">
+  <style type="text/css">
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	
+	body{
+		background-color: #366982;
+		color: white;
+		font-weight: bold;
+		font-family: arial;
+	}
+	
+	#center-text, img{
+		position: absolute;
+		text-align: center;
+	}
+
+	#center-text{
+		transform: translateY(-50%);
+		top: 50%;
+		width: 100%;
+	}
+	
+	h1 ,h2{
+		padding-right: 10px;
+	}
+	
+	img{
+		text-align: center;
+		left: 50%;
+		transform: translateX(-50%);
+		top: 10px;
+	}
+
+	h1{
+		box-sizing: border-box;
+		display: inline-block;
+		font-size: 80px;
+		height: 80px;
+		border-right: 5px solid white;
+		animation-name: cursor;
+		animation-duration: .5s;
+		animation-delay: .9s;
+		animation-iteration-count: 1;
+		animation-direction: reverse;
+		animation-fill-mode:forwards;
+		margin-bottom: 15px;
+		margin-top: -1000px;
+	}
+
+	
+	h2{
+		display: inline-block;
+		height: 40px;
+		font-size: 40px;
+		animation-duration: .1s, 1s;
+		animation-name: cursor, cursor;
+		animation-iteration-count: 1, infinite;
+		animation-direction: normal, alternate-reverse;
+		animation-fill-mode: forwards, forwards;
+		animation-delay: 1.2s, 8s;
+	}
+	
+	@keyframes cursor{
+		from {border-right: 5px solid transparent;}	
+		to {border-right: 5px solid white;}
+	}
+
+
+  </style>
+ 
+</head>
+ 
+<body>
+	<img src="spook.png"/>
+	<div id="center-text">
+		<h1></h1>
+		<br/>
+		<h2></h2>
+	<div>
+</body>
+
+<script type="text/javascript">
+	let titleText = "404";
+	let subText = "Sorry, the page you are looking for doesn't exist"
+	let typedText = "";
+	let title = document.querySelector("h1");
+	let subTitle = document.querySelector("h2");
+	let myInterval = setInterval( function(){AppendToText(title, titleText)}, 300);
+	setTimeout(() => {
+		myInterval = setInterval( function(){ AppendToText(subTitle, subText)}, 100);
+	}, 1200);
+
+	function AppendToText(element, textToType){
+		if(typedText != textToType){
+			typedText += textToType[typedText.length];
+			let appendedChar = typedText[typedText.length-1];
+			if(IsSkippableCharacter(appendedChar)){
+				AppendToText(element, textToType);
+			}
+			element.innerText = typedText;
+			return false;
+		}
+		else{
+			clearInterval(myInterval);
+			typedText = "";
+			return
+		}
+	}
+
+
+	function IsSkippableCharacter(appendedChar){
+		let skippableCharacters = [".", "`", "'", ";", '"', " "];
+		for(let i = 0; i < skippableCharacters.length; i++){
+			if(appendedChar == skippableCharacters[i])
+				return true;
+		}
+		return false;
+	}
+
+</script>
+
+</html>
+
+

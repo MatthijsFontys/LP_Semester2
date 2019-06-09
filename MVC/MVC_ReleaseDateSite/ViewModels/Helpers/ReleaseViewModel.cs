@@ -12,5 +12,9 @@ namespace MVC_ReleaseDateSite.ViewModels {
         public int Id { get; set; }
         public CategoryViewModel Category { get; set; }
         public bool Followed { get; set; }
+        public string GetFollowCountSuffix(bool capitalize) {
+            string prefix = FollowerCount == 1 ? "follower" : "followers";
+            return capitalize ? prefix[0].ToString().ToUpper() + prefix.Substring(1) : prefix;
+        }
     }
 }

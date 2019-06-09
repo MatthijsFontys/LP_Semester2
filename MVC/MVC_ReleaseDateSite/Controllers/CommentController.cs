@@ -45,6 +45,8 @@ namespace MVC_ReleaseDateSite.Controllers {
                 User = new User
                 {
                     Id = HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault()
+                },
+                RepliedComment = new Comment {
                 }
             };
             if (commentId > 0)

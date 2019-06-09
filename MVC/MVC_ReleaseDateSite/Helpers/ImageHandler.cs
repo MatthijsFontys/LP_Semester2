@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using MVC_ReleaseDateSite.Interfaces;
 using System;
 using System.IO;
 using System.Text;
@@ -9,18 +10,19 @@ namespace MVC_ReleaseDateSite {
         private const string ImagePathFromRoot = @"images/userUploads";
 
         public static bool IsImageValid(IFormFile file) {
-            try {
-                if (file != null) {
-                    string extension = Path.GetExtension(file.FileName);
-                    if (extension != ".png" && extension != ".jpg" && extension != ".jpeg")
-                        throw new FileLoadException("Only png and jpg allowed");
-                    return true;
-                }
-            }
-            catch (FileNotFoundException ex) {
-                Console.WriteLine(ex.Message);
+            if (file != null) {
+                string extension = Path.GetExtension(file.FileName);
+                if (! IsFileExtensionValid(extension))
+                    throw new BadImageFormatException(ExceptionMessages.InvalidImageType(extension));
+
+                double MaxFileSizeInBytes = Math.Pow(10, 6); // 1 Mega byte
+                if (file.Length > MaxFileSizeInBytes)
+                    throw new FileLoadException(ExceptionMessages.FileSizeTooBig);
+
+                return true;
             }
             return false;
+
         }
         public static string SaveImage(string rootpath, IFormFile file) {
             string filePath = Path.Combine(rootpath, ImagePathFromRoot);
@@ -42,6 +44,15 @@ namespace MVC_ReleaseDateSite {
 
         private static string CreateFileName(string releaseName, string releaseCategory, DateTime releaseDate, string extension) {
             return releaseName + "_" + releaseCategory + "_" + releaseDate + extension;
+        }
+
+        private static bool IsFileExtensionValid(string extension) {
+            string[] validFileExtentions = new string[] {".png", ".jpg", ".jpeg"};
+            foreach (string fileFormat in validFileExtentions) {
+                if (extension == fileFormat)
+                    return true;
+            }
+            return false;
         }
     }
 }

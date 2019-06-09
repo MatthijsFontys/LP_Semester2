@@ -54,7 +54,7 @@
                 <img src=@Html.DisplayFor(model => model.Release.ImgLocation) class="img-large">
                 <h3 class="m-0 p-0">@Html.DisplayFor(model => model.Release.Title)</h3>
                 <h3 class="text-info m-0 p-0">@Html.DisplayFor(model => model.Release.ReleaseDate)</h3>
-                <span class="text-muted"><span id="followCounter">@Html.DisplayFor(model => model.Release.FollowerCount)</span> followers</span>
+                <span class="text-muted"><span id="followCounter">@Html.DisplayFor(model => model.Release.FollowerCount)</span> @Model.Release.GetFollowCountSuffix(false)</span>
             </div>
 
             <!-- Holds the description -->

@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 
 namespace MVC_ReleaseDateSite.Controllers {
     public class ReleaseController : Controller {
@@ -65,7 +66,8 @@ namespace MVC_ReleaseDateSite.Controllers {
                     ImgLocation = model.ImgLocation,
                     ReleaseDate = model.ReleaseDate,
                     Title = model.Title,
-                    Category = new Category {
+                    Category = new Category
+                    {
                         Id = model.CategoryId,
                     },
                     User = new User
@@ -74,62 +76,73 @@ namespace MVC_ReleaseDateSite.Controllers {
                     }
                 };
                 IFormFile file = model.ImgFile;
-                if (ImageHandler.IsImageValid(file))
-                    release.ImgLocation = ImageHandler.SaveImage(he.WebRootPath, file);
-
                 try {
-                    releaseLogic.Add(release);
+                    if (ImageHandler.IsImageValid(file))
+                        release.ImgLocation = ImageHandler.SaveImage(he.WebRootPath, file);
                 }
 
-                catch (SqlException ex) {
-                    if (ex.Number == Convert.ToInt32(SqlErrorCodes.insertRolledback))
-                        ModelState.AddModelError(string.Empty, "You have reached your daily creation limit");
-                    else
-                        ModelState.AddModelError(string.Empty, "Something went wrong in the database");
-
+                catch (BadImageFormatException ex) {
+                    ModelState.AddModelError("ImgFile", ex.Message);
                 }
-            }
-            else {
+
+                catch (FileLoadException ex) {
+                    ModelState.AddModelError("ImgFile", ex.Message);
+                }
+
+
                 foreach (ValidationFailure error in result.Errors)
                     ModelState.AddModelError(string.Empty, error.ErrorMessage);
+
+                if (ModelState.ErrorCount == 0) {
+                    try {
+                        releaseLogic.Add(release);
+                    }
+
+                    catch (SqlException ex) {
+                        if (ex.Number == (int)SqlErrorCodes.insertRolledback)
+                            ModelState.AddModelError(string.Empty, "You have reached your daily creation limit");
+                        else
+                            ModelState.AddModelError(string.Empty, "Something went wrong in the database");
+                    }
+                }
             }
-            if (ModelState.ErrorCount > 0)
-                return View("Create", model);
-            return RedirectToAction("index");
+            if(ModelState.ErrorCount == 0)
+                return RedirectToAction("index");
+            return View("Create", model);
         }
 
-        public JsonResult Follow(int id) {
-            int? userId = HttpContext.Session.GetInt32(SessionHolder.SessionUserId);
-            if (userId == null) {
-                RedirectToAction("single", new { id });
-                return null;
+            public JsonResult Follow(int id) {
+                int? userId = HttpContext.Session.GetInt32(SessionHolder.SessionUserId);
+                if (userId == null) {
+                    RedirectToAction("single", new { id });
+                    return null;
+                }
+                if (IsFollowStateValid(FollowState.notFollowing, id)) {
+                    releaseLogic.FollowRelease(id, userId.GetValueOrDefault());
+                    return CreateFollowStateJson(id, "unfollow");
+                }
+                throw new Exception("Incorrect follow state");
             }
-            if (IsFollowStateValid(FollowState.notFollowing, id)) {
-                releaseLogic.FollowRelease(id, userId.GetValueOrDefault());
-                return CreateFollowStateJson(id, "unfollow");
+
+            public JsonResult Unfollow(int id) {
+                int? userId = HttpContext.Session.GetInt32(SessionHolder.SessionUserId);
+                if (IsFollowStateValid(FollowState.following, id)) {
+                    releaseLogic.UnfollowRelease(id, userId.GetValueOrDefault());
+                    return CreateFollowStateJson(id, "follow");
+                }
+                throw new Exception("Incorrect follow state");
             }
-            throw new Exception("Incorrect follow state");
-        }
 
-        public JsonResult Unfollow(int id) {
-            int? userId = HttpContext.Session.GetInt32(SessionHolder.SessionUserId);
-            if (IsFollowStateValid(FollowState.following, id)) {
-                releaseLogic.UnfollowRelease(id, userId.GetValueOrDefault());
-                return CreateFollowStateJson(id, "follow");
+            private JsonResult CreateFollowStateJson(int id, string updatedFollowState) {
+                int UpdatedFollowerCount = releaseLogic.GetReleaseById(id).FollowerCount;
+                string json = JsonConvert.SerializeObject(new { state = "success", followCount = UpdatedFollowerCount, followState = updatedFollowState });
+                return new JsonResult(json);
             }
-            throw new Exception("Incorrect follow state");
-        }
 
-        private JsonResult CreateFollowStateJson(int id, string updatedFollowState) {
-            int UpdatedFollowerCount = releaseLogic.GetReleaseById(id).FollowerCount;
-            string json = JsonConvert.SerializeObject(new { state = "success", followCount = UpdatedFollowerCount, followState = updatedFollowState });
-            return new JsonResult(json);
-        }
-
-        private bool IsFollowStateValid(FollowState followState, int id) {
-            int? userId = HttpContext.Session.GetInt32(SessionHolder.SessionUserId);
-            return userId != null && releaseLogic.ValidateFollowState(followState, id, userId.GetValueOrDefault());
-        }
+            private bool IsFollowStateValid(FollowState followState, int id) {
+                int? userId = HttpContext.Session.GetInt32(SessionHolder.SessionUserId);
+                return userId != null && releaseLogic.ValidateFollowState(followState, id, userId.GetValueOrDefault());
+            }
 
         [HttpPost]
         public JsonResult ChangeDate([FromBody] ChangeDateModel[] dates) {
