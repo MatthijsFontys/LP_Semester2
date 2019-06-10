@@ -51,7 +51,7 @@
 
             <!-- Holds thumbnail title release date and follower count -->
             <div class="col-sm-6 col-md-4 text-center flex-wrap">
-                <img src=@Html.DisplayFor(model => model.Release.ImgLocation) class="img-large">
+                <img src=@Html.DisplayFor(model => model.Release.ImgLocation) class="img-large">      
                 <h3 class="m-0 p-0">@Html.DisplayFor(model => model.Release.Title)</h3>
                 <h3 class="text-info m-0 p-0">@Html.DisplayFor(model => model.Release.ReleaseDate)</h3>
                 <span class="text-muted"><span id="followCounter">@Html.DisplayFor(model => model.Release.FollowerCount)</span> @Model.Release.GetFollowCountSuffix(false)</span>
@@ -60,7 +60,7 @@
             <!-- Holds the description -->
             @if (!string.IsNullOrEmpty(Model.Release.Description)) {
                 <div class="col-sm-12 col-md-4 text-center">
-                    <strong>Description</strong>
+                    <strong>@Html.DisplayNameFor(model => model.Release.Description)</strong>
                     <div class="px-1 py-sm-3 py-md-1 overflow-hidden standard-border description">@Html.DisplayFor(model => model.Release.Description)</div>
                     <p class="read-more">Read more</p>
                 </div>
@@ -68,7 +68,7 @@
         </div> <!-- End row -->
         <div id="CommentList">
             <!-- Holds the comments -->
-            <h4 class="col-12 text-muted text-center mt-4">Comments</h4>
+            <h4 class="col-12 text-muted text-center mt-4">@Html.DisplayNameFor(model => model.Release.Comments)</h4>
 
             @if (!string.IsNullOrEmpty(Context.Session.GetInt32("_userId").ToString())) {
                 <!-- Your comment -->

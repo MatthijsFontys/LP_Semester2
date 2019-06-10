@@ -56,7 +56,7 @@
                     </a>
                     <div style="display: inline-block;">
                         <h5><a href=@Url.Action("single", "release", new { id = item.Id }) class="title-link" title="@item.Title">@item.MaxLengthTitle()</a></h5>
-                        <h6 data-releasedate="@item.ReleaseDate">@item.ReleaseDate</h6>
+                        <h6 data-releasedate="@Html.DisplayFor(modelitem => item.ReleaseDate)">@Html.DisplayFor(modelitem => item.ReleaseDate)</h6>
                         <h6><span class="followcounter">@item.FollowerCount</span> @item.GetFollowCountSuffix(false)</h6>
                     </div>
                 </div>

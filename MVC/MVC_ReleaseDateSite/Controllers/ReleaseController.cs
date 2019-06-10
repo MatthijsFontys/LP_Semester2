@@ -173,7 +173,7 @@ namespace MVC_ReleaseDateSite.Controllers {
                     Id = releaseModel.Id,
                     FollowerCount = releaseModel.FollowerCount,
                     ImgLocation = releaseModel.ImgLocation,
-                    ReleaseDate = releaseModel.ReleaseDate.ToShortDateString(),
+                    ReleaseDate = releaseModel.ReleaseDate,
                     Category = new CategoryViewModel
                     {
                         ImgLocation = releaseModel.Category.ImgLocation

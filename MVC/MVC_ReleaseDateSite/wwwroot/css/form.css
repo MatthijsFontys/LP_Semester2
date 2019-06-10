@@ -21,7 +21,7 @@
 
 #center-box{
     max-height: 500px;
-    max-width: 450px;
+    width: 420px;
     padding: 0 40px;
     background-color: var(--primary);
     position: relative;

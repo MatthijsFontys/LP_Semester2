@@ -20,7 +20,7 @@ namespace MVC_ReleaseDateSite {
                 Title = release.Title,
                 Followed = release.IsFollowed,
                 FollowerCount = release.FollowerCount,
-                ReleaseDate = release.ReleaseDate.ToShortDateString(),
+                ReleaseDate = release.ReleaseDate,
                 ImgLocation = release.ImgLocation,
                 Category = new CategoryViewModel
                 {
@@ -52,7 +52,7 @@ namespace MVC_ReleaseDateSite {
                 Title = release.Title,
                 Followed = release.IsFollowed,
                 FollowerCount = release.FollowerCount,
-                ReleaseDate = release.ReleaseDate.ToShortDateString(),
+                ReleaseDate = release.ReleaseDate,
                 ImgLocation = release.ImgLocation,
                 Category = new CategoryViewModel
                 {
