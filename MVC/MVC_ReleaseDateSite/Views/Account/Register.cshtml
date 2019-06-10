@@ -34,24 +34,6 @@
 </div>
 
 @section Scripts {
-    <script type="text/javascript">
-        let test;
-        function IsUsernameAvailable(inputBox){
-            let username = inputBox.value;
-            $.ajax({
-                type: "POST",
-                url: "/account/IsUsernameAvailable",
-                data: { "username" : username }
-            }).done((data) => {
-                let json = JSON.parse(data);
-                let usernameValidationField = document.querySelector("#username-validation");
-                if (json.result == false && usernameValidationField.innerHTML == "") {
-                    usernameValidationField.innerHTML += "This username already exists";
-                }
-                else if (json.result == true)
-                  usernameValidationField.innerHTML = "";
-            });
-        }
-    </script>
+    <script type="text/javascript" src="~/js/RegisterAjax.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
