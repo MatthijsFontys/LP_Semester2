@@ -12,20 +12,20 @@
             <div class="form-group form-in-popup">
                 <!-- Username -->
                 <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" />
+                <input asp-for="Username" class="form-control" onkeyup="IsUsernameAvailable(this)" onblur="IsUsernameAvailable(this)" />
                 <!-- Password -->
                 <label asp-for="Password" class="control-label"></label>
                 <input asp-for="Password" class="form-control" autocomplete="new-password" />
                 <!-- Repeat password -->
                 <label asp-for="ConfirmPassword" class="control-label"></label>
-                <input asp-for="ConfirmPassword" class="form-control" autocomplete="new-password"/>
+                <input asp-for="ConfirmPassword" class="form-control" autocomplete="new-password" />
 
                 <!-- Sign up button -->
                 <button type="submit" class="btn primary-button w-100 my-5">Sign up</button>
             </div>
 
             <!-- Errors -->
-            <span asp-validation-for="Username" class="text-white d-block pb-1"></span>
+            <span asp-validation-for="Username" class="text-white d-block pb-1" id="username-validation"></span>
             <span asp-validation-for="Password" class="text-white d-block pb-1"></span>
             <span asp-validation-for="ConfirmPassword" class="text-white d-block pb-1"></span>
             <div asp-validation-summary="ModelOnly" class="text-white d-block"></div>
@@ -34,5 +34,24 @@
 </div>
 
 @section Scripts {
+    <script type="text/javascript">
+        let test;
+        function IsUsernameAvailable(inputBox){
+            let username = inputBox.value;
+            $.ajax({
+                type: "POST",
+                url: "/account/IsUsernameAvailable",
+                data: { "username" : username }
+            }).done((data) => {
+                let json = JSON.parse(data);
+                let usernameValidationField = document.querySelector("#username-validation");
+                if (json.result == false && usernameValidationField.innerHTML == "") {
+                    usernameValidationField.innerHTML += "This username already exists";
+                }
+                else if (json.result == true)
+                  usernameValidationField.innerHTML = "";
+            });
+        }
+    </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

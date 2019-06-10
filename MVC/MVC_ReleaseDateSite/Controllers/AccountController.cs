@@ -3,6 +3,7 @@ using MVC_ReleaseDateSite.Logic;
 using Microsoft.AspNetCore.Http;
 using MVC_ReleaseDateSite.ViewModels;
 using MVC_ReleaseDateSite.Interfaces;
+using Newtonsoft.Json;
 
 namespace MVC_ReleaseDateSite.Controllers
 {
@@ -63,9 +64,18 @@ namespace MVC_ReleaseDateSite.Controllers
                     Username = model.Username,
                     PasswordHash = model.Password
                 };
-                accountLogic.Add(user);
+                if (accountLogic.IsUsernameAvailable(model.Username))
+                    accountLogic.Add(user);
+                else {
+                    ModelState.AddModelError("Username", "This username already exists");
+                    return View("Register", model);
+                }
             }
-            return RedirectToAction("index", "Release");      
+            LoginViewModel vm = new LoginViewModel {
+                Username = model.Username,
+                Password = model.Password
+            };
+            return TryLogin(vm);      
         }
 
         [Route("/User/Account")]
@@ -73,6 +83,13 @@ namespace MVC_ReleaseDateSite.Controllers
             int userId = HttpContext.Session.GetInt32(SessionHolder.SessionUserId).GetValueOrDefault();
             return View(releaseMapper.ToSmallReleaseViewModelCollection(releaseLogic.GetFollowedReleases(userId)));
         }
+
+        [HttpPost]
+        public JsonResult IsUsernameAvailable(string username) {
+            string json = JsonConvert.SerializeObject(new { result = accountLogic.IsUsernameAvailable(username) });
+            return new JsonResult(json);
+        } 
+
 
         [HttpPost]
         public IActionResult test2(float id, float rest) {

@@ -19,6 +19,10 @@ namespace MVC_ReleaseDateSite.Logic {
             accountRepository.Add(user);
         }
 
+        public bool IsUsernameAvailable(string username) {
+            return accountRepository.IsUsernameAvailable(username);
+        }
+
         public bool CheckLoginCredentials(IUser user) {
             string salt = GetUserByName(user.Username).Salt;
             user.PasswordHash = Encryptor.Hash(user.PasswordHash + salt);

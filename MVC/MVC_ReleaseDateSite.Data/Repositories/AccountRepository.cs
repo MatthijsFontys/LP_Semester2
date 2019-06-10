@@ -21,5 +21,9 @@ namespace MVC_ReleaseDateSite.Data {
         public IUser GetUserByName(string username) {
             return context.GetByPrimaryKey(username);
         }
+
+        public bool IsUsernameAvailable(string username) {
+            return context.IsUsernameAvailable(username);
+        }
     }
 }

@@ -6,5 +6,6 @@ using System.Text;
 namespace MVC_ReleaseDateSite.Data {
     public interface IAccountContext : ICrudContext<IUser> {
         bool CheckLoginCredentials(IUser user);
+        bool IsUsernameAvailable(string username);
     }
 }

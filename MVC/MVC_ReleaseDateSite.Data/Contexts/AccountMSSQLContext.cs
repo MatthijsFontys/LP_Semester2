@@ -78,6 +78,20 @@ namespace MVC_ReleaseDateSite.Data {
             return result == 1;
         }
 
+        public bool IsUsernameAvailable(string username) {
+            using (SqlConnection conn = new SqlConnection(connectionstring)) {
+                using (SqlCommand cmd = new SqlCommand("IF EXISTS(SELECT * from dbo.releaseUser where username = @username) SELECT 0 as [available] ELSE SELECT 1 as [available]", conn)) {
+                    cmd.Parameters.AddWithValue("@username", username);
+                    conn.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader()) {
+                        if(reader.Read())
+                            return Convert.ToBoolean(reader.GetInt32(0));
+                    }
+                }
+            }
+            return false; //Todo find better solution
+        }
+
     }
 }
 
