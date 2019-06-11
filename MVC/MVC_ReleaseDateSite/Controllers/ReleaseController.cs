@@ -99,7 +99,7 @@ namespace MVC_ReleaseDateSite.Controllers {
                     }
 
                     catch (SqlException ex) {
-                        if (ex.Number == (int)SqlErrorCodes.insertRolledback)
+                        if (ex.Number == (int)SqlErrorCodes.InsertRolledback)
                             ModelState.AddModelError(string.Empty, "You have reached your daily creation limit");
                         else
                             ModelState.AddModelError(string.Empty, "Something went wrong in the database");
@@ -117,7 +117,7 @@ namespace MVC_ReleaseDateSite.Controllers {
                     RedirectToAction("single", new { id });
                     return null;
                 }
-                if (IsFollowStateValid(FollowState.notFollowing, id)) {
+                if (IsFollowStateValid(FollowState.NotFollowing, id)) {
                     releaseLogic.FollowRelease(id, userId.GetValueOrDefault());
                     return CreateFollowStateJson(id, "unfollow");
                 }
@@ -126,7 +126,7 @@ namespace MVC_ReleaseDateSite.Controllers {
 
             public JsonResult Unfollow(int id) {
                 int? userId = HttpContext.Session.GetInt32(SessionHolder.SessionUserId);
-                if (IsFollowStateValid(FollowState.following, id)) {
+                if (IsFollowStateValid(FollowState.Following, id)) {
                     releaseLogic.UnfollowRelease(id, userId.GetValueOrDefault());
                     return CreateFollowStateJson(id, "follow");
                 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Xunit;
 using MVC_ReleaseDateSite.Logic;
 using MVC_ReleaseDateSite.Data;
-using MVC_ReleaseDateSite.Models;
 using MVC_ReleaseDateSite.Interfaces;
 using System.Linq;
 

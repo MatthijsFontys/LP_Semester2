@@ -26,6 +26,10 @@ namespace UnitTests.MockContexts {
             throw new NotImplementedException();
         }
 
+        public bool IsUsernameAvailable(string username) {
+            throw new NotImplementedException();
+        }
+
         public void Update(IUser type) {
             throw new NotImplementedException();
         }

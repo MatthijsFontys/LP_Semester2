@@ -154,7 +154,7 @@ namespace MVC_ReleaseDateSite.Data {
                     conn.Open();
                     using (SqlDataReader reader = cmd.ExecuteReader()) {
                         if (reader.Read()) {
-                            return Convert.ToInt32(reader["followState"]) == 1 ? FollowState.following : FollowState.notFollowing;
+                            return Convert.ToInt32(reader["followState"]) == 1 ? FollowState.Following : FollowState.NotFollowing;
                         }
                     }
                     throw new Exception("Couldn't read out of the database");

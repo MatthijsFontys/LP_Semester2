@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 using MVC_ReleaseDateSite.Logic;
-using MVC_ReleaseDateSite.Models;
 
 namespace UnitTests {
     public class TimeCalculations {

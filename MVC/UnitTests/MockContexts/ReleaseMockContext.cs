@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using MVC_ReleaseDateSite.Data;
 using MVC_ReleaseDateSite.Interfaces;
-using MVC_ReleaseDateSite.Models;
+using MVC_ReleaseDateSite.Logic;
 
 namespace UnitTests {
     class ReleaseMockContext : IReleaseContext {

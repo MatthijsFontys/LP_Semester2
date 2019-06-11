@@ -7,9 +7,9 @@ using MVC_ReleaseDateSite.Data;
 
 namespace MVC_ReleaseDateSite.Logic {
    public static class LogicFactory {
-        private static string connectionstringLocal = "Data Source=DESKTOP-AAOK8UK\\SQLEXPRESS03;Initial Catalog=releaseSite;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-        private static string connectionstringSchool = "Server=mssql.fhict.local;Database=dbi400433;User Id = dbi400433; Password=semester2;";
-        private static string currentConnectionstring = connectionstringLocal;
+        private readonly static string connectionstringLocal = "Data Source=DESKTOP-AAOK8UK\\SQLEXPRESS03;Initial Catalog=releaseSite;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        private readonly static string connectionstringSchool = "Server=mssql.fhict.local;Database=dbi400433;User Id = dbi400433; Password=semester2;";
+        private readonly static string currentConnectionstring = connectionstringSchool;
         public static ReleaseLogic CreateReleaseLogic() {
             return new ReleaseLogic(
                 new ReleaseRepository(

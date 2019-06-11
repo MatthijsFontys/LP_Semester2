@@ -30,7 +30,7 @@
                     </a>
                     <div>
                         <h5><a href=@Url.Action("single", "release", new { id = release.Id }) class="title-link" style="font-size: 16px">@release.Title</a></h5>
-                        <h6>@release.ReleaseDate</h6>
+                        <h6>@Html.DisplayFor(model => release.ReleaseDate)</h6>
                     </div>
                 </div>
             </div>
